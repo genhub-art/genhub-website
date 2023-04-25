@@ -1,0 +1,13 @@
+.header_logo {
+    font-family: 'Bungee';
+    font-weight: bold;
+    color: #0d0c22;
+    text-decoration: none;
+    font-size: 36px;
+    line-height: 46px;
+}
+
+.header_logo:hover {
+    color: #0d0c22;
+}
+

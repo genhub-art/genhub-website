@@ -1,0 +1,152 @@
+{
+    "source": {
+      "hash": "0xfc2adad71e77b8df8470b537e962872344d1600325dda4d41d6425857781ffc2",
+      "language": "ink! 3.4.0",
+      "compiler": "rustc 1.68.0-nightly"
+    },
+    "contract": {
+      "name": "mytoken",
+      "version": "0.1.0",
+      "authors": [
+        "[your_name] <[your_email]>"
+      ]
+    },
+    "V3": {
+      "spec": {
+        "constructors": [
+          {
+            "args": [
+              {
+                "label": "init_value",
+                "type": {
+                  "displayName": [
+                    "bool"
+                  ],
+                  "type": 0
+                }
+              }
+            ],
+            "docs": [
+              "Constructor that initializes the `bool` value to the given `init_value`."
+            ],
+            "label": "new",
+            "payable": false,
+            "selector": "0x9bae9d5e"
+          },
+          {
+            "args": [],
+            "docs": [
+              "Constructor that initializes the `bool` value to `false`.",
+              "",
+              "Constructors can delegate to other constructors."
+            ],
+            "label": "default",
+            "payable": false,
+            "selector": "0xed4b9d1b"
+          }
+        ],
+        "docs": [],
+        "events": [],
+        "messages": [
+          {
+            "args": [],
+            "docs": [
+              " A message that can be called on instantiated contracts.",
+              " This one flips the value of the stored `bool` from `true`",
+              " to `false` and vice versa."
+            ],
+            "label": "flip",
+            "mutates": true,
+            "payable": false,
+            "returnType": null,
+            "selector": "0x633aa551"
+          },
+          {
+            "args": [],
+            "docs": [
+              " Increment i "
+            ],
+            "label": "inc",
+            "mutates": true,
+            "payable": false,
+            "returnType": null,
+            "selector": "0x1d32619f"
+          },
+          {
+            "args": [],
+            "docs": [
+              " Simply returns the current value of our `bool`."
+            ],
+            "label": "get",
+            "mutates": false,
+            "payable": false,
+            "returnType": {
+              "displayName": [
+                "bool"
+              ],
+              "type": 0
+            },
+            "selector": "0x2f865bd9"
+          },
+          {
+            "args": [],
+            "docs": [
+              " Simply returns the current value of our `i`."
+            ],
+            "label": "geti",
+            "mutates": false,
+            "payable": false,
+            "returnType": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 1
+            },
+            "selector": "0xabb98792"
+          }
+        ]
+      },
+      "storage": {
+        "struct": {
+          "fields": [
+            {
+              "layout": {
+                "cell": {
+                  "key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                  "ty": 0
+                }
+              },
+              "name": "value"
+            },
+            {
+              "layout": {
+                "cell": {
+                  "key": "0x0100000000000000000000000000000000000000000000000000000000000000",
+                  "ty": 1
+                }
+              },
+              "name": "i"
+            }
+          ]
+        }
+      },
+      "types": [
+        {
+          "id": 0,
+          "type": {
+            "def": {
+              "primitive": "bool"
+            }
+          }
+        },
+        {
+          "id": 1,
+          "type": {
+            "def": {
+              "primitive": "u32"
+            }
+          }
+        }
+      ]
+    }
+  }
