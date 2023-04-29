@@ -25,7 +25,7 @@ type NFT = {
       return http_get(url.href)
   }
    
-  type Collection = {
+  export type Collection = {
     chain: string;
     address: string;
     metadata:{
@@ -33,7 +33,11 @@ type NFT = {
       description: string;
       image: string;
       external_url: string;
-    }
+      generator_url: string;
+    };
+    price: number;
+    max_supply: number;
+    current_supply: number;
   }
    
   export let get_collections = (chains: string[], collection_addresses: string[]) : Promise<Collection[]> =>

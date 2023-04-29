@@ -2,12 +2,14 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-export default function NftDetailsPrew(props) {
+export default function CollectionDetailsPreview(props) {
     return (
         <div>
-            <img className="coll_prw_img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s" />
-            <div className="spacer-40" />
+            <img className="coll_prw_img" src="/preview.jpg" />
+            <div className="spacer-30" />
             <div style={{justifyContent: "center", display: "grid"}}>
+                <a className='my_btn_main' id="variations_btn" href="#!">Variations</a>
+                <div className="spacer-40" />
                 <h6 className="index_title" style={{fontSize: "16px"}}>Properties</h6>
             </div>
             <Row xs={1} sm={2} md={3} className="g-4" style={{maxWidth: "612px"}}>
@@ -78,7 +80,6 @@ export default function NftDetailsPrew(props) {
                     </Card>
                 </Col>
             </Row>
-            <div className="spacer-60" />
         </div>
     )
 }

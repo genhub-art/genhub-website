@@ -27,7 +27,7 @@ export default function Header(props) {
     const [beacon_pkh, setBeaconPKH] = useLocalStorage(KEYWORDS.BEACON_PKH, null);
     const [aleph0_pkh, setAleph0PKH] = useLocalStorage(KEYWORDS.ALEPH0_PKH ,null);
     const [solidity_pkh, setSolidityPKH] = useLocalStorage(KEYWORDS.SOLIDITY_PKH ,null);
-    const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.MAINNET)
+    const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.MAINNET);
     const scrollPosition = useScrollPosition();
     // const [Window, setWindow] = useState(null);
     
@@ -93,6 +93,7 @@ export default function Header(props) {
             {console.log("Beacon PKH", beacon_pkh)}
             {console.log("Aleph0 PKH", aleph0_pkh)}
             {console.log("Solidity PKH", solidity_pkh)}
+            {/* {console.log("Network Header", network)} */}
             {/* {console.log("Window", Window)} */}
             <Modal scrollable={true} show={bridge_modal} onHide={() => setBridgeModal(false)} backdrop="static" keyboard={false} centered >
                 <Modal.Header closeButton>

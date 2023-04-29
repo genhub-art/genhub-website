@@ -10,10 +10,10 @@ import Title from '../components/Title';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import MyCardsCollection from '../components/MyCardsCollection';
-import NftDetailsPrew from '../components/NftDetailsPrew';
+import NftDetailsPreview from '../components/NftDetailsPreview';
 import NftDetialsInfo from '../components/NftDetialsInfo';
 
-export default function CollectionDetails(props) {
+export default function NftDetails(props) {
     const [tabs_key, setTabsKey] = useState('all');
     const [coll, setColl] = useState({get_current_tid: 7, get_max_tid: 10, get_mutez_earned: 0.6, get_mutez_goal: 0.9});
 
@@ -21,7 +21,7 @@ export default function CollectionDetails(props) {
         <Container className="site_content">
             <Row>
                 <Col md={6}>
-                    <NftDetailsPrew />
+                    <NftDetailsPreview />
                 </Col>
                 <Col md={6}>
                     <NftDetialsInfo coll={coll} />

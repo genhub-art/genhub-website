@@ -10,7 +10,6 @@ import Title from '../components/Title';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import MyCardsCollection from '../components/MyCardsCollection';
-import CollDetailsPrew from '../components/CollDetailsPrew';
 import ProgressBar from "@ramonak/react-progress-bar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'

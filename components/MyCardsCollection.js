@@ -10,8 +10,8 @@ export default function MyCardsCollection(props) {
         {/* {Array.from({ length: 18 }).map((_, idx) => ( */}
         {props?.values?.map(val =>
             <Col>   
-                <MyCard href={props.href} title={val.get_title} image={val.get_image} 
-                  price={val.get_price} curr_tid={val.get_curr_tid} max_tid={val.get_max_tid} typ={val.typ} />
+                <MyCard href={props.href} title={val.title} image={val.image} 
+                  price={val.price} curr_tid={val.curr_tid} max_tid={val.max_tid} typ={val.typ} />
             </Col>
         )}
     </Row>

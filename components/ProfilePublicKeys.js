@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
 
-export default function ProfilePubKeys(props) {
+export default function ProfilePublicKeys(props) {
 
     const [beacon_pkh, setBeaconPKH] = useState(null);
     const [aleph0_pkh, setAleph0PKH] = useState(null);

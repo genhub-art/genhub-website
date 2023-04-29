@@ -65,11 +65,11 @@ export default function App({ Component, pageProps }) {
         </button> */}
 
         <NetworkContextProvider>
-          <MoralisProvider appId={"PxKwutTiUMpQQt7ACjcRb3ewxk5McvfLHt5kaVgY"} serverUrl={"https://fypkueewl3fg.usemoralis.com:2053/server"}>
+          {/* <MoralisProvider appId={"PxKwutTiUMpQQt7ACjcRb3ewxk5McvfLHt5kaVgY"} serverUrl={"https://fypkueewl3fg.usemoralis.com:2053/server"}> */}
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          </MoralisProvider>
+          {/* </MoralisProvider> */}
         </NetworkContextProvider>
     </> 
     // <SSRProvider> 

@@ -13,11 +13,15 @@ import Title from '../components/Title';
 import MyCardsCollection from '../components/MyCardsCollection';
 import { useEffect, useState } from 'react';
 import { tezos, aleph0, solidity } from '../lib/blockchains';
-import { get_collections } from '../lib/blockchains.ts';
+import { get_collections } from '../lib/blockchainsTS';
 
 // export function getStaticProps() {
 //   return {props: {MORALIS_API_KEY: process.env.MORALIS_API_KEY}};
 // }
+
+
+
+
 
 export default function AllCollections(props) {
 
@@ -31,40 +35,26 @@ export default function AllCollections(props) {
       // console.log("Collections", colls)
       // setCollections(colls);
     }
-    setCollections([{get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 1", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 2", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 3", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 4", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 5", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 6", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 7", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 1", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 2", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 3", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 4", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 5", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 6", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 7", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
-                    get_title: "Collection 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6}])
+
+
+    setCollections([{image: "/preview.jpg",title: "Collection 1", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 2", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 3", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 4", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 5", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 6", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 7", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 8", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 1", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 2", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 3", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 4", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 5", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 6", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 7", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg",title: "Collection 8", price: 0.4, curr_tid: 6, max_tid: 6},
+                    {image: "/preview.jpg", title: "Collection 1", price: 0.4, curr_tid: 6, max_tid: 6}
+                  ])
     fetch();
 
   }, [])

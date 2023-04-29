@@ -170,6 +170,12 @@ p {
   font-size: 14px;
 }
 
+#chose_chain_btn{
+  padding: 6px 12px;
+  font-size: 14px;
+  display: inline-block;
+}
+
 .my_btn_main{
   display: inline-block;
   line-height: 1.2em;
@@ -629,6 +635,25 @@ p {
   text-decoration: none;
   margin-left: 12px;
   margin-right: 12px;
+}
+
+.spinner {
+  animation: spin infinite 0.3s linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.custom-dropdown-menu {
+  transform-origin: top left !important;
+  top: 100% !important;
+  bottom: auto !important;
 }
 
 .menu_element:hover{

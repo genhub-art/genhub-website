@@ -10,8 +10,8 @@ import Title from '../components/Title';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import MyCardsCollection from '../components/MyCardsCollection';
-import CollDetailsPrew from '../components/CollDetailsPrew';
-import CollDetailsInfo from '../components/CollDetialsInfo';
+import CollectionDetailsPreview from '../components/CollectionDetailsPreview';
+import CollectionDetailsInfo from '../components/CollectionDetialsInfo';
 
 export default function CollectionDetails(props) {
     const [tabs_key, setTabsKey] = useState('all');
@@ -25,74 +25,74 @@ export default function CollectionDetails(props) {
             console.log("Collections", colls)
             setCollections(colls);
         }
-        setNFTS([{get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+        setNFTS([{get_image: "/preview.jpg",
                     get_title: "NFT 1", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 2", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 3", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 4", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 5", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 6", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 7", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 1", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 2", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 3", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 4", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 5", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 6", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 7", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "NFT 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"}])
 
-        setMyNFTS([{get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+        setMyNFTS([{get_image: "/preview.jpg",
                     get_title: "My NFT 1", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 2", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 3", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 4", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 5", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 6", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 7", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 1", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 2", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 3", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 4", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 5", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 6", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 7", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s",
+                    {get_image: "/preview.jpg",
                     get_title: "My NFT 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"}])
 
 
@@ -101,10 +101,10 @@ export default function CollectionDetails(props) {
         <Container className="site_content">
             <Row>
                 <Col md={6}>
-                    <CollDetailsPrew />
+                    <CollectionDetailsPreview />
                 </Col>
                 <Col md={6}>
-                    <CollDetailsInfo coll={coll} />
+                    <CollectionDetailsInfo coll={coll} />
                 </Col>
             </Row>
             <div className="spacer-60" /><div className="spacer-30" />

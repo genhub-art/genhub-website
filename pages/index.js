@@ -20,10 +20,10 @@ export default function Home(props) {
     <Container>
       <Row style={{paddingBottom: "90px"}}>
         <Col md={6}><IndexPresentation /></Col>
-        <Col md={6} bsPrefix="d-none d-sm-block col"><MyCarousel nfts={[{id: 0, address: "efsdfsfsd", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s", name: "Castor", price: 10},
-        {id: 0, address: "efsdfsfsd", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s", name: "Castor 1", price: 10},
-        {id: 0, address: "efsdfsfsd", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s", name: "Castor 2", price: 15},
-        {id: 0, address: "efsdfsfsd", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s", name: "Castor 3", price: 20}
+        <Col md={6} bsPrefix="d-none d-sm-block col"><MyCarousel nfts={[{id: 0, address: "efsdfsfsd", image: "/preview.jpg", name: "Castor", price: 10},
+        {id: 0, address: "efsdfsfsd", image: "/preview.jpg", name: "Castor 1", price: 10},
+        {id: 0, address: "efsdfsfsd", image: "/preview.jpg", name: "Castor 2", price: 15},
+        {id: 0, address: "efsdfsfsd", image: "/preview.jpg", name: "Castor 3", price: 20}
       ]} /></Col>
       </Row>
       <Row>

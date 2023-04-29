@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Image from 'next/image';
 
 export default function MyCard(props) {
   return (
     <Link className="cardA" href={props.href}>
       <Card className='cardItem'>
-        <Card.Img variant="top" src={props.image} className="cardImg" />
+        <Image /*variant="top"*/ height={264} width={264} src={props.image} className="cardImg" />
         <Card.Body style={props.typ === "nft" ? {paddingTop: "0px", paddingBottom: "0px"} : {paddingTop: "8px", paddingBottom: "8px"}}>
           <Card.Title className="cardTitle">{props.title}</Card.Title>
           {props.typ !== "nft" &&

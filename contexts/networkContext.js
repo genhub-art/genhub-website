@@ -1,5 +1,7 @@
 'use client';
 import { createContext, useContext } from 'react';
+import { useState, useEffect } from "react";
+import useLocalStorage from '../custom_hooks/useLocalStorage';
 
 const NetworkContext = createContext();
 

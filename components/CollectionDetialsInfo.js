@@ -1,16 +1,16 @@
 import { useEffect, useState, useRef } from 'react';
-import IndexPresentation from '../components/IndexPresentation';
-import MyCarousel from '../components/MyCarousel';
-import MyOwlCarousel from '../components/MyOwlCarousel';
+import IndexPresentation from './IndexPresentation';
+import MyCarousel from './MyCarousel';
+import MyOwlCarousel from './MyOwlCarousel';
 import Image from 'next/image';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Title from '../components/Title';
+import Title from './Title';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import MyCardsCollection from '../components/MyCardsCollection';
-import CollDetailsPrew from '../components/CollDetailsPrew';
+import MyCardsCollection from './MyCardsCollection';
+import CollDetailsPrew from './CollectionDetailsPreview';
 import ProgressBar from "@ramonak/react-progress-bar";
 import dynamic from 'next/dynamic';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,6 +19,7 @@ import {faCircleCheck} from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { Form } from 'react-bootstrap';
 import MyCard from './MyCard';
+import { mint_nft } from "../lib/solidity_api";
 // import { AiFillCheckCircle } from "react-icons/fa";
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {	
 	ssr: false,
@@ -67,7 +68,7 @@ const modules = {
     'video',
   ]
 
-export default function CollDetailsInfo(props) {
+export default function CollectionDetailsInfo(props) {
 
     const refs = {
         ref_copy_1: useRef(null),
@@ -161,7 +162,8 @@ export default function CollDetailsInfo(props) {
             <Link target={"_blank"} title={iframe_url} href="Profile" className="aTag" id="detATag">{shortening_str(iframe_url, 30, 0)}</Link>&nbsp;&nbsp;
             <a id="btn_copy" title="Copy Text" onClick={() => {navigator.clipboard.writeText(iframe_url); copy(3);}} href="#!" ref={refs.ref_copy_3}>Copy</a>
             <div className='spacer-20' />
-            
+            <a className='my_btn_main' id="edit_btn" href="#!" onClick={() => mint_nft(window)}>Mint</a>
+            &nbsp;&nbsp;&nbsp;
             <Link className='my_btn_main' id="edit_btn" href="EditCollection">Edit</Link>
             <div className='spacer-20' />
 
@@ -205,7 +207,7 @@ export default function CollDetailsInfo(props) {
                         <Col lg={6} sm={6} xs={12}>
                             <h5 className="index_title" style={{fontSize: "18px"}}>Preview Collection Card</h5>
                             <div className="spacer-5" />
-                            <MyCard href="#!" title={"Collection 1"} image={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s"} 
+                            <MyCard href="#!" title={"Collection 1"} image={"/preview.jpg"} 
                                 price={0.4} curr_tid={6} max_tid={6} typ={"no buttons"} />
                         </Col>
                     </Row>

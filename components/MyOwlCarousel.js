@@ -22,7 +22,7 @@ export default function MyOwlCarousel(props) {
             <OwlCarousel className='owl-theme' responsive={responsive_obj} loop items={4} margin={20} nav>
                 {Array.from(Array(12).keys()).map(i => 
                     <MyOwlCarouselItem title={`Owl Carousel Item ${i + 1}`} 
-                     image={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08vz0MsFRneW3Gvxp0-7cV6H7QEOQ25ggclc-rtY&s"} />
+                     image={"/preview.jpg"} />
                 )}
             </OwlCarousel>
         </>
