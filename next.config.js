@@ -3,6 +3,9 @@
 const webpack = require('webpack');
 
 const nextConfig = {
+  images: {
+    domains: ['gateway.moralisipfs.com'],
+  },
   reactStrictMode: true,
   webpack: (config, { dev }) => {
     config.plugins.push(
