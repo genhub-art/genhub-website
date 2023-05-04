@@ -11,7 +11,7 @@ import DateTimePicker from 'react-datetime-picker';
 import Image from 'next/image';
 import { Button } from 'react-bootstrap';
 import Moralis from "moralis";
-import { upload_generator, upload_metadata } from '../lib/utils';
+import { upload_generator, upload_metadata, ipfs_to_https } from '../lib/utils';
 import { FaSpinner } from 'react-icons/fa';
 import { create_collection } from '../lib/solidity_api';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -108,9 +108,8 @@ export default function CollectionCreationForm(props) {
         setUploadingFolder(true);
         props.setPreviewProps({...props.preview_props, ...{image: "/Loading.gif"}});
         try{
-            upload_generator(e).then(r => {let generator_src = `https://gateway.moralisipfs.com/ipfs/${r.replace("ipfs://", "")}/`;
-            setUploadingFolder(false); setGeneratorIpfsUri(r); setGeneratorSrc(generator_src);
-            props.setPreviewProps({...props.preview_props, ...{image: generator_src + "/preview.png"}});})
+            upload_generator(e).then(r => {let generator_src = ipfs_to_https(r); setUploadingFolder(false); setGeneratorIpfsUri(r); 
+            setGeneratorSrc(generator_src); props.setPreviewProps({...props.preview_props, ...{image: generator_src + "/preview.png"}});})
         }
         catch(err){
             console.log("Err", err);
@@ -171,7 +170,7 @@ export default function CollectionCreationForm(props) {
             </Form.Group>
 
             <Form.Group>
-                <Form.Label className="index_title" style={{fontSize: "18px"}}>Max MaxSupply</Form.Label>
+                <Form.Label className="index_title" style={{fontSize: "18px"}}>Max Supply</Form.Label>
                 <Form.Control type="text" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
                               placeholder="E.g. 25" defaultValue="" onChange={e => {setMaxSupply(e.target.value); 
                               props.setPreviewProps({...props.preview_props, ...{max_tid: e.target.value}});}} />

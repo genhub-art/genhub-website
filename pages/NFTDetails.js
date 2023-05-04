@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/router';
 import IndexPresentation from '../components/IndexPresentation';
 import MyCarousel from '../components/MyCarousel';
 import MyOwlCarousel from '../components/MyOwlCarousel';
@@ -12,19 +13,40 @@ import Tabs from 'react-bootstrap/Tabs';
 import MyCardsCollection from '../components/MyCardsCollection';
 import NftDetailsPreview from '../components/NftDetailsPreview';
 import NftDetialsInfo from '../components/NftDetialsInfo';
+import { get_collections, get_nfts, Collection, NFT } from '../lib/blockchainsTS';
 
 export default function NftDetails(props) {
+
+    const router = useRouter();
+
     const [tabs_key, setTabsKey] = useState('all');
-    const [coll, setColl] = useState({get_current_tid: 7, get_max_tid: 10, get_mutez_earned: 0.6, get_mutez_goal: 0.9});
+    const [nft, setNFT] = useState({});
+    const [collection, setCollection] = useState({});
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+
+        if(!router.isReady) return;
+        let collection_address = router.query.collection;
+        let token_id = router.query.token_id;
+
+        const fetch = async _ => {
+            setNFT((await get_nfts([], [collection_address], [token_id], []))[0]);
+            setCollection((await get_collections([], [collection_address]))[0]);
+            setLoading(false);
+        }
+        fetch();
+
+    }, [router.isReady]);
 
     return (
         <Container className="site_content">
             <Row>
                 <Col md={6}>
-                    <NftDetailsPreview />
+                    <NftDetailsPreview loading={loading} image={nft?.metadata?.image} />
                 </Col>
                 <Col md={6}>
-                    <NftDetialsInfo coll={coll} />
+                    {!loading && <NftDetialsInfo nft={nft} collection={collection} />}
                 </Col>
             </Row>
             <div className="spacer-60" />

@@ -1,11 +1,13 @@
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Image from 'next/image';
 
 export default function NftDetailsPreview(props) {
     return (
         <div>
-            <img className="coll_prw_img" src="/preview.jpg" />
+            <Image width={612} height={612} style={{height: "612px"}} className="coll_prw_img" src={props?.loading ? "/Loading.gif" : props?.image} />
+            {/* TOADD: Properties
             <div className="spacer-40" />
             <div style={{justifyContent: "center", display: "grid"}}>
                 <h6 className="index_title" style={{fontSize: "16px"}}>Properties</h6>
@@ -78,6 +80,7 @@ export default function NftDetailsPreview(props) {
                     </Card>
                 </Col>
             </Row>
+            */}
             <div className="spacer-60" />
         </div>
     )

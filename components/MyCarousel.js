@@ -1,5 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel';
 import Link from "next/link";
+import Image from 'next/image';
 
 export default function MyCarousel(props) {
     if(props.nfts){
@@ -10,9 +11,9 @@ export default function MyCarousel(props) {
                 {
                     props.nfts.map(nft => 
                         <Carousel.Item>
-                            <Link href={"NFTDetails?id=" + nft.id + "&address=" + nft.address}><img className="d-block w-100" src={nft.image} /></Link>
+                            <Link href={"NFTDetails?id=" + nft?.id + "&address=" + nft?.address}><Image height={636} width={636} className="d-block w-100" src={nft?.metadata?.image} /></Link>
                             <Carousel.Caption bsPrefix="carousel-caption my-carousel-caption">
-                                <Link href={"NFTDetails?id=" + nft.id + "&address=" + nft.address}><span className="nft_pic_title"  style={{fontFamily: "Roboto Slab"}}>{nft.name} - {(typeof nft.price !== "undefined") && <>{(nft.price / 1000000)} ꜩ</>}</span></Link>
+                                <Link href={"NFTDetails?id=" + nft?.id + "&address=" + nft?.address}><span className="nft_pic_title"  style={{fontFamily: "Roboto Slab"}}>{nft?.metadata?.name} - {(nft?.price) && <>{(nft?.price / 1000000)} ꜩ</>}</span></Link>
                                 {/* <h3 style={{backgroundColor: ""}}>{collection.get_title}</h3> */}
                             </Carousel.Caption>
                         </Carousel.Item>

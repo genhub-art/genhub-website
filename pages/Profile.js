@@ -14,146 +14,53 @@ import ProfilePublicKeys from '../components/ProfilePublicKeys';
 import useLocalStorage from '../custom_hooks/useLocalStorage';
 import { KEYWORDS } from '../pages/_app';
 import { useRouter } from 'next/router';
+import { get_collections, get_nfts, Collection, NFT } from '../lib/blockchainsTS';
 
 export default function Profile(props) {
 
   const router = useRouter();
 
+  const loading_collection = {chain: "", address: "", metadata: {name: "Loading...", description: "", image: "/Loading.gif",
+                                         external_url: "", generator_url: ""}, price: 0, max_supply: 0, current_supply: 0};
+
   const [tabs_key, setTabsKey] = useState('nfts');
-  const [collections, setCollections] = useState([]);
-  const [nfts, setNfts] = useState([]);
-  const [creations, setCreations] = useState([]);
+  const [collections, setCollections] = useState(Array(8).fill(loading_collection));
+  const [nfts, setNfts] = useState(Array(8).fill(loading_collection));
+  const [creations, setCreations] = useState(Array(8).fill(loading_collection));
   const [beacon_pkh, setBeaconPKH] = useLocalStorage(KEYWORDS.BEACON_PKH, null);
   const [aleph0_pkh, setAleph0PKH] = useLocalStorage(KEYWORDS.ALEPH0_PKH ,null);
   const [solidity_pkh, setSolidityPKH] = useLocalStorage(KEYWORDS.SOLIDITY_PKH ,null);
   const [account, setAccount] = useState("");
   const [account_typ, setAccountTyp] = useState("no");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
 
     if(!router.isReady) return;
     if(props.ready === false) return;
-
+    
     let acc = router.query.account;
+    let owner = "";
+    
+    if(solidity_pkh && acc === "My Account") owner = solidity_pkh;
+
+    if(acc !== "My Account" && router.query.account_typ === "solidity_pkh") owner = acc;
+
     setAccount(acc);
     if(acc !== "My Account") setAccountTyp(router.query.account_typ);
     else setAccountTyp(null);
-
-  }, [router.isReady, router.query]);
-
-  useEffect(() => {
-    const fetch = async _ => {
-      const colls = await tezos.get_all_collections();
-      console.log("Collections", colls)
-      setCollections(colls);
+    let fetch = async _ => {
+      let curr_nfts = await get_nfts([], [], [], [owner]);
+      setNfts(curr_nfts);
+      let curr_collections = await get_collections([], [...new Set(curr_nfts.map(nft => nft.collection))]);
+      setCollections(curr_collections);
+      setCreations(curr_collections);
+      setLoading(false);
     }
-    setCollections([{get_image: "/preview.jpg",
-                    get_title: "Collection 1", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 2", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 3", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 4", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 5", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 6", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 7", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 1", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 2", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 3", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 4", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 5", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 6", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 7", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Collection 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6}])
-                    
-                    setCreations([{get_image: "/preview.jpg",
-                    get_title: "Creation 1", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 2", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 3", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 4", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 5", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 6", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 7", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 1", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 2", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 3", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 4", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 5", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 6", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 7", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6},
-                    {get_image: "/preview.jpg",
-                    get_title: "Creation 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6}])
-                    
-                    setNfts([{get_image: "/preview.jpg",
-                    get_title: "NFT 1", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 2", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 3", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 4", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 5", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 6", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 7", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 1", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 2", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 3", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 4", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 5", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 6", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 7", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"},
-                    {get_image: "/preview.jpg",
-                    get_title: "NFT 8", get_price: 0.4, get_curr_tid: 6, get_max_tid: 6, typ: "nft"}])
-    // fetch();
 
-  }, [])
+    fetch();
+
+  }, [router.isReady, router.query, solidity_pkh]);
   
   return (
     <div>
@@ -164,13 +71,13 @@ export default function Profile(props) {
           <ProfilePublicKeys beacon_pkh={beacon_pkh} solidity_pkh={solidity_pkh} aleph0_pkh={aleph0_pkh} account={account} account_typ={account_typ} />
           <Tabs id="controlled-tab-example" activeKey={tabs_key} onSelect={(k) => setTabsKey(k)} className="mb-3">
             <Tab tabClassName="tabText" eventKey="nfts" title="NFTs">
-                <MyCardsCollection values={nfts} href={"NFTDetails"} />
+                <MyCardsCollection values={nfts} href={"NFTDetails"} typ="nft" />
             </Tab>
             <Tab tabClassName="tabText" eventKey="collections" title="Collections">
-                <MyCardsCollection values={collections} href={"CollectionDetails"} />
+                <MyCardsCollection values={collections} href={"CollectionDetails"} typ="collection" />
             </Tab>
             <Tab tabClassName="tabText" eventKey="creations" title="Creations">
-                <MyCardsCollection values={creations} href={"CollectionDetails"} />
+                <MyCardsCollection values={creations} href={"CollectionDetails"} typ="collection" />
             </Tab>
           </Tabs>
           {/* <div className="spacer-60" />

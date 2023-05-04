@@ -5,13 +5,28 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 export default function MyCardsCollection(props) {
+
+  let get_href = val => {
+    let href = props.href;
+    
+    if(props?.typ == "collection" && val?.address && val?.chain)
+        href += `?address=${val?.address}&chain=${val?.chain}`;
+
+    if(props?.typ === "nft" && val?.collection && val?.token_id && val?.chain)
+        href += `?collection=${val?.collection}&token_id=${val?.token_id}&chain=${val?.chain}`;
+
+    return href;
+  }
+  
   return (
     <Row xs={1} md={2} lg={3} xl={4} className="g-4">
+        {console.log("Href", props.href)}
         {/* {Array.from({ length: 18 }).map((_, idx) => ( */}
         {props?.values?.map(val =>
             <Col>   
-                <MyCard href={props.href} title={val.title} image={val.image} 
-                  price={val.price} curr_tid={val.curr_tid} max_tid={val.max_tid} typ={val.typ} />
+                <MyCard href={get_href(val)} 
+                        name={val?.metadata?.name} image={val?.metadata?.image} price={val.price} current_supply={val.current_supply} 
+                        max_supply={val.max_supply} typ={props.typ} address={val.address} chain={val.chain} />
             </Col>
         )}
     </Row>

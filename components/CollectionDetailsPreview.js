@@ -1,17 +1,25 @@
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Image from 'next/image';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function CollectionDetailsPreview(props) {
     return (
         <div>
-            <img className="coll_prw_img" src="/preview.jpg" />
+            {console.log("DNG props", props)}
+            <Image width={612} height={612} style={{height: "612px"}} className="coll_prw_img" src={props?.loading ? "/Loading.gif" : props?.image} />
             <div className="spacer-30" />
             <div style={{justifyContent: "center", display: "grid"}}>
-                <a className='my_btn_main' id="variations_btn" href="#!">Variations</a>
+                <a className='my_btn_main' id="variations_btn" href="#!" 
+                    style={props?.loading ? {pointerEvents: "none", backgroundColor: "#D3D3D7"} : {}}>
+                    {(props?.loading) ? <><FaSpinner className="spinner" />&nbsp;&nbsp;Loading...</> : <>Variations</>}
+                </a>
                 <div className="spacer-40" />
-                <h6 className="index_title" style={{fontSize: "16px"}}>Properties</h6>
+                {/* TOADD: Properties
+                <h6 className="index_title" style={{fontSize: "16px"}}>Properties</h6> */}
             </div>
+            {/* TOADD: Properties
             <Row xs={1} sm={2} md={3} className="g-4" style={{maxWidth: "612px"}}>
                 <Col xs={12} sm={6} md={4} style={{paddingLeft: "4px", paddingRight: "4px"}}>
                     <Card>
@@ -80,6 +88,7 @@ export default function CollectionDetailsPreview(props) {
                     </Card>
                 </Col>
             </Row>
+            */}
         </div>
     )
 }

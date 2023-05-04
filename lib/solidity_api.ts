@@ -29,30 +29,42 @@ export const create_collection = async (
       factory_abi,
       signer
     );
-  
+      
+    console.log("DNG Collection!!!", collection, "Price", collection.price.toString(), "MAX SUPPLY", collection.max_supply, "ETHERS PARSE UNITS",
+                ethers.utils.parseUnits(collection.price.toString(), 'ether'), "COLLECTION METADATA", collection.metadata);
+    // return;
     // Call the 'deploy' function on the factory contract
-    const deployTx = await factoryContract.deploy(collection.metadata, ethers.utils.parseUnits(collection.price.toString(), 'ether'), collection.max_supply);
+    const deployTx = await factoryContract.deploy(collection.metadata, collection.max_supply, 
+                                                  ethers.utils.parseUnits(collection.price.toString(), 'ether'));
     await deployTx.wait();
     await fetch(cors_fixer + "https://nftm-indexer-s5knoljafq-ey.a.run.app/");
   };
 
-  export const mint_nft = async (window: any) => {
+  export const mint_nft = async (
+      collection_address: string,
+      price: number,
+      window: any
+    ) => {
     let rpc_url = rpc_urls["bsc_testnet"];
     let provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    let temp_coll_address = "0x6221bFe5a1dd8b0071049690c6f7840BAea45D49";
     // let temp_coll_address = "0x95CeA9698BcdaC246e7342211E870cF62Abb6b34";
     const factoryContract = new ethers.Contract(
-      temp_coll_address,
+      collection_address,
       collection_abi,
       signer
     );
-    const deployTx = await factoryContract.mint({ value:  ethers.utils.parseUnits("0.1"), gasLimit: 1000000, nonce: undefined});
+    console.log("DNG Price", price, price.toString()) 
+    // return;
+    let price_string;
+    if(price < 0.000000001) price_string = price.toFixed(20).toString(); else price_string = price.toString();
+    const deployTx = await factoryContract.mint({ value:  ethers.utils.parseUnits(price_string, "ether")});
     // const deployTx = await factoryContract.mint({ value:  ethers.utils.parseUnits("0.1"), gasLimit: Math.ceil(100000 * 1.1)});
     // const deployTx = await factoryContract.mint({ value:  ethers.utils.parseUnits("0.1"), gasLimit: 300000, nonce: undefined});
     // const deployTx = await factoryContract.mint({ value:  ethers.utils.parseUnits("0.1")}, {gasLimit: 300000, nonce: undefined});
     // const deployTx = await factoryContract.mint({ value:  });
     await deployTx.wait();
+    await fetch(cors_fixer + "https://nftm-indexer-s5knoljafq-ey.a.run.app/");
   }
 
 // export let create_collection = async (c:Collection) => {

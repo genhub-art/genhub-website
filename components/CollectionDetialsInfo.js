@@ -20,6 +20,8 @@ import Link from 'next/link';
 import { Form } from 'react-bootstrap';
 import MyCard from './MyCard';
 import { mint_nft } from "../lib/solidity_api";
+import { add_back_youtube_videos, save_youtube_videos } from '../lib/utils';
+import DOMPurify from 'dompurify';
 // import { AiFillCheckCircle } from "react-icons/fa";
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {	
 	ssr: false,
@@ -69,7 +71,7 @@ const modules = {
   ]
 
 export default function CollectionDetailsInfo(props) {
-
+    console.log("CollectionDetailsInfo", props);
     const refs = {
         ref_copy_1: useRef(null),
         ref_copy_2: useRef(null),
@@ -99,22 +101,33 @@ export default function CollectionDetailsInfo(props) {
         refs[`ref_copy_${nr}`].current.text = "Copy";
     }
 
+    let process_description = _ => {
+        let [src, yt_videos] = save_youtube_videos(props?.collection?.metadata?.description);
+        return add_back_youtube_videos(DOMPurify.sanitize(src, { USE_PROFILES: { html: true }}).replace("<a", '<a target="_blank"'), yt_videos);
+    }
+
     return (
         <>
-            <h2 className="details_title">Collection</h2>
+            <h2 className="details_title">{props?.collection?.metadata?.name}</h2>
             
-            <p className="details_p">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            {/* <p className="details_p">{props?.collection?.metadata?.description}</p> */}
             
-            <div className="progressLabel" style={{color: "#6a1b9a", marginBottom: "5px"}}><b>{props.coll.get_current_tid} / {props.coll.get_max_tid} minted</b></div>
-            <ProgressBar completed={parseInt(props.coll.get_current_tid) / parseInt(props.coll.get_max_tid) * 100} borderRadius={0} labelAlignment={"outside"} customLabel={props.coll.get_current_tid + " / " + props.coll.get_max_tid + " minted"} labelColor={"black"} isLabelVisible={false} labelSize={"14px"} height={"5px"} width={"50%"} />
+            {((props?.collection?.metadata?.description || "").charAt(0) === '<')
+                ? <div className='details_p' dangerouslySetInnerHTML={{__html: process_description()}} /> 
+                : <p className="details_p">{props?.collection?.metadata?.description}</p>
+            }
+
+            <div className="progressLabel" style={{color: "#6a1b9a", marginBottom: "5px"}}><b>{props?.collection?.current_supply} / {props?.collection?.max_supply} minted</b></div>
+            <ProgressBar completed={parseInt(props?.collection?.current_supply) / parseInt(props?.collection?.max_supply) * 100} borderRadius={0} labelAlignment={"outside"} customLabel={props?.collection?.current_supply + " / " + props?.collection?.max_supply + " minted"} labelColor={"black"} isLabelVisible={false} labelSize={"14px"} height={"5px"} width={"50%"} />
             <div className='spacer-30' />
             
+            {/* TOADD: Funding Goal
             <h6 className="index_title" style={{fontSize: "14px"}}>Funding Goal</h6>
             <div className='spacer-10' />
             
-            <div className="progressLabel" style={{color: "#6a1b9a", marginBottom: "5px"}}><b>{props.coll.get_mutez_earned} / {props.coll.get_mutez_goal} ꜩ earned</b></div>
-            <ProgressBar completed={parseFloat(props.coll.get_mutez_earned) / parseFloat(props.coll.get_mutez_goal) * 100} borderRadius={0} labelAlignment={"outside"} customLabel={props.coll.get_mutez_earned + " / " + props.coll.get_mutez_goal + "ꜩ earned"} labelColor={"black"} isLabelVisible={false} labelSize={"14px"} height={"5px"} width={"50%"} /> 
-            <div className='spacer-10' />
+            <div className="progressLabel" style={{color: "#6a1b9a", marginBottom: "5px"}}><b>{props?.collection.get_mutez_earned} / {props?.collection.get_mutez_goal} ꜩ earned</b></div>
+            <ProgressBar completed={parseFloat(props?.collection.get_mutez_earned) / parseFloat(props?.collection.get_mutez_goal) * 100} borderRadius={0} labelAlignment={"outside"} customLabel={props?.collection.get_mutez_earned + " / " + props?.collection.get_mutez_goal + "ꜩ earned"} labelColor={"black"} isLabelVisible={false} labelSize={"14px"} height={"5px"} width={"50%"} /> 
+            <div className='spacer-10' /> */}
             
             {/* <FontAwesomeIcon icon={faCoffee} />
             <FontAwesomeIcon icon={faCircleCheck} /> */}
@@ -122,13 +135,13 @@ export default function CollectionDetailsInfo(props) {
             {/* <FontAwesomeIcon icon={Icons.faCopyright} size="6x" /> */}
             {/* <AiFillCheckCircle /> */}
             {/* <FontAwesomeIcon icon="fa-solid fa-circle-check" /> */}
-            {/* <FontAwesomeIcon icon={solid("circle-check")} /> */}
-            <div className="goalMessage"><b><FontAwesomeIcon icon={faCircleCheck} /> Goal met!</b></div>
+            {/* <FontAwesomeIcon icon={solid("circle-check")} /> 
+            <div className="goalMessage"><b><FontAwesomeIcon icon={faCircleCheck} /> Goal met!</b></div>*/}
             
+            {/* TOADD: Revenue Share Smart Contract
             <h6 style={{marginTop: "20px"}}>
                 <a dataBsToggle="tooltip" title="Discover the Revenue Share Smart Contract" target={"_blank"} href={`https://www.google.com`} className="aTag">Revenue Share Smart Contract</a>
             </h6>
-            {/* <div className='spacer-10' /> */}
             
             <p className="total_rev_shared_p">Collection Total Revenue Shared: 0 ꜩ</p>
             <div className='spacer-10' />
@@ -139,7 +152,7 @@ export default function CollectionDetailsInfo(props) {
             <a className='my_btn_main' id="fund_rev_share_btn" href="#!">Fund Rev Share</a>&emsp;
             <input type="text" name="item_title" style={{height: "44px", width: "114px", textAlign: "center", marginTop: "10px"}} 
             placeholder="2.5 (ꜩ)" />
-            <div className='spacer-30' />
+            <div className='spacer-30' />*/}
             
             <h6 className="index_title" style={{fontSize: "14px"}}>Author</h6>
             <div className='spacer-10' />
@@ -162,11 +175,16 @@ export default function CollectionDetailsInfo(props) {
             <Link target={"_blank"} title={iframe_url} href="Profile" className="aTag" id="detATag">{shortening_str(iframe_url, 30, 0)}</Link>&nbsp;&nbsp;
             <a id="btn_copy" title="Copy Text" onClick={() => {navigator.clipboard.writeText(iframe_url); copy(3);}} href="#!" ref={refs.ref_copy_3}>Copy</a>
             <div className='spacer-20' />
-            <a className='my_btn_main' id="edit_btn" href="#!" onClick={() => mint_nft(window)}>Mint</a>
+            <a className='my_btn_main' id="edit_btn" href="#!" 
+                onClick={() => mint_nft(props?.collection.address, props?.collection?.price, window)}>
+                Mint {props?.collection.price}
+            </a>
+            {/* TOADD: Edit Collection 
             &nbsp;&nbsp;&nbsp;
-            <Link className='my_btn_main' id="edit_btn" href="EditCollection">Edit</Link>
+            <Link className='my_btn_main' id="edit_btn" href="EditCollection">Edit</Link> */}
             <div className='spacer-20' />
 
+            {/* TOADD: Add NFT 
             {(add_nft)
                 ? <a href='#!' className="my_btn_main" id="add_nft" onClick={() => {setAddNFT(false);}}>
                     Add NFT&nbsp;&nbsp;
@@ -176,7 +194,7 @@ export default function CollectionDetailsInfo(props) {
                     Add NFT&nbsp;&nbsp;
                     <Image src="/angle-down.svg" width={15} height={15} style={{position: 'relative', top: "-1px"}} />
                   </a>
-            }
+            } */}
             {add_nft &&
                 <Form>
                     <div className='spacer-30' />

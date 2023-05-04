@@ -10,7 +10,7 @@ import CollCreationForm from '../components/CollectionCreationForm';
 import CollCreationPrew from '../components/CollectionCreationPreview';
 import { useState } from 'react';
 
-export default function Home(props) {
+export default function CreateCollection(props) {
     
   const [preview_props, setPreviewProps] = useState({
     image: "/preview.jpg",

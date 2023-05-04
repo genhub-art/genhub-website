@@ -20,9 +20,8 @@ export default function MyOwlCarousel(props) {
             <h1 className="owl_carousel_title">Hot Collections</h1>
             <div className="spacer-60"></div>
             <OwlCarousel className='owl-theme' responsive={responsive_obj} loop items={4} margin={20} nav>
-                {Array.from(Array(12).keys()).map(i => 
-                    <MyOwlCarouselItem title={`Owl Carousel Item ${i + 1}`} 
-                     image={"/preview.jpg"} />
+                {props?.collections?.map(collection => 
+                    <MyOwlCarouselItem name={collection?.metadata?.name} image={collection?.metadata?.image} />
                 )}
             </OwlCarousel>
         </>

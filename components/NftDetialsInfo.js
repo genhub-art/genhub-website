@@ -21,11 +21,11 @@ import Link from 'next/link';
 
 export default function NftDetialsInfo(props) {
 
+    console.log("DNG NFT", props?.nft);
+
     const refs = {
         ref_copy_1: useRef(null),
     }
-
-    const [pub_key, setPubKey] = useState("tz1h7Tek85LYJPBpG8e5xqCZPAvSMu97tenm");
 
     const sleep = (delay) => {
         try{
@@ -34,7 +34,7 @@ export default function NftDetialsInfo(props) {
         catch(_){}
     }
     
-    let shortening_str = (str, sz_l, sz_r) => (str.substring(0, sz_l) + "..." + str.substring(str.length - sz_r, str.length));
+    let shortening_str = (str, sz_l, sz_r) => (str?.substring(0, sz_l) + "..." + str?.substring(str.length - sz_r, str.length));
 
     let copy = async nr => {
         // console.log("Ref", refs[`ref_copy_${nr}`]);
@@ -45,26 +45,35 @@ export default function NftDetialsInfo(props) {
 
     return (
         <>
-            <h2 className="details_title">Collection</h2>
+            <h2 className="details_title">{props?.nft?.metadata?.name}</h2>
             <div className='spacer-30' />
 
             <h6 className="index_title" style={{fontSize: "14px"}}>Owner</h6>
-            <Link target={"_blank"} title={pub_key} href="Profile" className="aTag" id="detATag">{shortening_str(pub_key, 12, 12)}</Link>&nbsp;&nbsp;
-            <a id="btn_copy" title="Copy Text" onClick={() => navigator.clipboard.writeText(pub_key)} href="#!" ref={refs.ref_copy_1}>Copy</a>
+            <Link target={"_blank"} title={props?.nft?.owner} href={`Profile?account=${props?.nft?.owner}&account_typ=solidity_pkh`}
+                    className="aTag" id="detATag">
+                {shortening_str(props?.nft?.owner, 12, 12)}
+            </Link>&nbsp;&nbsp;
+            <a id="btn_copy" title="Copy Text" onClick={() => navigator.clipboard.writeText(props?.nft?.owner)} href="#!" 
+                ref={refs.ref_copy_1}>Copy</a>
             <div className='spacer-30' />
             
             <h6 className="index_title" style={{fontSize: "14px"}}>Collection</h6>
-            <Link target={"_blank"} href="CollectionDetails" className="aTag" id="detATag">Collection</Link>
+            <Link target={"_blank"} href={`CollectionDetails?address=${props?.collection?.address}&chain=${props?.collection?.chain}`} 
+                className="aTag" id="detATag">
+                {props?.collection?.metadata?.name}
+            </Link>
             <div className='spacer-30' />
             
-            <h6 className="index_title" style={{fontSize: "14px"}}>Token Id:&nbsp;&nbsp;3</h6>  
+            <h6 className="index_title" style={{fontSize: "14px"}}>Token Id:&nbsp;&nbsp;{props?.nft?.token_id}</h6>  
             <div className='spacer-30' />
 
+            {/* TOADD: Add Revenue Share 
             <h6 className="index_title" style={{fontSize: "14px"}}>Revenue Share for this NFT</h6>
             <div className='spacer-10' />
             <a className='my_btn_main' id="claim_rev_btn" href="#!">Claim 0.693 ꜩ</a>&emsp;
-            <div className='spacer-30' />
+            <div className='spacer-30' /> */}
             
+            {/* TOADD: Actions 
             <h6 className="index_title" style={{fontSize: "14px"}}>Actions</h6>
             <div className='spacer-10' />
             
@@ -72,7 +81,7 @@ export default function NftDetialsInfo(props) {
             <input type="text" name="item_title" style={{height: "44px", width: "100px", textAlign: "center"}} placeholder="2.5 (ꜩ)" />
             <div className='spacer-20' />
             
-            <a className='my_btn_main' id="trigger_btn" href="EditCollection">Trigger 1 ꜩ</a>  
+            <a className='my_btn_main' id="trigger_btn" href="EditCollection">Trigger 1 ꜩ</a>   */}
         </>
     )
 }
