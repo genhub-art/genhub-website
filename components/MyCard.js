@@ -7,7 +7,6 @@ import { mint_nft } from '../lib/solidity_api';
 export default function MyCard(props) {
   return (
       <Card className='cardItem'>
-        {console.log("DNG Href", props.href, props.price, typeof props.price)}
         <Link className="cardA" href={props.href}>
           <Image /*variant="top"*/ height={264} width={264} src={props.image} className="cardImg" 
                 alt={props.typ === "nft" ? "Nft" : "Collection"} />
@@ -26,7 +25,7 @@ export default function MyCard(props) {
               {props.typ !== "no buttons" && 
                 <>
                   <Button onClick={() => mint_nft(props.address, props.price, window)} className="cardButton" variant="primary">Mint</Button>
-                  <Button className="cardButton" variant="primary">Edit</Button>
+                  {/* TOADD: Edit button <Button className="cardButton" variant="primary">Edit</Button> */}
                   <a href={props.href} className="cardButton" variant="primary">View</a>
                 </>
               }

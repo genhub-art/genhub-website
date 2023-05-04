@@ -48,7 +48,6 @@ export default function CollectionDetails(props) {
 
         if(!solidity_pkh) return;
         // console.log("COLL DET SOLIDITY PKH", solidity_pkh);
-        console.log("DNG COLL DET NFTS", nfts);
         setMyNFTS(nfts.filter(nft => nft.owner === solidity_pkh));
         // console.log("MY NFTS", nfts.filter(nft => nft.owner === solidity_pkh));
     }, [nfts, solidity_pkh]);
@@ -67,16 +66,20 @@ export default function CollectionDetails(props) {
                 </Col>
             </Row>
             <div className="spacer-60" /><div className="spacer-30" />
-            <Row>
-                <Tabs id="controlled-tab-example" activeKey={tabs_key} onSelect={(k) => setTabsKey(k)} className="mb-3">
-                    <Tab tabClassName="tabText" eventKey="all" title="Collection NFTs">
-                        <MyCardsCollection href={"NFTDetails"} values={nfts} typ="nft" />
-                    </Tab>
-                    <Tab tabClassName="tabText" eventKey="yours" title="You Own">
-                        <MyCardsCollection href={"NFTDetails"} values={my_nfts} typ="nft" />
-                    </Tab>
-                </Tabs>
-            </Row>
+            {/* Maybe TOADD: Not show the tabs if there are no NFTs minted in that collection {nfts.length > 0 && */}
+                <Row>
+                    <Tabs id="controlled-tab-example" activeKey={tabs_key} onSelect={(k) => setTabsKey(k)} className="mb-3">
+                        <Tab tabClassName="tabText" eventKey="all" title="Collection NFTs">
+                            <MyCardsCollection href={"NFTDetails"} values={nfts} typ="nft" />
+                        </Tab>
+                        {/*  Maybe TOADD: Not show the You Own tab if you don't own an NFT in that collection {my_nfts.length > 0 && */}
+                            <Tab tabClassName="tabText" eventKey="yours" title="You Own">
+                                <MyCardsCollection href={"NFTDetails"} values={my_nfts} typ="nft" />
+                            </Tab>
+                        {/* } */}
+                    </Tabs>
+                </Row>
+            {/* } */}
             <div className="spacer-60" /><div className="spacer-30" />
         </Container>
     )

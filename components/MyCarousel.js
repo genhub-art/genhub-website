@@ -11,7 +11,9 @@ export default function MyCarousel(props) {
                 {
                     props.nfts.map(nft => 
                         <Carousel.Item>
-                            <Link href={"NFTDetails?id=" + nft?.id + "&address=" + nft?.address}><Image height={636} width={636} className="d-block w-100" src={nft?.metadata?.image} /></Link>
+                            <Link href={"NFTDetails?token_id=" + nft?.token_id + "&collection=" + nft?.collection + "&chain=" + nft?.chain}>
+                                <Image height={636} width={636} className="d-block w-100" src={nft?.metadata?.image} />
+                            </Link>
                             <Carousel.Caption bsPrefix="carousel-caption my-carousel-caption">
                                 <Link href={"NFTDetails?id=" + nft?.id + "&address=" + nft?.address}><span className="nft_pic_title"  style={{fontFamily: "Roboto Slab"}}>{nft?.metadata?.name} - {(nft?.price) && <>{(nft?.price / 1000000)} ꜩ</>}</span></Link>
                                 {/* <h3 style={{backgroundColor: ""}}>{collection.get_title}</h3> */}

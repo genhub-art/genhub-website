@@ -57,7 +57,6 @@ export default function AllCollections(props) {
     fetch();
 
   }, [])
-  console.log("DNG Collections", collections);
   return (
     <div>
         <Title title="Collections" />

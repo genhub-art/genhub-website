@@ -3,17 +3,39 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Image from 'next/image';
 import { FaSpinner } from 'react-icons/fa';
+import { v4 as uuidv4 } from 'uuid';
+import { useState, useEffect } from 'react';
 
 export default function CollectionDetailsPreview(props) {
+
+    const [iframe_url, setIframeUrl] = useState("");
+    const [use_iframe, setUseIframe] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    let generate_variation = _ => {
+        setLoading(true);
+        setUseIframe(true);
+        setIframeUrl(props?.generator_url + `/?gxhash=${uuidv4()}`);
+    }
+
+    useEffect(() => {
+        
+        setLoading(false);
+
+    }, [iframe_url]);
+
     return (
         <div>
-            {console.log("DNG props", props)}
-            <Image width={612} height={612} style={{height: "612px"}} className="coll_prw_img" src={props?.loading ? "/Loading.gif" : props?.image} />
+            {use_iframe 
+                ? <iframe width={612} height={612} style={{height: "612px"}} className="coll_prw_img" src={iframe_url} />
+                : <Image width={612} height={612} style={{height: "612px"}} className="coll_prw_img" 
+                    src={props?.loading ? "/Loading.gif" : props?.image} />  
+            }
             <div className="spacer-30" />
             <div style={{justifyContent: "center", display: "grid"}}>
-                <a className='my_btn_main' id="variations_btn" href="#!" 
-                    style={props?.loading ? {pointerEvents: "none", backgroundColor: "#D3D3D7"} : {}}>
-                    {(props?.loading) ? <><FaSpinner className="spinner" />&nbsp;&nbsp;Loading...</> : <>Variations</>}
+                <a className='my_btn_main' id="variations_btn" href="#!" onClick={() => generate_variation()} 
+                    style={(props?.loading || loading) ? {pointerEvents: "none", backgroundColor: "#D3D3D7"} : {}}>
+                    {(props?.loading || loading) ? <><FaSpinner className="spinner" />&nbsp;&nbsp;Loading...</> : <>Variations</>}
                 </a>
                 <div className="spacer-40" />
                 {/* TOADD: Properties

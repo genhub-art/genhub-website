@@ -21,8 +21,6 @@ import Link from 'next/link';
 
 export default function NftDetialsInfo(props) {
 
-    console.log("DNG NFT", props?.nft);
-
     const refs = {
         ref_copy_1: useRef(null),
     }

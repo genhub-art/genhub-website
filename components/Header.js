@@ -214,13 +214,13 @@ export default function Header(props) {
 
                         <Link className="menu_element navbar" href="/">Home</Link>
                         <Link className="menu_element navbar" href="AllCollections">Collections</Link>
-                        <Link className="menu_element navbar" href="Marketplace">Marketplace</Link>
+                        {/* TOADD: Marketplace <Link className="menu_element navbar" href="Marketplace">Marketplace</Link> */}
                         {(beacon_pkh || solidity_pkh || aleph0_pkh) && 
                             <Link className="menu_element navbar" href="Profile?account=My Account">Profile</Link>
                         }
                         <Link className="menu_element navbar" href="CreateCollection">Create</Link>
                         <Nav.Link href="https://docs.lay3rz.xyz/" target="_blank" bsPrefix="menu_element navbar">Docs</Nav.Link>
-                        <Nav.Link href="#!" bsPrefix="menu_element navbar" onClick={() => setBridgeModal(true)}>Bridge</Nav.Link>
+                        {/* TOADD: Bridge <Nav.Link href="#!" bsPrefix="menu_element navbar" onClick={() => setBridgeModal(true)}>Bridge</Nav.Link> */}
                         <Nav.Link href="https://twitter.com/LAY3RZ_XYZ" target="_blank" bsPrefix="menu_element navbar"><img className='opacity_hover' src='512x512-logo-27157.png' style={{height: "20px"}}></img></Nav.Link>
                         <Nav.Link href="https://discord.com/invite/f9eaNt4qX4" target="_blank" bsPrefix="menu_element navbar"><img className='opacity_hover' src='discord-logo-png-7616.png' style={{height: "25px"}}></img></Nav.Link>
                         <NavDropdown title={network === KEYWORDS.MAINNET ? "Mainnet" : "Testnet"} id="basic-nav-dropdown" bsPrefix="menu_element navbar">

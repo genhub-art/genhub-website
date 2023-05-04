@@ -30,8 +30,6 @@ export const create_collection = async (
       signer
     );
       
-    console.log("DNG Collection!!!", collection, "Price", collection.price.toString(), "MAX SUPPLY", collection.max_supply, "ETHERS PARSE UNITS",
-                ethers.utils.parseUnits(collection.price.toString(), 'ether'), "COLLECTION METADATA", collection.metadata);
     // return;
     // Call the 'deploy' function on the factory contract
     const deployTx = await factoryContract.deploy(collection.metadata, collection.max_supply, 
@@ -54,7 +52,6 @@ export const create_collection = async (
       collection_abi,
       signer
     );
-    console.log("DNG Price", price, price.toString()) 
     // return;
     let price_string;
     if(price < 0.000000001) price_string = price.toFixed(20).toString(); else price_string = price.toString();

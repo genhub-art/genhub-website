@@ -31,7 +31,6 @@ export type NFT = {
         if (collection_addresses.length > 0) url.searchParams.append("collection", "in.(" + collection_addresses.join(",") + ")")
         if (token_ids.length > 0) url.searchParams.append("token_id", "in.(" + token_ids.join(",") + ")")
         if (owners.length > 0) url.searchParams.append("owner", "in.(" + owners.join(",") + ")")
-        console.log("DNG nfts URL Href", url.href);
         return (await http_get(url.href)).map((nft: NFT) =>{
           nft.metadata.animation_url = ipfs_to_https(nft.metadata.animation_url);
           nft.metadata.external_url = ipfs_to_https(nft.metadata.external_url);

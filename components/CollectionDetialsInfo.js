@@ -154,6 +154,7 @@ export default function CollectionDetailsInfo(props) {
             placeholder="2.5 (ꜩ)" />
             <div className='spacer-30' />*/}
             
+            {/* TOADD: Author and Embed 
             <h6 className="index_title" style={{fontSize: "14px"}}>Author</h6>
             <div className='spacer-10' />
             
@@ -174,10 +175,10 @@ export default function CollectionDetailsInfo(props) {
             <div className='spacer-5' />
             <Link target={"_blank"} title={iframe_url} href="Profile" className="aTag" id="detATag">{shortening_str(iframe_url, 30, 0)}</Link>&nbsp;&nbsp;
             <a id="btn_copy" title="Copy Text" onClick={() => {navigator.clipboard.writeText(iframe_url); copy(3);}} href="#!" ref={refs.ref_copy_3}>Copy</a>
-            <div className='spacer-20' />
+            <div className='spacer-20' /> */}
             <a className='my_btn_main' id="edit_btn" href="#!" 
                 onClick={() => mint_nft(props?.collection.address, props?.collection?.price, window)}>
-                Mint {props?.collection.price}
+                Mint {props?.collection?.price}
             </a>
             {/* TOADD: Edit Collection 
             &nbsp;&nbsp;&nbsp;

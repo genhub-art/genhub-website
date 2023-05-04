@@ -87,7 +87,7 @@ export default function CollectionCreationForm(props) {
     const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.MAINNET);
     const [chain, setChain] = useState("Choose a chain");
 
-    let not_ready_to_mint = _ => (!title || !description || !price || !max_supply || !generator_src || chain === "Choose a chain");
+    let not_ready_to_mint = _ => (!title || !description || !price || !max_supply || !generator_src/* TOADD: chain || chain === "Choose a chain"*/);
 
     let handle_upload = _ => {
         console.log("YES", inputRef);
@@ -178,10 +178,12 @@ export default function CollectionCreationForm(props) {
             <div className="spacer-40" />
 
 
+            {/* TOADD: Sale Start Time, Set Funding Goal, Enabled, Chose Chain and Network
+            
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>Sale Start Time</Form.Label>&nbsp;&nbsp;
                 <DateTimePicker onChange={setDateTime} value={date_time} />
-                {/* <DateTimeField /> */}
+                {/* <DateTimeField />
             </Form.Group>
             <div className="spacer-30" />
 
@@ -212,8 +214,8 @@ export default function CollectionCreationForm(props) {
             
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>Enabled</Form.Label>&nbsp;&nbsp;
-                <Form.Check inline checked={checked} type="checkbox" id="my_checkbox" /*bsPrefix="form-check my_checkbox_class"*/ onChange={x => {setChecked(!checked);}} /*label="Enabled"*/ />
-                {/* <Form.Control id="my_checkbox" type="checkbox" onChange={x => {setChecked(!checked);}} /> */}
+                <Form.Check inline checked={checked} type="checkbox" id="my_checkbox" /*bsPrefix="form-check my_checkbox_class" onChange={x => {setChecked(!checked);}} /*label="Enabled" />
+                {/* <Form.Control id="my_checkbox" type="checkbox" onChange={x => {setChecked(!checked);}} />
             </Form.Group>    
             <div className="spacer-30" />
             <DropdownButton id="chose_chain_btn" bsPrefix="my_btn_main custom-dropdown-menu" className="d-inline-block" title={chain}>
@@ -230,7 +232,7 @@ export default function CollectionCreationForm(props) {
                     {network === "mainnet" ? "Testnet" : "Mainnet"}
                 </Dropdown.Item>
             </DropdownButton>
-            <div className="spacer-30" />
+            <div className="spacer-30" /> */}
             <Button id="create_coll_btn" bsPrefix="my_btn_main" onClick={async () => 
              create_collection({chain: "bsc_testnet", address: "", metadata: await call_upload_metadata({name: title, description, 
              image: generator_ipfs_uri + "/preview.png", external_url, generator_url: generator_ipfs_uri}), price, max_supply, 
