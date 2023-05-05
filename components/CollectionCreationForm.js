@@ -123,7 +123,7 @@ export default function CollectionCreationForm(props) {
             {/* {console.log("Network KEYWORDS", KEYWORDS.NETWORK, KEYWORDS.MAINNET, KEYWORDS.TESTNET)} */}
             <div className="spacer-60" />
             {console.log("Generator", generator_ipfs_uri, generator_src)}
-            <a dataBsToggle="tooltip" title="Instructions on how to create a collection" target={"_blank"} href={`https://docs.lay3rz.xyz/launch-your-collection`} className="instructionsATag">Instructions</a>
+            <a dataBsToggle="tooltip" title="Instructions on how to create a collection" target={"_blank"} rel={"noreferrer"} href={`https://docs.lay3rz.xyz/launch-your-collection`} className="instructionsATag">Instructions</a>
             <div className="spacer-40" />
             <Form.Group>  
                 

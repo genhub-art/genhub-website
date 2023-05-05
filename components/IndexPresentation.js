@@ -15,7 +15,7 @@ export default function IndexPresentation() {
             <p>Join us on:</p>
             <div className="spacer-single"></div>
             <div>
-                <a href="https://twitter.com/LAY3RZ_XYZ" target={"_blank"}><img className='opacity_hover' src='512x512-logo-27157.png' style={{height: "40px"}}></img></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/f9eaNt4qX4" target={"_blank"}><img className='opacity_hover' src='discord-logo-png-7616.png' style={{height: "50px"}}></img></a>
+                <a href="https://twitter.com/LAY3RZ_XYZ" rel={"noreferrer"} target={"_blank"}><img className='opacity_hover' src='512x512-logo-27157.png' style={{height: "40px"}}></img></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://discord.gg/f9eaNt4qX4" rel={"noreferrer"} target={"_blank"}><img className='opacity_hover' src='discord-logo-png-7616.png' style={{height: "50px"}}></img></a>
             </div>                              
         </div>
     );

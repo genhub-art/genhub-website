@@ -9,8 +9,8 @@ export default function MyCarousel(props) {
                 nextIcon={(props.nfts.length > 0) && <span aria-hidden="true" className="carousel-control-next-icon" style={{backgroundColor: "black"}} />}
                 prevIcon={(props.nfts.length > 0) && <span aria-hidden="true" className="carousel-control-prev-icon" style={{backgroundColor: "black"}} />} >
                 {
-                    props.nfts.map(nft => 
-                        <Carousel.Item>
+                    props.nfts.map((nft, i) => 
+                        <Carousel.Item key={`${i}`}>
                             <Link href={"NFTDetails?token_id=" + nft?.token_id + "&collection=" + nft?.collection + "&chain=" + nft?.chain}>
                                 <Image height={636} width={636} className="d-block w-100" src={nft?.metadata?.image} />
                             </Link>

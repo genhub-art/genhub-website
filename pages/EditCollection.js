@@ -95,7 +95,7 @@ export default function EditCollection(props) {
                         {(add_whitelists.length > 0) && <div className="spacer-5"></div>}
                         {
                             add_whitelists.map((el, idx) =>
-                                <a href="#!" dataBsToggle="tooltip" title={el}><div className="alert alert-dark align-items-center" role="alert" style={{padding: "5px", paddingRight: "23px", width: "fit-content", marginTop: "15px", marginRight: "5px", marginBottom: "0", display: "inline-block"}}>
+                                <a key={`${idx}`} href="#!" dataBsToggle="tooltip" title={el}><div className="alert alert-dark align-items-center" role="alert" style={{padding: "5px", paddingRight: "23px", width: "fit-content", marginTop: "15px", marginRight: "5px", marginBottom: "0", display: "inline-block"}}>
                                     <div>
                                         {el.substring(0, 4) + "..." + el.substring(el.length - 4, el.length)} 
                                     </div>
@@ -116,7 +116,7 @@ export default function EditCollection(props) {
                         {(rmv_whitelists.length > 0) && <div className="spacer-5"></div>}
                         {
                             rmv_whitelists.map((el, idx) =>
-                                <a href="#!" dataBsToggle="tooltip" title={el}><div className="alert alert-dark align-items-center" role="alert" style={{padding: "5px", paddingRight: "23px", width: "fit-content", marginTop: "15px", marginRight: "5px", marginBottom: "0", display: "inline-block"}}>
+                                <a key={`${idx}`} href="#!" dataBsToggle="tooltip" title={el}><div className="alert alert-dark align-items-center" role="alert" style={{padding: "5px", paddingRight: "23px", width: "fit-content", marginTop: "15px", marginRight: "5px", marginBottom: "0", display: "inline-block"}}>
                                     <div>
                                         {el.substring(0, 4) + "..." + el.substring(el.length - 4, el.length)} 
                                     </div>
@@ -127,7 +127,7 @@ export default function EditCollection(props) {
                     
                     <div className="spacer-30" />
                     
-                    <a target={"_blank"} href={`https://docs.lay3rz.xyz/launch-your-collection`} className="instructionsATag">See Whitelist</a>    
+                    <a target={"_blank"} rel={"noreferrer"} href={`https://docs.lay3rz.xyz/launch-your-collection`} className="instructionsATag">See Whitelist</a>    
                     <div className="spacer-30" />
                     
                     <Form.Control type="button" id="create_coll_btn" bsPrefix="my_btn_main" value="Edit Collection" />
