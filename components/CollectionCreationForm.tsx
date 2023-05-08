@@ -71,24 +71,10 @@ export default function CollectionCreationForm(props: { collection:Collection; h
 
     const inputRef = useRef(null);
     const [collection, setCollection] = useState<Collection>(props.collection)
-    // const [title, setTitle]   = useState("");
-    // const [description, setDescription]     = useState("");
-    // const [external_url, setExternalURL] = useState("");
-    // const [price, setPrice]   = useState(0);
-    // const [max_supply, setMaxSupply] = useState(0);
-    // const [generator_ipfs_uri, setGeneratorIpfsUri] = useState("");
-    // const [generator_src, setGeneratorSrc] = useState("");
-    // const [date_time, setDateTime] = useState(new Date());
-    // const [checked, setChecked] = useState(true);
-    // const [fund_deadline, setFundDeadline] = useState(new Date());
-    // const [fund_goal, setFundGoal] = useState(-1);
-    // const [has_goal, setHasGoal] = useState(false);
     const [uploading_folder, setUploadingFolder] = useState(false);
     const [creating_collection, setCreatingCollection] = useState(false);
     const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.MAINNET);
-    // const [chain, setChain] = useState("Choose a chain");
 
-    // let not_ready_to_mint = _ => (!title || !description || !price || !max_supply || !generator_src/* TOADD: chain || chain === "Choose a chain"*/);
     let not_ready_to_mint = () => (!collection.metadata.name || !collection.metadata.description || !collection.price || !collection.max_supply || !collection.metadata.generator_url/* TOADD: chain || chain === "Choose a chain"*/);
 
     let handle_upload = () => {
