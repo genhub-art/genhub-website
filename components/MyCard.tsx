@@ -20,7 +20,7 @@ export default function MyCard(props: { href:string; collection_or_nft: Collecti
         setInterval(() => {
             try {
                 // @ts-ignore
-                let md = document.getElementById("generator_iframe").contentWindow.metadata()
+                let md = document.getElementById("generator_iframe").contentWindow.postMessage({type: "metadata"}, "*")
                 console.log("md", md)
             } catch (e) {
                 console.log("error", e)
