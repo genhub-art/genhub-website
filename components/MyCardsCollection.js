@@ -24,9 +24,7 @@ export default function MyCardsCollection(props) {
         {/* {Array.from({ length: 18 }).map((_, idx) => ( */}
         {props?.values?.map((val, i) =>
             <Col key={`${i}`}>   
-                <MyCard href={get_href(val)} 
-                        name={val?.metadata?.name} image={val?.metadata?.image} price={val.price} current_supply={val.current_supply} 
-                        max_supply={val.max_supply} typ={props.typ} address={val.address} chain={val.chain} />
+                <MyCard href={get_href(val)} collection_or_nft={val} />
             </Col>
         )}
     </Row>

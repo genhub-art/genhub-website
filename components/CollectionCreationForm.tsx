@@ -18,6 +18,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import useLocalStorage from '../custom_hooks/useLocalStorage';
 import { KEYWORDS } from '../pages/_app';
+import {Collection} from "../lib/blockchainsTS";
 // import { DateTimeField } from 'react-bootstrap-datetimepicker';
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {	
 	ssr: false,
@@ -66,30 +67,31 @@ const modules = {
     'video',
   ]
 
-export default function CollectionCreationForm(props) {
+export default function CollectionCreationForm(props: { collection:Collection; handleCollectionModified: (arg0: Collection) => void; }) {
 
     const inputRef = useRef(null);
- 
-    const [title, setTitle]   = useState("");
-    const [description, setDescription]     = useState("");
-    const [external_url, setExternalURL] = useState("");
-    const [price, setPrice]   = useState(0);
-    const [max_supply, setMaxSupply] = useState(0);
-    const [generator_ipfs_uri, setGeneratorIpfsUri] = useState("");
-    const [generator_src, setGeneratorSrc] = useState("");
-    const [date_time, setDateTime] = useState(new Date());
-    const [checked, setChecked] = useState(true);
-    const [fund_deadline, setFundDeadline] = useState(new Date());
-    const [fund_goal, setFundGoal] = useState(-1);
-    const [has_goal, setHasGoal] = useState(false);
+    const [collection, setCollection] = useState<Collection>(props.collection)
+    // const [title, setTitle]   = useState("");
+    // const [description, setDescription]     = useState("");
+    // const [external_url, setExternalURL] = useState("");
+    // const [price, setPrice]   = useState(0);
+    // const [max_supply, setMaxSupply] = useState(0);
+    // const [generator_ipfs_uri, setGeneratorIpfsUri] = useState("");
+    // const [generator_src, setGeneratorSrc] = useState("");
+    // const [date_time, setDateTime] = useState(new Date());
+    // const [checked, setChecked] = useState(true);
+    // const [fund_deadline, setFundDeadline] = useState(new Date());
+    // const [fund_goal, setFundGoal] = useState(-1);
+    // const [has_goal, setHasGoal] = useState(false);
     const [uploading_folder, setUploadingFolder] = useState(false);
     const [creating_collection, setCreatingCollection] = useState(false);
     const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.MAINNET);
-    const [chain, setChain] = useState("Choose a chain");
+    // const [chain, setChain] = useState("Choose a chain");
 
-    let not_ready_to_mint = _ => (!title || !description || !price || !max_supply || !generator_src/* TOADD: chain || chain === "Choose a chain"*/);
+    // let not_ready_to_mint = _ => (!title || !description || !price || !max_supply || !generator_src/* TOADD: chain || chain === "Choose a chain"*/);
+    let not_ready_to_mint = () => (!collection.metadata.name || !collection.metadata.description || !collection.price || !collection.max_supply || !collection.metadata.generator_url/* TOADD: chain || chain === "Choose a chain"*/);
 
-    let handle_upload = _ => {
+    let handle_upload = () => {
         console.log("YES", inputRef);
         inputRef.current?.click();
     }
@@ -106,23 +108,31 @@ export default function CollectionCreationForm(props) {
 
     let call_upload_generator = e => {
         setUploadingFolder(true);
-        props.setPreviewProps({...props.preview_props, ...{image: "/Loading.gif"}});
         try{
-            upload_generator(e).then(r => {let generator_src = ipfs_to_https(r); setUploadingFolder(false); setGeneratorIpfsUri(r); 
-            setGeneratorSrc(generator_src); props.setPreviewProps({...props.preview_props, ...{image: generator_src + "/preview.png"}});})
+            upload_generator(e).then(r => {
+                let generator_src = ipfs_to_https(r);
+                setUploadingFolder(false);
+                setCollection({...collection, ...{metadata: {...collection.metadata, ...{generator_url: r}}}})
+            });
         }
         catch(err){
             console.log("Err", err);
             setUploadingFolder(false);
         }
     }
-
+    
+    useEffect(() => {
+        props.handleCollectionModified(collection);
+    }, [collection]);
+    
+    // @ts-ignore
     return (
+        // @ts-ignore
         <Form>
             {console.log("Network", network)}
             {/* {console.log("Network KEYWORDS", KEYWORDS.NETWORK, KEYWORDS.MAINNET, KEYWORDS.TESTNET)} */}
             <div className="spacer-60" />
-            {console.log("Generator", generator_ipfs_uri, generator_src)}
+            {/*@ts-ignore*/}
             <a dataBsToggle="tooltip" title="Instructions on how to create a collection" target={"_blank"} rel={"noreferrer"} href={`https://docs.lay3rz.xyz/launch-your-collection`} className="instructionsATag">Instructions</a>
             <div className="spacer-40" />
             <Form.Group>  
@@ -134,6 +144,7 @@ export default function CollectionCreationForm(props) {
                       style={uploading_folder ? {pointerEvents: "none", backgroundColor: "#D3D3D7"} : {}}>
                         {uploading_folder ? <><FaSpinner className="spinner" /> Uploading...</> : <>Browse</>}
                     </Button>
+                    {/*@ts-ignore*/}
                     <input ref={inputRef} type="file" id="upload_file" webkitdirectory="true" mozdirectory="true" onChange={call_upload_generator} style={{display: "none"}} />
                 </div>
             </Form.Group>
@@ -142,14 +153,13 @@ export default function CollectionCreationForm(props) {
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>Title</Form.Label>
                 <Form.Control type="text" name="item_title" id="item_title" bsPrefix="form-control my_form_control" 
-                              placeholder="e.g. 'Crypto Funk" defaultValue="" onChange={e => {setTitle(e.target.value); 
-                              props.setPreviewProps({...props.preview_props, ...{title: e.target.value}});}} />
+                              placeholder="e.g. 'Crypto Funk" defaultValue="" onChange={e => {setCollection({...collection, ...{metadata: {...collection.metadata, ...{name: e.target.value}}}}) }} />
             </Form.Group>
             <div className="spacer-40" />
 
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>Description</Form.Label>
-                <QuillNoSSRWrapper placeholder="e.g. 'This is very limited collection!'" onChange={content => setDescription(content)} 
+                <QuillNoSSRWrapper placeholder="e.g. 'This is very limited collection!'" onChange={content => setCollection({...collection, ...{metadata: {...collection.metadata, ...{description: content}}}})} 
                                    modules={modules} formats={formats} theme="snow" />
             </Form.Group>    
             <div className="spacer-40" />
@@ -157,23 +167,21 @@ export default function CollectionCreationForm(props) {
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>External URL (Optional)</Form.Label>
                 <Form.Control type="text" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
-                              placeholder="E.g. www.google.com" defaultValue="" onChange={e => setExternalURL(e.target.value)} />
+                              placeholder="E.g. www.google.com" defaultValue="" onChange={e => setCollection({...collection, ...{metadata: {...collection.metadata, ...{external_url: e.target.value}}}})} /> 
             </Form.Group> 
             <div className="spacer-40" />
 
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>Price Per Token</Form.Label>
-                <Form.Control type="text" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
-                              placeholder="E.g. 2.5 ꜩ" defaultValue="" onChange={e => {setPrice(e.target.value); 
-                              props.setPreviewProps({...props.preview_props, ...{price: e.target.value}});}} />
+                <Form.Control type="number" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
+                              placeholder="E.g. 2.5 ꜩ" defaultValue="" onChange={e => setCollection( {...collection, price: parseInt(e.target.value)})} />
                 <div className="spacer-40" />
             </Form.Group>
 
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>Max Supply</Form.Label>
-                <Form.Control type="text" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
-                              placeholder="E.g. 25" defaultValue="" onChange={e => {setMaxSupply(e.target.value); 
-                              props.setPreviewProps({...props.preview_props, ...{max_tid: e.target.value}});}} />
+                <Form.Control type="number" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
+                              placeholder="E.g. 25" defaultValue="" onChange={e => setCollection({...collection, max_supply: parseInt(e.target.value)})} />
             </Form.Group>
             <div className="spacer-40" />
 
@@ -234,9 +242,7 @@ export default function CollectionCreationForm(props) {
             </DropdownButton>
             <div className="spacer-30" /> */}
             <Button id="create_coll_btn" bsPrefix="my_btn_main" onClick={async () => 
-             create_collection({chain: "bsc_testnet", address: "", metadata: await call_upload_metadata({name: title, description, 
-             image: generator_ipfs_uri + "/preview.png", external_url, generator_url: generator_ipfs_uri}), price, max_supply, 
-             current_supply: 0}, window)} style={creating_collection || not_ready_to_mint() ? {pointerEvents: "none", 
+             create_collection(collection, window)} style={creating_collection || not_ready_to_mint() ? {pointerEvents: "none", 
              backgroundColor: "#D3D3D7"} : {}}>
                 {creating_collection ? <><FaSpinner className="spinner" /> Creating...</> : <>Create Collection</>}
             </Button>

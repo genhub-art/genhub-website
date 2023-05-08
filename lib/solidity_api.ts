@@ -2,7 +2,7 @@ import {Collection, get_factories} from "./blockchainsTS";
 import { ethers } from "ethers";
 import { factory_abi, collection_abi } from "./abis";
 import { solidity } from "./blockchains"
-import {http_get} from "./utils";
+import {http_get, upload_metadata} from "./utils";
 export let cors_fixer = "https://higher-order-games.net:9996/";
 
 let rpc_urls = {
@@ -20,6 +20,7 @@ export const create_collection = async (
   ) => {
     if(!collection.metadata) return;
     console.log("Collection metadata", collection.metadata);
+    let uploaded_metadata = await upload_metadata(collection.metadata);
     let rpc_url = rpc_urls[collection.chain];
     // let provider = new ethers.providers.JsonRpcProvider(rpc_url)
     let provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -33,7 +34,7 @@ export const create_collection = async (
       
     // return;
     // Call the 'deploy' function on the factory contract
-    const deployTx = await factoryContract.deploy(collection.metadata, collection.max_supply, 
+    const deployTx = await factoryContract.deploy(uploaded_metadata, collection.max_supply, 
                                                   ethers.utils.parseUnits(collection.price.toString(), 'ether'));
     await deployTx.wait();
     await fetch(cors_fixer + "https://nftm-indexer-s5knoljafq-ey.a.run.app/");

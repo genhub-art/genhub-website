@@ -226,8 +226,7 @@ export default function CollectionDetailsInfo(props) {
                         <Col lg={6} sm={6} xs={12}>
                             <h5 className="index_title" style={{fontSize: "18px"}}>Preview Collection Card</h5>
                             <div className="spacer-5" />
-                            <MyCard href="#!" title={"Collection 1"} image={"/preview.jpg"} 
-                                price={0.4} curr_tid={6} max_tid={6} typ={"no buttons"} />
+                            {/*<MyCard href="#!" title={"Collection 1"} image={"/preview.jpg"} price={0.4} curr_tid={6} max_tid={6} typ={"no buttons"} />*/}
                         </Col>
                     </Row>
                     <div className="spacer-20" />

@@ -9,16 +9,25 @@ import Title from '../components/Title';
 import CollCreationForm from '../components/CollectionCreationForm';
 import CollCreationPrew from '../components/CollectionCreationPreview';
 import { useState } from 'react';
+import {Collection} from "../lib/blockchainsTS";
 
 export default function CreateCollection(props) {
-    
-  const [preview_props, setPreviewProps] = useState({
-    image: "/preview.jpg",
-    title: "Silver Surver",
-    max_tid: 20,
-    price: 0.08,
-  });
-    
+
+
+    const [collection, setCollection] = useState<Collection>({
+        chain: "bsc_testnet",
+        address: "",
+        metadata: {
+            name: "",
+            description: "",
+            image: "",
+            external_url: "",
+            generator_url: ""
+        },
+        price: 0,
+        current_supply: 0,
+        max_supply: 0
+    });
   
   return (
     <div>
@@ -26,11 +35,10 @@ export default function CreateCollection(props) {
         <Container>    
           <Row>
               <Col lg={{span: 7, offset: 1}}>
-                  <CollCreationForm preview_props={preview_props} setPreviewProps={setPreviewProps} />
+                  <CollCreationForm collection={collection} handleCollectionModified={setCollection} />
               </Col>
               <Col lg={3} sm={6} xs={12}>
-                <CollCreationPrew image={preview_props.image} title={preview_props.title} price={preview_props.price} 
-                                  curr_tid={0} max_tid={preview_props.max_tid} />  
+                <CollCreationPrew collection={collection} />  
               </Col>
           </Row>
         </Container>
