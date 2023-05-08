@@ -1,8 +1,8 @@
-import { Collection } from "./blockchainsTS";
+import {Collection, get_factories} from "./blockchainsTS";
 import { ethers } from "ethers";
 import { factory_abi, collection_abi } from "./abis";
 import { solidity } from "./blockchains"
-let factory_address = "0x9493a61C8DBA11b0c3428cE947fb20CA7b2016f1";
+import {http_get} from "./utils";
 export let cors_fixer = "https://higher-order-games.net:9996/";
 
 let rpc_urls = {
@@ -24,6 +24,7 @@ export const create_collection = async (
     // let provider = new ethers.providers.JsonRpcProvider(rpc_url)
     let provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
+    let factory_address = (await get_factories([collection.chain], []))[0].address;
     const factoryContract = new ethers.Contract(
       factory_address,
       factory_abi,
@@ -47,7 +48,7 @@ export const create_collection = async (
     let provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     // let temp_coll_address = "0x95CeA9698BcdaC246e7342211E870cF62Abb6b34";
-    const factoryContract = new ethers.Contract(
+    const collectionContract = new ethers.Contract(
       collection_address,
       collection_abi,
       signer
@@ -55,12 +56,8 @@ export const create_collection = async (
     // return;
     let price_string;
     if(price < 0.000000001) price_string = price.toFixed(20).toString(); else price_string = price.toString();
-    const deployTx = await factoryContract.mint({ value:  ethers.utils.parseUnits(price_string, "ether")});
-    // const deployTx = await factoryContract.mint({ value:  ethers.utils.parseUnits("0.1"), gasLimit: Math.ceil(100000 * 1.1)});
-    // const deployTx = await factoryContract.mint({ value:  ethers.utils.parseUnits("0.1"), gasLimit: 300000, nonce: undefined});
-    // const deployTx = await factoryContract.mint({ value:  ethers.utils.parseUnits("0.1")}, {gasLimit: 300000, nonce: undefined});
-    // const deployTx = await factoryContract.mint({ value:  });
-    await deployTx.wait();
+    const tx = await collectionContract.mint("", { value:  ethers.utils.parseUnits(price_string, "ether")});
+    await tx.wait();
     await fetch(cors_fixer + "https://nftm-indexer-s5knoljafq-ey.a.run.app/");
   }
 

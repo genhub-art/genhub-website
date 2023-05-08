@@ -15,7 +15,7 @@ export default function CollectionDetailsPreview(props) {
     let generate_variation = _ => {
         setLoading(true);
         setUseIframe(true);
-        setIframeUrl(props?.generator_url + `/?gxhash=${uuidv4()}`);
+        setIframeUrl(props?.generator_url + `/?seed=${uuidv4()}`);
     }
 
     useEffect(() => {
