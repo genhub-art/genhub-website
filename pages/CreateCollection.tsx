@@ -1,7 +1,3 @@
-import IndexPresentation from '../components/IndexPresentation';
-import MyCarousel from '../components/MyCarousel';
-import MyOwlCarousel from '../components/MyOwlCarousel';
-import Image from 'next/image';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -9,7 +5,7 @@ import Title from '../components/Title';
 import CollCreationForm from '../components/CollectionCreationForm';
 import CollCreationPrew from '../components/CollectionCreationPreview';
 import { useState } from 'react';
-import {Collection} from "../lib/blockchainsTS";
+import {Collection} from "../lib/indexer_api";
 
 export default function CreateCollection(props) {
 

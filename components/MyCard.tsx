@@ -1,13 +1,11 @@
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Image from 'next/image';
 import { mint_nft } from '../lib/solidity_api';
-import {Collection, ERC1155TokenMetadata, NFT} from "../lib/blockchainsTS";
+import {Collection, ERC1155TokenMetadata, NFT} from "../lib/indexer_api";
 import {ipfs_to_https} from "../lib/utils";
 import {useEffect, useState} from "react";
 import { cors_fixer } from "../lib/solidity_api";
-import useDebouncedState from "@restart/hooks/useDebouncedState";
 
 export default function MyCard(props: { href:string; collection_or_nft: Collection | NFT; type:string; on_iframe_metadata_loaded:(tmd:ERC1155TokenMetadata) => void }) {
     

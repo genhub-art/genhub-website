@@ -1,11 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import IndexPresentation from '../components/IndexPresentation';
-import MyCarousel from '../components/MyCarousel';
-import MyOwlCarousel from '../components/MyOwlCarousel';
-import Image from 'next/image';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Title from '../components/Title';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
@@ -14,7 +8,7 @@ import ProfilePublicKeys from '../components/ProfilePublicKeys';
 import useLocalStorage from '../custom_hooks/useLocalStorage';
 import { KEYWORDS } from '../pages/_app';
 import { useRouter } from 'next/router';
-import { get_collections, get_nfts, Collection, NFT } from '../lib/blockchainsTS';
+import { get_collections, get_nfts, Collection, NFT } from '../lib/indexer_api';
 
 export default function Profile(props) {
 
@@ -39,7 +33,7 @@ export default function Profile(props) {
     if(!router.isReady) return;
     if(props.ready === false) return;
     
-    let acc = router.query.account;
+    let acc = router.query.account as string;
     let owner = "";
     
     if(solidity_pkh && acc === "My Account") owner = solidity_pkh;
@@ -47,11 +41,12 @@ export default function Profile(props) {
     if(acc !== "My Account" && router.query.account_typ === "solidity_pkh") owner = acc;
 
     setAccount(acc);
-    if(acc !== "My Account") setAccountTyp(router.query.account_typ);
+    if(acc !== "My Account") setAccountTyp(router.query.account_typ as string);
     else setAccountTyp(null);
-    let fetch = async _ => {
+    let fetch = async () => {
       let curr_nfts = await get_nfts([], [], [], [owner]);
       setNfts(curr_nfts);
+      // @ts-ignore
       let curr_collections = await get_collections([], [...new Set(curr_nfts.map(nft => nft.collection))]);
       setCollections(curr_collections);
       setCreations(curr_collections);

@@ -1,19 +1,14 @@
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-import IndexPresentation from '../components/IndexPresentation';
-import MyCarousel from '../components/MyCarousel';
-import MyOwlCarousel from '../components/MyOwlCarousel';
-import Image from 'next/image';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Title from '../components/Title';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import MyCardsCollection from '../components/MyCardsCollection';
 import CollectionDetailsPreview from '../components/CollectionDetailsPreview';
-import CollectionDetailsInfo from '../components/CollectionDetialsInfo';
-import { get_collections, get_nfts, Collection, NFT } from '../lib/blockchainsTS';
+import CollectionDetailsInfo from '../components/CollectionDetailsInfo';
+import { get_collections, get_nfts, Collection, NFT } from '../lib/indexer_api';
 import useLocalStorage from '../custom_hooks/useLocalStorage';
 import { KEYWORDS } from '../pages/_app';
 
@@ -26,16 +21,16 @@ export default function CollectionDetails(props) {
     const router = useRouter();
     const [tabs_key, setTabsKey] = useState('all');
     const [my_nfts, setMyNFTS] = useState(Array(8).fill(loading_nfts));
-    const [collection, setCollection] = useState();
+    const [collection, setCollection] = useState<Collection | null>(null);
     const [loading, setLoading] = useState(true);
     const [solidity_pkh, setSolidityPKH] = useLocalStorage(KEYWORDS.SOLIDITY_PKH ,null);
     // console.log("KEYWORDS SOLIDITY PKH", KEYWORDS.SOLIDITY_PKH, KEYWORDS);
   useEffect(() => {
 
         if(!router.isReady) return;
-        let address = router.query.address;
+        let address = router.query.address as string;
 
-        const fetch = async _ => {
+        const fetch = async () => {
             setCollection((await get_collections([], [address]))[0]);
             setNFTS(await get_nfts([], [address], [], []));
             setLoading(false);

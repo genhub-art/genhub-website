@@ -10,7 +10,6 @@ import 'react-clock/dist/Clock.css';
 import DateTimePicker from 'react-datetime-picker';
 import Image from 'next/image';
 import { Button } from 'react-bootstrap';
-import Moralis from "moralis";
 import { upload_generator, upload_metadata, ipfs_to_https } from '../lib/utils';
 import { FaSpinner } from 'react-icons/fa';
 import { create_collection } from '../lib/solidity_api';
@@ -18,7 +17,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import useLocalStorage from '../custom_hooks/useLocalStorage';
 import { KEYWORDS } from '../pages/_app';
-import {Collection} from "../lib/blockchainsTS";
+import {Collection} from "../lib/indexer_api";
 // import { DateTimeField } from 'react-bootstrap-datetimepicker';
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {	
 	ssr: false,

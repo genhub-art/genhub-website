@@ -54,7 +54,7 @@ export default function ProfilePublicKeys(props) {
             <h6 className="index_title" style={{fontSize: "18px"}}>Pub Keys:</h6>
             {(solidity_pkh) &&
                 <>
-                    <Image src="/MetaMaskWallet.png" width={20} height={20} />&nbsp;&nbsp;
+                    <Image alt={""} src="/MetaMaskWallet.png" width={20} height={20} />&nbsp;&nbsp;
                     <h5 className="walletName">Metamask</h5>&nbsp;&nbsp;
                     <Link title={solidity_pkh} href={`Profile?account=${solidity_pkh}&account_typ=solidity_pkh`} className="aTag" id="detATag">
                         {shortening_str(solidity_pkh, 12, 12)}
@@ -66,7 +66,7 @@ export default function ProfilePublicKeys(props) {
             }
             {(beacon_pkh) &&
                 <>
-                    <Image src="/BeaconWallet.png" width={20} height={20} />&nbsp;&nbsp;
+                    <Image alt={""} src="/BeaconWallet.png" width={20} height={20} />&nbsp;&nbsp;
                     <h5 className="walletName" style={{width: "102.1px", display: "inline-block"}}>Beacon</h5>&nbsp;&nbsp;
                     <Link title={beacon_pkh} href={`Profile?account=${beacon_pkh}&account_typ=beacon_pkh`} className="aTag" id="detATag" style={{marginRight: "1px"}}>
                         {shortening_str(beacon_pkh, 11, 11)}
@@ -77,7 +77,7 @@ export default function ProfilePublicKeys(props) {
             }
             {(aleph0_pkh) &&
                 <>
-                    <Image src="/EverWallet.png" width={20} height={20} />&nbsp;&nbsp;
+                    <Image alt={""} src="/EverWallet.png" width={20} height={20} />&nbsp;&nbsp;
                     <h5 className="walletName" style={{width: "102.1px", display: "inline-block"}}>Ever</h5>&nbsp;&nbsp;
                     <Link title={aleph0_pkh} href={`Profile?account=${aleph0_pkh}&account_typ=aleph0_pkh`} className="aTag" id="detATag" style={{marginRight: "2.5px"}}>
                         {shortening_str(aleph0_pkh, 11, 12)}

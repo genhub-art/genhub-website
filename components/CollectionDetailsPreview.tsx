@@ -1,6 +1,3 @@
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Image from 'next/image';
 import { FaSpinner } from 'react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,7 +9,7 @@ export default function CollectionDetailsPreview(props) {
     const [use_iframe, setUseIframe] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    let generate_variation = _ => {
+    let generate_variation = () => {
         setLoading(true);
         setUseIframe(true);
         setIframeUrl(props?.generator_url + `/?seed=${uuidv4()}`);
@@ -28,7 +25,7 @@ export default function CollectionDetailsPreview(props) {
         <div>
             {use_iframe 
                 ? <iframe width={612} height={612} style={{height: "612px"}} className="coll_prw_img" src={iframe_url} />
-                : <Image width={612} height={612} style={{height: "612px"}} className="coll_prw_img" 
+                : <Image alt={""} width={612} height={612} style={{height: "612px"}} className="coll_prw_img" 
                     src={props?.loading ? "/Loading.gif" : props?.image} />  
             }
             <div className="spacer-30" />

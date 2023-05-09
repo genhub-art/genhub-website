@@ -1,4 +1,4 @@
-import {Collection, get_factories} from "./blockchainsTS";
+import {Collection, get_factories} from "./indexer_api";
 import { ethers } from "ethers";
 import { factory_abi, collection_abi } from "./abis";
 import { solidity } from "./blockchains"

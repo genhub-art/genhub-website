@@ -6,7 +6,7 @@ import Image from 'next/image';
 export default function NftDetailsPreview(props) {
     return (
         <div>
-            <Image width={612} height={612} style={{height: "612px"}} className="coll_prw_img" src={props?.loading ? "/Loading.gif" : props?.image} />
+            <Image alt={"nft image"} width={612} height={612} style={{height: "612px"}} className="coll_prw_img" src={props?.loading ? "/Loading.gif" : props?.image} />
             {/* TOADD: Properties
             <div className="spacer-40" />
             <div style={{justifyContent: "center", display: "grid"}}>

@@ -1,75 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
-import IndexPresentation from './IndexPresentation';
-import MyCarousel from './MyCarousel';
-import MyOwlCarousel from './MyOwlCarousel';
-import Image from 'next/image';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Title from './Title';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
-import MyCardsCollection from './MyCardsCollection';
-import CollDetailsPrew from './CollectionDetailsPreview';
 import ProgressBar from "@ramonak/react-progress-bar";
-import dynamic from 'next/dynamic';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
-import {faCircleCheck} from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
 import { Form } from 'react-bootstrap';
-import MyCard from './MyCard';
 import { mint_nft } from "../lib/solidity_api";
 import { add_back_youtube_videos, save_youtube_videos } from '../lib/utils';
 import DOMPurify from 'dompurify';
-// import { AiFillCheckCircle } from "react-icons/fa";
-const QuillNoSSRWrapper = dynamic(import('react-quill'), {	
-	ssr: false,
-	loading: () => <p>Loading ...</p>,
-})
-
-const modules = {
-    toolbar: [
-      [{ header: '1' }, { header: '2' }],
-      [{ size: [] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [
-        { list: 'ordered' },
-        { list: 'bullet' }
-      ],
-      ['link', 'image', 'video'],
-      ['clean'],
-    ],
-    clipboard: {
-      // toggle to add extra line breaks when pasting HTML:
-      matchVisual: false,
-    },
-    // imageResize: {
-    //     parchment: QuillNoSSRWrapper.import('parchment'),
-    //     modules: ['Resize', 'DisplaySize']
-    //  }
-  }
-  /*
-   * Quill editor formats
-   * See https://quilljs.com/docs/formats/
-   */
-  const formats = [
-    'header',
-    'font',
-    'size',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'list',
-    'bullet',
-    'indent',
-    'link',
-    'image',
-    'video',
-  ]
-
 export default function CollectionDetailsInfo(props) {
     console.log("CollectionDetailsInfo", props);
     const refs = {
@@ -101,7 +37,7 @@ export default function CollectionDetailsInfo(props) {
         refs[`ref_copy_${nr}`].current.text = "Copy";
     }
 
-    let process_description = _ => {
+    let process_description = () => {
         let [src, yt_videos] = save_youtube_videos(props?.collection?.metadata?.description);
         return add_back_youtube_videos(DOMPurify.sanitize(src, { USE_PROFILES: { html: true }}).replace("<a", '<a target="_blank"'), yt_videos);
     }
@@ -118,7 +54,7 @@ export default function CollectionDetailsInfo(props) {
             }
 
             <div className="progressLabel" style={{color: "#6a1b9a", marginBottom: "5px"}}><b>{props?.collection?.current_supply} / {props?.collection?.max_supply} minted</b></div>
-            <ProgressBar completed={parseInt(props?.collection?.current_supply) / parseInt(props?.collection?.max_supply) * 100} borderRadius={0} labelAlignment={"outside"} customLabel={props?.collection?.current_supply + " / " + props?.collection?.max_supply + " minted"} labelColor={"black"} isLabelVisible={false} labelSize={"14px"} height={"5px"} width={"50%"} />
+            <ProgressBar completed={parseInt(props?.collection?.current_supply) / parseInt(props?.collection?.max_supply) * 100} borderRadius={"0"} labelAlignment={"outside"} customLabel={props?.collection?.current_supply + " / " + props?.collection?.max_supply + " minted"} labelColor={"black"} isLabelVisible={false} labelSize={"14px"} height={"5px"} width={"50%"} />
             <div className='spacer-30' />
             
             {/* TOADD: Funding Goal
