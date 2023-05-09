@@ -34,7 +34,7 @@ export default function CollectionDetailsPreview(props: {collection: Collection 
         <div>
             {iframe_url !== ""  
                 ? <GeneratorIframe width={612} height={612} style={{height: "612px"}} className="coll_prw_img" url={iframe_url} on_iframe_metadata_loaded={setIframeMetadata} />
-                : <Image alt={""} width={612} height={612} style={{height: "612px"}} className="coll_prw_img" 
+                : <Image alt={"Loading..."} width={612} height={612} style={{height: "612px"}} className="coll_prw_img" 
                     src={props?.loading ? "/Loading.gif" : props.collection.metadata.image} />  
             }
             <div className="spacer-30" />
@@ -64,7 +64,7 @@ export default function CollectionDetailsPreview(props: {collection: Collection 
                             </Card.Body>
                         </Card>
                     return <Row xs={1} sm={2} md={3} className="g-4" style={{maxWidth: "612px"}}>
-                        {all.map(p => <Col xs={12} sm={6} md={4} style={{paddingLeft: "4px", paddingRight: "4px"}}>{property_card(p)}</Col>)}
+                        {all.map((p, i) => <Col key={`key${i}`} xs={12} sm={6} md={4} style={{paddingLeft: "4px", paddingRight: "4px"}}>{property_card(p)}</Col>)}
                     </Row>
                 })()
             }
