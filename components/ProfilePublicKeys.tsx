@@ -32,7 +32,7 @@ export default function ProfilePublicKeys(props) {
 
     useEffect(() => {
 
-        console.log("Props changed", props);
+        // console.log("Props changed", props);
 
         if(props.solidity_pkh && props.account === "My Account") setSolidityPKH(props.solidity_pkh);
 
@@ -50,7 +50,7 @@ export default function ProfilePublicKeys(props) {
    
     return (
         <>
-            {console.log("Profile Pub Keys: ", props)}
+            {/* {console.log("Profile Pub Keys: ", props)} */}
             <h6 className="index_title" style={{fontSize: "18px"}}>Pub Keys:</h6>
             {(solidity_pkh) &&
                 <>

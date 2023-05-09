@@ -10,7 +10,7 @@ import Row from "react-bootstrap/Row";
 
 export default function CollectionDetailsPreview(props: {collection: Collection | null; loading: boolean}) {
 
-    console.log("collecction details preview props", props);
+    // console.log("collecction details preview props", props);
     const [iframe_url, setIframeUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [iframe_metadata, setIframeMetadata] = useState<ERC1155TokenMetadata | null>(null);
@@ -29,10 +29,10 @@ export default function CollectionDetailsPreview(props: {collection: Collection 
         setLoading(false);
 
     }, [iframe_url]);
-
+    
     return (
         <div>
-            {iframe_url !== ""  
+            {iframe_url && iframe_url.includes("https://")
                 ? <GeneratorIframe width={612} height={612} style={{height: "612px"}} className="coll_prw_img" url={iframe_url} on_iframe_metadata_loaded={setIframeMetadata} />
                 : <Image alt={"Loading..."} width={612} height={612} style={{height: "612px"}} className="coll_prw_img" 
                     src={props?.loading ? "/Loading.gif" : props.collection.metadata.image} />  
@@ -50,7 +50,7 @@ export default function CollectionDetailsPreview(props: {collection: Collection 
             {/*/!* TOADD: Properties*/}
             {
                 (() => {
-                    console.log("iframe_metadata", iframe_metadata)
+                    console.log("RERENDER")
                     let attributes = iframe_metadata?.attributes.map(x => {return{name: x.trait_type, value:x.value}}) || [] ;
                     console.log("attributes", attributes)
                     let properties = Object.entries(iframe_metadata?.properties || {}).flatMap(ps => ps.map(nv => {return {name:nv[0], value:nv[1]}})) || [] ;

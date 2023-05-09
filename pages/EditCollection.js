@@ -103,7 +103,7 @@ export default function EditCollection(props) {
                                 </div></a>
                         )}
                     </Form.Group>
-                    {console.log("Add whitelists", add_whitelists)}
+                    {/* {console.log("Add whitelists", add_whitelists)} */}
                     <div className="spacer-30" />
                     <Form.Group>
                         <Form.Label className="index_title" style={{fontSize: "18px"}}>Remove from Whitelist</Form.Label>

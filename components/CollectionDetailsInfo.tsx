@@ -7,7 +7,7 @@ import { mint_nft } from "../lib/solidity_api";
 import { add_back_youtube_videos, save_youtube_videos } from '../lib/utils';
 import DOMPurify from 'dompurify';
 export default function CollectionDetailsInfo(props) {
-    console.log("CollectionDetailsInfo", props);
+    // console.log("CollectionDetailsInfo", props);
     const refs = {
         ref_copy_1: useRef(null),
         ref_copy_2: useRef(null),

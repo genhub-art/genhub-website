@@ -19,7 +19,7 @@ export const create_collection = async (
     window: any
   ) => {
     if(!collection.metadata) return;
-    console.log("Collection metadata", collection.metadata);
+    // console.log("Collection metadata", collection.metadata);
     let uploaded_metadata = await upload_metadata(collection.metadata);
     let rpc_url = rpc_urls[collection.chain];
     // let provider = new ethers.providers.JsonRpcProvider(rpc_url)

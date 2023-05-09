@@ -20,7 +20,7 @@ export default function MyCardsCollection(props: { href: any; type: "nft" | "col
   
   return (
     <Row xs={1} md={2} lg={3} xl={4} className="g-4"><>
-        {console.log("Href", props.href)}
+        {/* {console.log("Href", props.href)} */}
         {/* {Array.from({ length: 18 }).map((_, idx) => ( */}
         {props?.values?.map((val, i) =>
             <Col key={`${i}`}>   

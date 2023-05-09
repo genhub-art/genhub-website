@@ -34,7 +34,7 @@ export default function Header(props) {
     let beacon_connect = () => {
         if(!beacon_pkh){
             tezos.connect().then(pkh =>{
-                console.log("Button PKH", pkh); 
+                // console.log("Button PKH", pkh); 
                 setBeaconPKH(pkh);
             }); 
         }
@@ -49,7 +49,7 @@ export default function Header(props) {
     let aleph0_connect = () => {
         if(!aleph0_pkh){
             aleph0.connect().then(pkh =>{
-                console.log("Button PKH", pkh);
+                // console.log("Button PKH", pkh);
                 setAleph0PKH(pkh);
             });
         }
@@ -59,7 +59,7 @@ export default function Header(props) {
     let solidity_connect = () => {
         if(!solidity_pkh){
             solidity.connect(window).then(pkh =>{
-                console.log("Button PKH", pkh); 
+                // console.log("Button PKH", pkh); 
                 setSolidityPKH(pkh);
             });
         }

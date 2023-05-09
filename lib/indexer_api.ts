@@ -39,7 +39,7 @@ export let get_nfts =  async (chains: string[], collection_addresses: string[], 
         return nft;
       });
     } catch(err){
-      console.log("Error in get_nfts", err);
+      // console.log("Error in get_nfts", err);
       return [];
     }
 }
@@ -65,11 +65,11 @@ export let get_collections = async (chains: string[], collection_addresses: stri
     let url = new URL(get_api_url + "/collections")
     if (chains.length > 0) url.searchParams.append("chain", "in.(" + chains.join(",") + ")")
     if (collection_addresses.length > 0) url.searchParams.append("address", "in.(" + collection_addresses.join(",") + ")")
-    // console.log("collections URL Href", url.href);
+    // // console.log("collections URL Href", url.href);
     // let res = await http_get(url.href);
-    // console.log("collections res", res, collection_addresses);
+    // // console.log("collections res", res, collection_addresses);
     let res = await http_get(url.href);
-    console.log("collections res", res);
+    // console.log("collections res", res);
     return (res).filter((coll: Collection) => !wrong_collections.includes(coll.address)).map((coll: Collection) => 
       {
         coll.price = parseFloat(ethers.utils.formatUnits(coll.price.toString()));
@@ -78,7 +78,7 @@ export let get_collections = async (chains: string[], collection_addresses: stri
         return coll;
       });
     } catch(err){
-      console.log("Error in get_collections", err);
+      // console.log("Error in get_collections", err);
       return [];
     }
 }
@@ -95,7 +95,7 @@ export let get_factories = async (chains: string[], factory_addresses: string[])
     if (factory_addresses.length > 0) url.searchParams.append("address", "in.(" + factory_addresses.join(",") + ")")
     return (await http_get(url.href));
     } catch(err){
-      console.log("Error in get_factories", err);
+      // console.log("Error in get_factories", err);
       return [];
     }
 }
