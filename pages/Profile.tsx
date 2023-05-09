@@ -66,10 +66,10 @@ export default function Profile(props) {
           <ProfilePublicKeys beacon_pkh={beacon_pkh} solidity_pkh={solidity_pkh} aleph0_pkh={aleph0_pkh} account={account} account_typ={account_typ} />
           <Tabs id="controlled-tab-example" activeKey={tabs_key} onSelect={(k) => setTabsKey(k)} className="mb-3">
             <Tab tabClassName="tabText" eventKey="nfts" title="NFTs">
-                <MyCardsCollection values={nfts} href={"NFTDetails"} typ="nft" />
+                <MyCardsCollection values={nfts} href={"NFTDetails"} type="nft" />
             </Tab>
             <Tab tabClassName="tabText" eventKey="collections" title="Collections">
-                <MyCardsCollection values={collections} href={"CollectionDetails"} typ="collection" />
+                <MyCardsCollection values={collections} href={"CollectionDetails"} type="collection" />
             </Tab>
             {/* TOADD: Creations
             <Tab tabClassName="tabText" eventKey="creations" title="Creations">

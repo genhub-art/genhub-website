@@ -2,17 +2,21 @@ import Image from 'next/image';
 import { FaSpinner } from 'react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect } from 'react';
+import {Collection, ERC1155TokenMetadata} from "../lib/indexer_api";
+import GeneratorIframe from "./GeneratorIframe";
 
-export default function CollectionDetailsPreview(props) {
+export default function CollectionDetailsPreview(props: {collection: Collection; loading: boolean}) {
 
-    const [iframe_url, setIframeUrl] = useState("");
-    const [use_iframe, setUseIframe] = useState(false);
+    console.log("collecction details preview props", props);
+    const [iframe_url, setIframeUrl] = useState(props.collection.metadata.generator_url + `/?seed=${uuidv4()}`);
+    const [use_iframe, setUseIframe] = useState(true);
     const [loading, setLoading] = useState(false);
-
+    const [iframe_metadata, setIframeMetadata] = useState<ERC1155TokenMetadata | null>(null);
+    
     let generate_variation = () => {
         setLoading(true);
         setUseIframe(true);
-        setIframeUrl(props?.generator_url + `/?seed=${uuidv4()}`);
+        setIframeUrl(props.collection.metadata.generator_url + `/?seed=${uuidv4()}`);
     }
 
     useEffect(() => {
@@ -24,9 +28,9 @@ export default function CollectionDetailsPreview(props) {
     return (
         <div>
             {use_iframe 
-                ? <iframe width={612} height={612} style={{height: "612px"}} className="coll_prw_img" src={iframe_url} />
+                ? <GeneratorIframe width={612} height={612} style={{height: "612px"}} className="coll_prw_img" url={iframe_url} on_iframe_metadata_loaded={setIframeMetadata} />
                 : <Image alt={""} width={612} height={612} style={{height: "612px"}} className="coll_prw_img" 
-                    src={props?.loading ? "/Loading.gif" : props?.image} />  
+                    src={props?.loading ? "/Loading.gif" : props.collection.metadata.image} />  
             }
             <div className="spacer-30" />
             <div style={{justifyContent: "center", display: "grid"}}>

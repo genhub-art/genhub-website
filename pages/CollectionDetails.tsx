@@ -53,8 +53,7 @@ export default function CollectionDetails(props) {
         <Container className="site_content">
             <Row>
                 <Col md={6}>
-                    <CollectionDetailsPreview loading={loading} image={collection?.metadata?.image} 
-                        generator_url={collection?.metadata?.generator_url} />
+                    <CollectionDetailsPreview loading={loading} collection={collection}/>
                 </Col>
                 <Col md={6}>
                     {!loading && <CollectionDetailsInfo collection={collection} />}
@@ -65,11 +64,11 @@ export default function CollectionDetails(props) {
                 <Row>
                     <Tabs id="controlled-tab-example" activeKey={tabs_key} onSelect={(k) => setTabsKey(k)} className="mb-3">
                         <Tab tabClassName="tabText" eventKey="all" title="Collection NFTs">
-                            <MyCardsCollection href={"NFTDetails"} values={nfts} typ="nft" />
+                            <MyCardsCollection href={"NFTDetails"} values={nfts} type="nft" />
                         </Tab>
                         {/*  Maybe TOADD: Not show the You Own tab if you don't own an NFT in that collection {my_nfts.length > 0 && */}
                             <Tab tabClassName="tabText" eventKey="yours" title="You Own">
-                                <MyCardsCollection href={"NFTDetails"} values={my_nfts} typ="nft" />
+                                <MyCardsCollection href={"NFTDetails"} values={my_nfts} type="nft" />
                             </Tab>
                         {/* } */}
                     </Tabs>

@@ -6,6 +6,7 @@ import {Collection, ERC1155TokenMetadata, NFT} from "../lib/indexer_api";
 import {ipfs_to_https} from "../lib/utils";
 import {useEffect, useState} from "react";
 import { cors_fixer } from "../lib/solidity_api";
+import GeneratorIframe from "./GeneratorIframe";
 
 export default function MyCard(props: { href:string; collection_or_nft: Collection | NFT; type:string; on_iframe_metadata_loaded:(tmd:ERC1155TokenMetadata) => void }) {
     
@@ -17,29 +18,11 @@ export default function MyCard(props: { href:string; collection_or_nft: Collecti
     iframe_url = iframe_url.startsWith("ipfs://") ? ipfs_to_https(iframe_url) : iframe_url
     console.log("iframe_url", iframe_url)
 
-    useEffect(() => {
-        //every 1 seconds try to call the metadata() function from inside the generator_iframe and print the result
-        window.addEventListener("message", (event) => {
-            if (event.data.name) {
-                setIframeMetadata(event.data)
-                props.on_iframe_metadata_loaded(event.data)
-            }
-        }, false);
-        setInterval(() => {
-            try {
-            // @ts-ignore
-                if(!iframe_metadata && props.collection_or_nft.metadata?.generator_url) {
-                    // @ts-ignore
-                    let md = document.getElementById("generator_iframe").contentWindow.postMessage({type: "metadata"}, "*")
-                }
-            } catch (e) { console.log("error", e) }
-        }, 10000)
-    })
+    
     return (
       <Card className='cardItem'>
-          <iframe id={"generator_iframe"} src={ (cors_fixer + iframe_url )} ></iframe>
         {/*<Link className="cardA" href={props.href}>*/}
-            
+            <GeneratorIframe height={200} url={iframe_url} on_iframe_metadata_loaded={setIframeMetadata} />
           {/*<Image height={264} width={264} src={props.collection_or_nft.metadata.image} className="cardImg" alt={props.type === "nft" ? "Nft" : "Collection"} />*/}
         {/*</Link>*/}
         

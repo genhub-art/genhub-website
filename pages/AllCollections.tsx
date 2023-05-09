@@ -27,8 +27,8 @@ export default function AllCollections(props) {
         <div className="spacer-60"></div>
         <Container>
           {loading 
-            ? <MyCardsCollection values={collections} href={"CollectionDetails"} typ="nft" />
-            : <MyCardsCollection values={collections} href={"CollectionDetails"} typ="collection" />
+            ? <MyCardsCollection values={collections} href={"CollectionDetails"} type="nft" />
+            : <MyCardsCollection values={collections} href={"CollectionDetails"} type="collection" />
           }
         </Container>
     </div>
