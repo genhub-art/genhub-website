@@ -4,7 +4,7 @@ import { get_api_url } from "./utils";
 
 const wrong_collections = ["0x5F7eb397abaf5e81236488274a1D487BFCB18344", "0x37541C88A1fbAc19833e3D8E9C0a5486fF8afC51",
                            "0x81561dEdc4b33304e3D4F91B069Ccdbc0056dc29", "0x95CeA9698BcdaC246e7342211E870cF62Abb6b34"];
-type ERC1155TokenMetadata = {
+export type ERC1155TokenMetadata = {
   name: string;
   description: string;
   image: string;

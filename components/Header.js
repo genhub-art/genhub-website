@@ -89,10 +89,10 @@ export default function Header(props) {
 
     return(
         <header style={{borderBottom: (scrollPosition > 0 || screen_width < 1200) ? "solid 1px #dddddd" : "solid 1px transparent"}} /*className="borderBottom"*/>
-            {console.log("scrollTop", scrollPosition)}
-            {console.log("Beacon PKH", beacon_pkh)}
-            {console.log("Aleph0 PKH", aleph0_pkh)}
-            {console.log("Solidity PKH", solidity_pkh)}
+            {/*{console.log("scrollTop", scrollPosition)}*/}
+            {/*{console.log("Beacon PKH", beacon_pkh)}*/}
+            {/*{console.log("Aleph0 PKH", aleph0_pkh)}*/}
+            {/*{console.log("Solidity PKH", solidity_pkh)}*/}
             {/* {console.log("Network Header", network)} */}
             {/* {console.log("Window", Window)} */}
             <Modal scrollable={true} show={bridge_modal} onHide={() => setBridgeModal(false)} backdrop="static" keyboard={false} centered >
