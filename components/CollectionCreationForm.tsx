@@ -76,6 +76,10 @@ export default function CollectionCreationForm(props: { collection:Collection; h
 
     let not_ready_to_mint = () => (!collection.metadata.name || !collection.metadata.description || !collection.price || !collection.max_supply || !collection.metadata.generator_url/* TOADD: chain || chain === "Choose a chain"*/);
 
+    useEffect(() => {
+        console.log("Collection", collection);
+    }, [collection]);
+    
     let handle_upload = () => {
         console.log("YES", inputRef);
         inputRef.current?.click();
