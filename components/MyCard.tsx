@@ -12,18 +12,18 @@ export default function MyCard(props: { href:string; collection_or_nft: Collecti
     
     const [iframe_metadata, setIframeMetadata] = useState<ERC1155TokenMetadata | null>(null)
     
-    console.log("card for ", props.collection_or_nft)
+    // console.log("card for ", props.collection_or_nft)
     // @ts-ignore
     let iframe_url = (props.collection_or_nft.metadata?.generator_url || props.collection_or_nft.metadata?.generator_instance_url) + "/"
     iframe_url = iframe_url.startsWith("ipfs://") ? ipfs_to_https(iframe_url) : iframe_url
-    console.log("iframe_url", iframe_url)
+    // console.log("iframe_url", iframe_url)
 
     
     return (
       <Card className='cardItem'>
         {/*<Link className="cardA" href={props.href}>*/}
             <GeneratorIframe height={200} url={iframe_url} on_iframe_metadata_loaded={setIframeMetadata} />
-          {/*<Image height={264} width={264} src={props.collection_or_nft.metadata.image} className="cardImg" alt={props.type === "nft" ? "Nft" : "Collection"} />*/}
+        {/*  <Image height={264} width={264} src={props.collection_or_nft.metadata.image} className="cardImg" alt={props.type === "nft" ? "Nft" : "Collection"} />*/}
         {/*</Link>*/}
         
         <Card.Body style={props.type === "nft" ? {paddingTop: "0px", paddingBottom: "0px"} : {paddingTop: "8px", paddingBottom: "8px"}}>
