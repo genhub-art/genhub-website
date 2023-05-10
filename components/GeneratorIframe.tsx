@@ -7,6 +7,7 @@ export default function GeneratorIframe(props: {className?:string; height?:numbe
     
     useEffect(() => {
         if (props.url && props.url.startsWith("https://")) {
+            console.log("good url")
             //every 1 seconds try to call the metadata() function from inside the generator_iframe and print the result
         window.addEventListener("message", (event) => {
             if (event.data.name) {
@@ -17,9 +18,14 @@ export default function GeneratorIframe(props: {className?:string; height?:numbe
             
         }, false);
         setInterval(() => {
-                // console.log("xxxTRIGGER METADATA IFRAME")
+                // console.log("zzzTRIGGER METADATA IFRAME")
+            try {
                 // @ts-ignore
                 let md = document.getElementById("generator_iframe").contentWindow.postMessage({type: "metadata"}, "*")
+                
+            }catch (e) {
+                // console.log("xxxERROR", e)
+            }
             
         }, 1000)
             
