@@ -6,6 +6,7 @@ import { Form } from 'react-bootstrap';
 import { mint_nft } from "../lib/solidity_api";
 import { add_back_youtube_videos, save_youtube_videos } from '../lib/utils';
 import DOMPurify from 'dompurify';
+import Link from 'next/link';
 export default function CollectionDetailsInfo(props) {
     // console.log("CollectionDetailsInfo", props);
     const refs = {
@@ -14,7 +15,6 @@ export default function CollectionDetailsInfo(props) {
         ref_copy_3: useRef(null)
     }
 
-    const [pub_key, setPubKey] = useState("tz1h7Tek85LYJPBpG8e5xqCZPAvSMu97tenm");
     const [iframe_code, setIframeCode] = useState(`<iframe src='https://lay3rz.xyz/CollectionDetailsIframe?collection=KT1SGYrBDC7ZJhpfT9snZSZc4skjvJtPsUnS&header=false' width='100%' height='1000px' />`);
     const [iframe_url, setIframeUrl] = useState(`https://lay3rz.xyz/CollectionDetailsIframe?collection=KT1SGYrBDC7ZJhpfT9snZSZc4skjvJtPsUnS&header=false`);
     const [add_nft, setAddNFT] = useState(false);
@@ -28,7 +28,7 @@ export default function CollectionDetailsInfo(props) {
         catch(_){}
     }
     
-    let shortening_str = (str, sz_l, sz_r) => (str.substring(0, sz_l) + "..." + str.substring(str.length - sz_r, str.length));
+    let shortening_str = (str, sz_l, sz_r) => (str?.substring(0, sz_l) + "..." + str?.substring(str?.length - sz_r, str?.length));
 
     let copy = async nr => {
         // console.log("Ref", refs[`ref_copy_${nr}`]);
@@ -90,16 +90,15 @@ export default function CollectionDetailsInfo(props) {
             placeholder="2.5 (ꜩ)" />
             <div className='spacer-30' />*/}
             
-            {/* TOADD: Author and Embed 
             <h6 className="index_title" style={{fontSize: "14px"}}>Author</h6>
             <div className='spacer-10' />
             
-            <Link target={"_blank"} title={pub_key} href={`Profile?account=${pub_key}&account_typ=beacon_pkh`} className="aTag" id="detATag" style={{marginRight: "2.5px"}}>
-                {shortening_str(pub_key, 12, 12)}
+            <Link target={"_blank"} title={props.collection.creator} href={`Profile?account=${props.collection.creator}&account_typ=solidity_pkh`} className="aTag" id="detATag" style={{marginRight: "2.5px"}}>
+                {shortening_str(props.collection.creator, 12, 12)}
             </Link>&nbsp;&nbsp;
-            <a id="btn_copy" title="Copy Text" onClick={() => {navigator.clipboard.writeText(pub_key); copy(1);}} href="#!" ref={refs.ref_copy_1}>Copy</a>
+            <a id="btn_copy" title="Copy Text" onClick={() => {navigator.clipboard.writeText(props.collection.creator); copy(1);}} href="#!" ref={refs.ref_copy_1}>Copy</a>
             <div className='spacer-30' />
-            
+            {/* TOADD: Author and Embed 
             <h6 className="index_title" style={{fontSize: "14px"}}>Embed</h6>
             <div className='spacer-10' />
             

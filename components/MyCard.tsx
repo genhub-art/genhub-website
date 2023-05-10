@@ -34,17 +34,24 @@ export default function MyCard(props: { href:string; collection_or_nft: Collecti
             <>
               <Link className="cardA" href={props.href}><Card.Text>
                 {/*  @ts-ignore */}
-                <span className="cardPrice">{(props.collection_or_nft as Collection).price } ꜩ</span>
-                <span className="cardTid">{(props.collection_or_nft as Collection).current_supply}/{(props.collection_or_nft as Collection).max_supply}</span>
+                {(props.type !== "nft") && 
+                  <>
+                    <span className="cardPrice">{(props.collection_or_nft as Collection).price } ꜩ</span>
+                    <span className="cardTid">{(props.collection_or_nft as Collection).current_supply}/{(props.collection_or_nft as Collection).max_supply}</span>
+                  </>
+                }
+                {/* {props.type === "nft" && <div className="spacer-10" />} */}
                 {/* Some quick example text to build on the card title and make up the
                 bulk of the card's content. */}
               </Card.Text></Link>
               {props.type !== "no buttons" && 
                 <>
-                  <Button onClick={() => mint_nft((props.collection_or_nft as Collection).address, (props.collection_or_nft as Collection).price, window)} className="cardButton" variant="primary">Mint</Button>
+                  {props.type !== "nft" &&
+                    <Button onClick={() => mint_nft((props.collection_or_nft as Collection).address, (props.collection_or_nft as Collection).price, window)} className="cardButton" variant="primary">Mint</Button>
+                  }
                   {/* TOADD: Edit button <Button className="cardButton" variant="primary">Edit</Button> */}
                   {/*  @ts-ignore */}
-                  <a href={props.href} className="cardButton" variant="primary">View</a>
+                  <a href={props.href} className="cardButton" variant="primary" style={props.type === "nft" ? {marginTop: "8px"} : {}}>View</a>
                 </>
               }
             </>

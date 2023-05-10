@@ -31,7 +31,7 @@ export default function CollectionDetails(props) {
         let address = router.query.address as string;
 
         const fetch = async () => {
-            setCollection((await get_collections([], [address]))[0]);
+            setCollection((await get_collections([], [address], []))[0]);
             setNFTS(await get_nfts([], [address], [], []));
             setLoading(false);
         }

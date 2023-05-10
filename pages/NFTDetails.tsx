@@ -13,7 +13,7 @@ export default function NftDetails(props) {
 
     const [tabs_key, setTabsKey] = useState('all');
     const [nft, setNFT] = useState<NFT | null>(null);
-    const [collection, setCollection] = useState({});
+    const [collection, setCollection] = useState<Collection | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export default function NftDetails(props) {
 
         const fetch = async () => {
             setNFT((await get_nfts([], [collection_address], [token_id], []))[0]);
-            setCollection((await get_collections([], [collection_address]))[0]);
+            setCollection((await get_collections([], [collection_address], []))[0]);
             setLoading(false);
         }
         fetch();

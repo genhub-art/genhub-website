@@ -50,15 +50,26 @@ export default function ProfilePublicKeys(props) {
    
     return (
         <>
+            <h6 className="index_title" style={{fontSize: "18px"}}>Pub Key:</h6>
+            {(solidity_pkh) &&
+                <>
+                    <Link title={solidity_pkh} href={`Profile?account=${solidity_pkh}&account_typ=solidity_pkh`} className="aTag" id="detATag">
+                        {shortening_str(solidity_pkh, 12, 12)}
+                        {/* {props.solidity_pkh.substring(0, 12) + "..." + props.solidity_pkh.substring(props.solidity_pkh.length - 12, props.solidity_pkh.length)} */}
+                    </Link>&nbsp;&nbsp;
+                    <a id="btn_copy" title="Copy Text" onClick={() => {navigator.clipboard.writeText(solidity_pkh); copy(1);}} href="#!" ref={refs.ref_copy_1}>Copy</a>
+                    <div className="spacer-60"></div>
+                </>
+            }
             {/* {console.log("Profile Pub Keys: ", props)} */}
-            <h6 className="index_title" style={{fontSize: "18px"}}>Pub Keys:</h6>
+            {/* <h6 className="index_title" style={{fontSize: "18px"}}>Pub Keys:</h6>
             {(solidity_pkh) &&
                 <>
                     <Image alt={""} src="/MetaMaskWallet.png" width={20} height={20} />&nbsp;&nbsp;
                     <h5 className="walletName">Metamask</h5>&nbsp;&nbsp;
                     <Link title={solidity_pkh} href={`Profile?account=${solidity_pkh}&account_typ=solidity_pkh`} className="aTag" id="detATag">
                         {shortening_str(solidity_pkh, 12, 12)}
-                        {/* {props.solidity_pkh.substring(0, 12) + "..." + props.solidity_pkh.substring(props.solidity_pkh.length - 12, props.solidity_pkh.length)} */}
+                        {/* {props.solidity_pkh.substring(0, 12) + "..." + props.solidity_pkh.substring(props.solidity_pkh.length - 12, props.solidity_pkh.length)}
                     </Link>&nbsp;&nbsp;
                     <a id="btn_copy" title="Copy Text" onClick={() => {navigator.clipboard.writeText(solidity_pkh); copy(1);}} href="#!" ref={refs.ref_copy_1}>Copy</a>
                     <div className="spacer-10"></div>
@@ -86,7 +97,7 @@ export default function ProfilePublicKeys(props) {
                 </>
             }
             <div className="spacer-60" />
-            <div className="spacer-5" />
+            <div className="spacer-5" /> */}
         </>
     )
 }
