@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
+import {Collection, NFT} from "../lib/indexer_api";
 // import { AiFillCheckCircle } from "react-icons/fa";
 
 
 
-export default function NftDetialsInfo(props) {
+export default function NftDetialsInfo(props: {nft: NFT, collection: Collection}) {
 
     const refs = {
         ref_copy_1: useRef(null),
@@ -49,7 +50,9 @@ export default function NftDetialsInfo(props) {
             
             <h6 className="index_title" style={{fontSize: "14px"}}>Token Id:&nbsp;&nbsp;{props?.nft?.token_id}</h6>  
             <div className='spacer-30' />
-
+            
+            <h6 className="index_title" style={{fontSize: "14px"}}>Description:</h6>
+            <p className="index_text" style={{fontSize: "14px"}}>{props.nft.metadata.description}</p>
         </>
     )
 }

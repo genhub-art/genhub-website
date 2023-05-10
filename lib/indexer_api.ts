@@ -19,6 +19,7 @@ export type NFT = {
     chain: string;
     collection: string;
     token_id: string;
+    owner:string;
     metadata:ERC1155TokenMetadata;
   };
    
@@ -69,16 +70,21 @@ export let get_collections = async (chains: string[], collection_addresses: stri
     // let res = await http_get(url.href);
     // // console.log("collections res", res, collection_addresses);
     let res = await http_get(url.href);
-    // console.log("collections res", res);
-    return (res).filter((coll: Collection) => !wrong_collections.includes(coll.address)).map((coll: Collection) => 
-      {
-        coll.price = parseFloat(ethers.utils.formatUnits(coll.price.toString()));
-        coll.metadata.image = ipfs_to_https(coll.metadata.image)
-        coll.metadata.generator_url = ipfs_to_https(coll.metadata.generator_url);
-        return coll;
-      });
+    // console.log("zzzcollections res", res);
+    let ret = (res).map((coll: Collection) =>{return {
+      ...coll,
+      price: parseFloat(ethers.utils.formatUnits(coll.price.toString())),
+      metadata: {
+        ...coll.metadata,
+        image: ipfs_to_https(coll.metadata.image),
+        generator_url: ipfs_to_https(coll.metadata.generator_url)
+      }
+    }}  );
+
+    // console.log("zzzcollections ret", ret);
+    return ret;
     } catch(err){
-      // console.log("Error in get_collections", err);
+      console.log("Error in get_collections", err);
       return [];
     }
 }

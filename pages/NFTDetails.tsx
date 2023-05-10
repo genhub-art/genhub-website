@@ -35,7 +35,7 @@ export default function NftDetails(props) {
         <Container className="site_content">
             <Row>
                 <Col md={6}>
-                    <NftDetailsPreview loading={loading} image={nft?.metadata?.image} />
+                    <NftDetailsPreview loading={loading} nft={nft} />
                 </Col>
                 <Col md={6}>
                     {!loading && <NftDetialsInfo nft={nft} collection={collection} />}

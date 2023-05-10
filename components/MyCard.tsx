@@ -7,8 +7,9 @@ import {ipfs_to_https} from "../lib/utils";
 import {useEffect, useState} from "react";
 import { cors_fixer } from "../lib/solidity_api";
 import GeneratorIframe from "./GeneratorIframe";
-
-export default function MyCard(props: { href:string; collection_or_nft: Collection | NFT; type:string; on_iframe_metadata_loaded:(tmd:ERC1155TokenMetadata) => void }) {
+import Image from "next/image";
+import NFTPropertiesGrid from "./NFTPropertiesGrid";
+export default function MyCard(props: { href:string; collection_or_nft: Collection | NFT; type:string; display_iframe: boolean; on_iframe_metadata_loaded:(tmd:ERC1155TokenMetadata) => void }) {
     
     const [iframe_metadata, setIframeMetadata] = useState<ERC1155TokenMetadata | null>(null)
     
@@ -18,13 +19,14 @@ export default function MyCard(props: { href:string; collection_or_nft: Collecti
     iframe_url = iframe_url.startsWith("ipfs://") ? ipfs_to_https(iframe_url) : iframe_url
     // console.log("iframe_url", iframe_url)
 
-    
     return (
       <Card className='cardItem'>
-        {/*<Link className="cardA" href={props.href}>*/}
-            <GeneratorIframe height={200} url={iframe_url} on_iframe_metadata_loaded={setIframeMetadata} />
-        {/*  <Image height={264} width={264} src={props.collection_or_nft.metadata.image} className="cardImg" alt={props.type === "nft" ? "Nft" : "Collection"} />*/}
-        {/*</Link>*/}
+          {props.display_iframe 
+              ?  <GeneratorIframe height={200} url={iframe_url} on_iframe_metadata_loaded={setIframeMetadata} />
+              :<> <Link className="cardA" href={props.href}>
+                    <img height={264} width={264} src={props.collection_or_nft.metadata.image} className="cardImg" alt={props.type === "nft" ? "Nft" : "Collection"} />
+                </Link></>
+          }
         
         <Card.Body style={props.type === "nft" ? {paddingTop: "0px", paddingBottom: "0px"} : {paddingTop: "8px", paddingBottom: "8px"}}>
           <Link className="cardA" href={props.href}><Card.Title className="cardTitle">{props.collection_or_nft.metadata.name}</Card.Title></Link>
@@ -47,6 +49,8 @@ export default function MyCard(props: { href:string; collection_or_nft: Collecti
               }
             </>
           }
+            {/*{console.log("zzziframemeta", iframe_metadata)}*/}
+            { iframe_metadata && <NFTPropertiesGrid metadata={iframe_metadata} />}
         </Card.Body>
       </Card>
   );

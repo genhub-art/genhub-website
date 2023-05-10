@@ -24,7 +24,7 @@ export default function MyCardsCollection(props: { href: any; type: "nft" | "col
         {/* {Array.from({ length: 18 }).map((_, idx) => ( */}
         {props?.values?.map((val, i) =>
             <Col key={`${i}`}>   
-                <MyCard type={props.type} href={get_href(val)} collection_or_nft={val} on_iframe_metadata_loaded={_ => {}} />
+                <MyCard display_iframe={false} type={props.type} href={get_href(val)} collection_or_nft={val} on_iframe_metadata_loaded={_ => {}} />
             </Col>
         )}</>
     </Row>
