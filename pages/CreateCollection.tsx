@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Title from '../components/Title';
 import CollCreationForm from '../components/CollectionCreationForm';
 import CollCreationPrew from '../components/CollectionCreationPreview';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import {Collection} from "../lib/indexer_api";
 
 export default function CreateCollection(props) {
@@ -24,7 +24,9 @@ export default function CreateCollection(props) {
         current_supply: 0,
         max_supply: 0
     });
-  
+  useEffect(() => {
+      console.log("modified collection", collection)
+  }, [collection])
   return (
     <div>
         <Title title="Create Collection" />
@@ -34,7 +36,7 @@ export default function CreateCollection(props) {
                   <CollCreationForm collection={collection} handleCollectionModified={setCollection} />
               </Col>
               <Col lg={3} sm={6} xs={12}>
-                <CollCreationPrew collection={collection} />  
+                <CollCreationPrew collection={collection} on_iframe_metadata_loaded={tmd => {console.log("ccchere"); setCollection(collection => {return {...collection, metadata: {...collection.metadata, image:tmd.image}}})} } />  
               </Col>
           </Row>
         </Container>

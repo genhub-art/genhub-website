@@ -9,23 +9,29 @@ import { cors_fixer } from "../lib/solidity_api";
 import GeneratorIframe from "./GeneratorIframe";
 import Image from "next/image";
 import NFTPropertiesGrid from "./NFTPropertiesGrid";
-export default function MyCard(props: { href:string; collection_or_nft: Collection | NFT; type:string; display_iframe: boolean; on_iframe_metadata_loaded:(tmd:ERC1155TokenMetadata) => void }) {
+
+import { v4 as uuidv4 } from 'uuid';
+export default function MyCard(props: { href:string; display_randomize?:boolean; collection_or_nft: Collection | NFT; type:string; display_iframe: boolean; on_iframe_metadata_loaded:(tmd:ERC1155TokenMetadata) => void }) {
     
     const [iframe_metadata, setIframeMetadata] = useState<ERC1155TokenMetadata | null>(null)
-    
+    const [preview_seed, setPreviewSeed] = useState<string>("x")
+    const [preview_token_id, setPreviewTokenId] = useState<number>(1)
     // console.log("card for ", props.collection_or_nft)
     // @ts-ignore
-    let iframe_url = (props.collection_or_nft.metadata?.generator_url || props.collection_or_nft.metadata?.generator_instance_url) + "/"
+    let iframe_url = (props.collection_or_nft.metadata?.generator_url || props.collection_or_nft.metadata?.generator_instance_url) + "/" + `?seed=${preview_seed}&token_id=${preview_token_id}`
     iframe_url = iframe_url.startsWith("ipfs://") ? ipfs_to_https(iframe_url) : iframe_url
     // console.log("iframe_url", iframe_url)
 
     return (
       <Card className='cardItem'>
-          {props.display_iframe 
-              ?  <GeneratorIframe height={200} url={iframe_url} on_iframe_metadata_loaded={setIframeMetadata} />
-              :<> <Link className="cardA" href={props.href}>
-                    <img height={264} width={264} src={props.collection_or_nft.metadata.image} className="cardImg" alt={props.type === "nft" ? "Nft" : "Collection"} />
-                </Link></>
+          {props.display_iframe && iframe_url.startsWith("https://") 
+              ?  <GeneratorIframe height={200} url={iframe_url} on_iframe_metadata_loaded={x => {setIframeMetadata(x); props.on_iframe_metadata_loaded(x)}} />
+              :<> 
+                  <div style={{width: "100%", height: "264px"}}>
+                  <Link className="cardA" href={props.href}>
+                  
+                    <img  src={props.collection_or_nft.metadata.image} className="cardImg" alt={props.type === "nft" ? "Nft" : "Collection"} />
+                  </Link></div></>
           }
         
         <Card.Body style={props.type === "nft" ? {paddingTop: "0px", paddingBottom: "0px"} : {paddingTop: "8px", paddingBottom: "8px"}}>
@@ -57,6 +63,10 @@ export default function MyCard(props: { href:string; collection_or_nft: Collecti
             </>
           }
             {/*{console.log("zzziframemeta", iframe_metadata)}*/}
+            { props.display_randomize && <Button onClick={() => {
+                setPreviewSeed(uuidv4())
+                setPreviewTokenId(Math.floor(Math.random() * 1000))
+            }} className="cardButton" variant="primary">Randomize</Button>}
             { iframe_metadata && <NFTPropertiesGrid metadata={iframe_metadata} />}
         </Card.Body>
       </Card>

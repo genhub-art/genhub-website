@@ -77,7 +77,7 @@ export let get_collections = async (chains: string[], collection_addresses: stri
       price: parseFloat(ethers.utils.formatUnits(coll.price.toString())),
       metadata: {
         ...coll.metadata,
-        image: ipfs_to_https(coll.metadata.image),
+        // image: ipfs_to_https(coll.metadata.image),
         generator_url: ipfs_to_https(coll.metadata.generator_url)
       }
     }}  );

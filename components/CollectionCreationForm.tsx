@@ -66,15 +66,15 @@ const modules = {
     'video',
   ]
 
-export default function CollectionCreationForm(props: { collection:Collection; handleCollectionModified: (arg0: Collection) => void; }) {
+export default function CollectionCreationForm(props: { collection:Collection; handleCollectionModified: any; }) {
 
     const inputRef = useRef(null);
-    const [collection, setCollection] = useState<Collection>(props.collection)
     const [uploading_folder, setUploadingFolder] = useState(false);
     const [creating_collection, setCreatingCollection] = useState(false);
     const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.MAINNET);
-
-    let not_ready_to_mint = () => (!collection.metadata.name || !collection.metadata.description || !collection.price || !collection.max_supply || !collection.metadata.generator_url/* TOADD: chain || chain === "Choose a chain"*/);
+    let setCollection = props.handleCollectionModified;
+    
+    let not_ready_to_mint = () => (!props.collection.metadata.name || !props.collection.metadata.description || !props.collection.price || !props.collection.max_supply || !props.collection.metadata.generator_url/* TOADD: chain || chain === "Choose a chain"*/);
 
     // useEffect(() => {
     //     console.log("Collection", collection);
@@ -101,7 +101,7 @@ export default function CollectionCreationForm(props: { collection:Collection; h
             upload_generator(e).then(r => {
                 let generator_src = ipfs_to_https(r);
                 setUploadingFolder(false);
-                setCollection({...collection, ...{metadata: {...collection.metadata, ...{generator_url: r}}}})
+                setCollection(collection => {return {...collection, ...{metadata: {...collection.metadata, ...{generator_url: r}}}}})
             });
         }
         catch(err){
@@ -110,9 +110,9 @@ export default function CollectionCreationForm(props: { collection:Collection; h
         }
     }
     
-    useEffect(() => {
-        props.handleCollectionModified(collection);
-    }, [collection]);
+    // useEffect(() => {
+        
+    // }, [collection]);
     
     // @ts-ignore
     return (
@@ -142,13 +142,13 @@ export default function CollectionCreationForm(props: { collection:Collection; h
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>Title</Form.Label>
                 <Form.Control type="text" name="item_title" id="item_title" bsPrefix="form-control my_form_control" 
-                              placeholder="e.g. 'Crypto Funk" defaultValue="" onChange={e => {setCollection({...collection, ...{metadata: {...collection.metadata, ...{name: e.target.value}}}}) }} />
+                              placeholder="e.g. 'Crypto Funk" defaultValue="" onChange={e => {setCollection(collection => {return {...collection, ...{metadata: {...collection.metadata, ...{name: e.target.value}}}}}) }} />
             </Form.Group>
             <div className="spacer-40" />
 
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>Description</Form.Label>
-                <QuillNoSSRWrapper placeholder="e.g. 'This is very limited collection!'" onChange={content => setCollection({...collection, ...{metadata: {...collection.metadata, ...{description: content}}}})} 
+                <QuillNoSSRWrapper placeholder="e.g. 'This is very limited collection!'" onChange={content => setCollection(collection => {return {...collection, ...{metadata: {...collection.metadata, ...{description: content}}}}})} 
                                    modules={modules} formats={formats} theme="snow" />
             </Form.Group>    
             <div className="spacer-40" />
@@ -156,21 +156,21 @@ export default function CollectionCreationForm(props: { collection:Collection; h
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>External URL (Optional)</Form.Label>
                 <Form.Control type="text" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
-                              placeholder="E.g. www.google.com" defaultValue="" onChange={e => setCollection({...collection, ...{metadata: {...collection.metadata, ...{external_url: e.target.value}}}})} /> 
+                              placeholder="E.g. www.google.com" defaultValue="" onChange={e => setCollection(collection => {return {...collection, ...{metadata: {...collection.metadata, ...{external_url: e.target.value}}}}})} /> 
             </Form.Group> 
             <div className="spacer-40" />
 
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>Price Per Token</Form.Label>
                 <Form.Control type="number" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
-                              placeholder="E.g. 2.5 ꜩ" defaultValue="" onChange={e => setCollection( {...collection, price: parseInt(e.target.value)})} />
+                              placeholder="E.g. 2.5 ꜩ" defaultValue="" onChange={e => setCollection(collection => {return {...collection, price: parseFloat(e.target.value)}})} />
                 <div className="spacer-40" />
             </Form.Group>
 
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>Max Supply</Form.Label>
                 <Form.Control type="number" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
-                              placeholder="E.g. 25" defaultValue="" onChange={e => setCollection({...collection, max_supply: parseInt(e.target.value)})} />
+                              placeholder="E.g. 25" defaultValue="" onChange={e => setCollection(collection => {return {...collection, max_supply: parseInt(e.target.value)}})} />
             </Form.Group>
             <div className="spacer-40" />
 
@@ -231,7 +231,7 @@ export default function CollectionCreationForm(props: { collection:Collection; h
             </DropdownButton>
             <div className="spacer-30" /> */}
             <Button id="create_coll_btn" bsPrefix="my_btn_main" onClick={async () => 
-             create_collection(collection, window)} style={creating_collection || not_ready_to_mint() ? {pointerEvents: "none", 
+             create_collection(props.collection, window)} style={creating_collection || not_ready_to_mint() ? {pointerEvents: "none", 
              backgroundColor: "#D3D3D7"} : {}}>
                 {creating_collection ? <><FaSpinner className="spinner" /> Creating...</> : <>Create Collection</>}
             </Button>
