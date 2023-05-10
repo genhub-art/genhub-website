@@ -24,7 +24,7 @@ export default function Home(props) {
   useEffect(() => {
 
     const fetch = async () => {
-        setCollections((await get_collections([], [])));
+        setCollections((await get_collections([], [], [])));
         setNFTS(await get_nfts([], [], [], []));
         setLoading(false);
     }

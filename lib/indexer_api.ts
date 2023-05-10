@@ -60,13 +60,14 @@ export type Collection = {
   current_supply: number;
 }
  
-export let get_collections = async (chains: string[], collection_addresses: string[]) : Promise<Collection[]> =>
+export let get_collections = async (chains: string[], collection_addresses: string[], collection_creators: string[]) : Promise<Collection[]> =>
 {
   try{
     let url = new URL(get_api_url + "/collections")
     if (chains.length > 0) url.searchParams.append("chain", "in.(" + chains.join(",") + ")")
     if (collection_addresses.length > 0) url.searchParams.append("address", "in.(" + collection_addresses.join(",") + ")")
-    // // console.log("collections URL Href", url.href);
+    if (collection_creators.length > 0) url.searchParams.append("creator", "in.(" + collection_creators.join(",") + ")")
+    console.log("collections URL Href", url.href);
     // let res = await http_get(url.href);
     // // console.log("collections res", res, collection_addresses);
     let res = await http_get(url.href);

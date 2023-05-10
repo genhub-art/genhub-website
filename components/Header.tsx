@@ -27,7 +27,7 @@ export default function Header(props) {
     const [beacon_pkh, setBeaconPKH] = useLocalStorage(KEYWORDS.BEACON_PKH, null);
     const [aleph0_pkh, setAleph0PKH] = useLocalStorage(KEYWORDS.ALEPH0_PKH ,null);
     const [solidity_pkh, setSolidityPKH] = useLocalStorage(KEYWORDS.SOLIDITY_PKH ,null);
-    const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.MAINNET);
+    const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.TESTNET);
     const scrollPosition = useScrollPosition();
     // const [Window, setWindow] = useState(null);
     
@@ -103,12 +103,12 @@ export default function Header(props) {
                     <iframe style={{width: `${Math.min(460, screen_width - 40)}px`, height: "550px"}} src={`https://widget.fixedfloat.com/?to=XTZ&lockReceive=true&toAmount=10&address=${props.PKH}&lockAddress=true&type=fixed`}></iframe>
                 </Modal.Body>
             </Modal>
-            <Modal scrollable={true} show={wallets_modal} onHide={() => {console.log("solidity_pkh", solidity_pkh); setWalletsModal(false)}} backdrop="static" keyboard={false} centered >
+            {/* <Modal scrollable={true} show={wallets_modal} onHide={() => {console.log("solidity_pkh", solidity_pkh); setWalletsModal(false)}} backdrop="static" keyboard={false} centered >
                 <Modal.Header closeButton>
                     <Modal.Title style={{margin: "auto"}}>Connect your wallets</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <ListGroup bsPrefix="" /*defaultActiveKey="#link1"*/>
+                    <ListGroup bsPrefix="" /*defaultActiveKey="#link1">
                         <ListGroup.Item action>
                             <Row>
                                 <Col sm={5} style={(screen_width <= 575) ? {marginBottom: "2px"} : {marginBottom: "0px"}}>
@@ -168,10 +168,10 @@ export default function Header(props) {
                         </ListGroup.Item>
                     </ListGroup>
                 </Modal.Body>
-            </Modal>
+            </Modal> */}
             <Navbar collapseOnSelect expand="lg" variant="light" bsPrefix="my_navbar navbar">
                 <Container bsPrefix="my_header_container container">
-                    <Navbar.Brand href="/" bsPrefix={style.header_logo}>LAY3RZ</Navbar.Brand>
+                    <Navbar.Brand href="/" bsPrefix={style.header_logo}>GENHUB</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
@@ -187,14 +187,15 @@ export default function Header(props) {
                         <Link className="menu_element navbar" href="CreateCollection">Create</Link>
                         <Nav.Link href="https://docs.lay3rz.xyz/" target="_blank" bsPrefix="menu_element navbar">Docs</Nav.Link>
                         {/* TOADD: Bridge <Nav.Link href="#!" bsPrefix="menu_element navbar" onClick={() => setBridgeModal(true)}>Bridge</Nav.Link> */}
-                        <Nav.Link href="https://twitter.com/LAY3RZ_XYZ" target="_blank" bsPrefix="menu_element navbar"><img className='opacity_hover' src='512x512-logo-27157.png' style={{height: "20px"}}></img></Nav.Link>
-                        <Nav.Link href="https://discord.com/invite/f9eaNt4qX4" target="_blank" bsPrefix="menu_element navbar"><img className='opacity_hover' src='discord-logo-png-7616.png' style={{height: "25px"}}></img></Nav.Link>
+                        {/* <Nav.Link href="https://twitter.com/LAY3RZ_XYZ" target="_blank" bsPrefix="menu_element navbar"><img className='opacity_hover' src='512x512-logo-27157.png' style={{height: "20px"}}></img></Nav.Link>
+                        <Nav.Link href="https://discord.com/invite/f9eaNt4qX4" target="_blank" bsPrefix="menu_element navbar"><img className='opacity_hover' src='discord-logo-png-7616.png' style={{height: "25px"}}></img></Nav.Link> */}
                         <NavDropdown title={network === KEYWORDS.MAINNET ? "Mainnet" : "Testnet"} id="basic-nav-dropdown" bsPrefix="menu_element navbar">
-                            <NavDropdown.Item href="#!" 
+                            <NavDropdown.Item href="#!" disabled
                             onClick={() => {network === KEYWORDS.MAINNET ? setNetwork(KEYWORDS.TESTNET) : setNetwork(KEYWORDS.MAINNET)}}>
-                                {network === "mainnet" ? "Testnet" : "Mainnet"}</NavDropdown.Item>
+                                {network === "mainnet" ? "Testnet" : "Mainnet (coming soon)"}</NavDropdown.Item>
                         </NavDropdown>
-                        <Button size="sm" variant="dark" bsPrefix="login_button btn" onClick={() => setWalletsModal(true)}><span className="menu_element">Wallets</span></Button>
+                        <Button size="sm" variant="dark" bsPrefix="login_button btn"><span className="menu_element">Connect Wallet</span></Button>
+                        {/* <Button size="sm" variant="dark" bsPrefix="login_button btn" onClick={() => setWalletsModal(true)}><span className="menu_element">Wallets</span></Button> */}
                     </Nav>
                     </Navbar.Collapse>
                 </Container>

@@ -15,7 +15,7 @@ export default function AllCollections(props) {
 
   useEffect(() => {
     const fetch = async () => {
-      setCollections(await get_collections([], []));
+      setCollections(await get_collections([], [], []));
       setLoading(false);
     }
     fetch();

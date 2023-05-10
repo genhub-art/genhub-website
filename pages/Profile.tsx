@@ -28,6 +28,8 @@ export default function Profile(props) {
   const [account_typ, setAccountTyp] = useState("no");
   const [loading, setLoading] = useState(true);
 
+  let replaceAt = (str, index, replacement) => str.substring(0, index) + replacement + str.substring(index + replacement.length);
+
   useEffect(() => {
 
     if(!router.isReady) return;
@@ -43,13 +45,22 @@ export default function Profile(props) {
     setAccount(acc);
     if(acc !== "My Account") setAccountTyp(router.query.account_typ as string);
     else setAccountTyp(null);
+
+    let owner_LowerCase = replaceAt(owner.toLowerCase(), 1, 'x');
+    let owner_UpperCase = replaceAt(owner.toUpperCase(), 1, 'x');
+
     let fetch = async () => {
-      let curr_nfts = await get_nfts([], [], [], [owner]);
+      let curr_nfts = await get_nfts([], [], [], [owner_LowerCase, owner_UpperCase, owner]);
       setNfts(curr_nfts);
+      let curr_collections = [];
       // @ts-ignore
-      let curr_collections = await get_collections([], [...new Set(curr_nfts.map(nft => nft.collection))]);
+      if([...new Set(curr_nfts.map(nft => nft.collection))].length){
+        // @ts-ignore
+        curr_collections = await get_collections([], [...new Set(curr_nfts.map(nft => nft.collection))], []);
+      }
       setCollections(curr_collections);
       setCreations(curr_collections);
+      setCreations(await get_collections([], [], [owner_LowerCase, owner_UpperCase, owner]));
       setLoading(false);
     }
 
@@ -71,10 +82,9 @@ export default function Profile(props) {
             <Tab tabClassName="tabText" eventKey="collections" title="Collections">
                 <MyCardsCollection values={collections} href={"CollectionDetails"} type="collection" />
             </Tab>
-            {/* TOADD: Creations
             <Tab tabClassName="tabText" eventKey="creations" title="Creations">
-                <MyCardsCollection values={creations} href={"CollectionDetails"} typ="collection" />
-            </Tab> */}
+                <MyCardsCollection values={creations} href={"CollectionDetails"} type="collection" />
+            </Tab>
           </Tabs>
           {/* <div className="spacer-60" />
           <div className="spacer-30" /> */}
