@@ -93,10 +93,10 @@ export default function CollectionDetailsInfo(props) {
             <h6 className="index_title" style={{fontSize: "14px"}}>Author</h6>
             <div className='spacer-10' />
             
-            <Link target={"_blank"} title={props.collection.creator} href={`Profile?account=${props.collection.creator}&account_typ=solidity_pkh`} className="aTag" id="detATag" style={{marginRight: "2.5px"}}>
-                {shortening_str(props.collection.creator, 12, 12)}
+            <Link target={"_blank"} title={props?.collection?.creator} href={`Profile?account=${props?.collection?.creator}&account_typ=solidity_pkh`} className="aTag" id="detATag" style={{marginRight: "2.5px"}}>
+                {shortening_str(props?.collection?.creator, 12, 12)}
             </Link>&nbsp;&nbsp;
-            <a id="btn_copy" title="Copy Text" onClick={() => {navigator.clipboard.writeText(props.collection.creator); copy(1);}} href="#!" ref={refs.ref_copy_1}>Copy</a>
+            <a id="btn_copy" title="Copy Text" onClick={() => {navigator.clipboard.writeText(props?.collection?.creator); copy(1);}} href="#!" ref={refs.ref_copy_1}>Copy</a>
             <div className='spacer-30' />
             {/* TOADD: Author and Embed 
             <h6 className="index_title" style={{fontSize: "14px"}}>Embed</h6>
