@@ -1,17 +1,17 @@
 export let collection_abi = [
 	"constructor(address,string,uint256,uint256)",
+	"event Approval(address indexed,address indexed,uint256 indexed)",
 	"event ApprovalForAll(address indexed,address indexed,bool)",
-	"event TransferBatch(address indexed,address indexed,address indexed,uint256[],uint256[])",
-	"event TransferSingle(address indexed,address indexed,address indexed,uint256,uint256)",
-	"event URI(string,uint256 indexed)",
-	"function balanceOf(address,uint256) view returns (uint256)",
-	"function balanceOfBatch(address[],uint256[]) view returns (uint256[])",
+	"event Transfer(address indexed,address indexed,uint256 indexed)",
+	"function approve(address,uint256)",
+	"function balanceOf(address) view returns (uint256)",
 	"function burn(uint256)",
 	"function contractURI() view returns (string)",
 	"function contract_metadata() view returns (string)",
 	"function creator() view returns (address)",
 	"function current_tid() view returns (uint256)",
 	"function fee_recipient() view returns (address)",
+	"function getApproved(uint256) view returns (address)",
 	"function getCreator() view returns (address)",
 	"function getCurrentTid() view returns (uint256)",
 	"function getMaxTid() view returns (uint256)",
@@ -20,19 +20,26 @@ export let collection_abi = [
 	"function isApprovedForAll(address,address) view returns (bool)",
 	"function max_tid() view returns (uint256)",
 	"function mint(string) payable",
+	"function name() view returns (string)",
+	"function ownerOf(uint256) view returns (address)",
 	"function percent_fee() view returns (uint256)",
 	"function price() view returns (uint256)",
-	"function safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
-	"function safeTransferFrom(address,address,uint256,uint256,bytes)",
+	"function safeTransferFrom(address,address,uint256)",
+	"function safeTransferFrom(address,address,uint256,bytes)",
 	"function setApprovalForAll(address,bool)",
 	"function setPrice(uint256)",
 	"function supportsInterface(bytes4) view returns (bool)",
+	"function symbol() view returns (string)",
+	"function tokenURI(uint256) view returns (string)",
 	"function token_params(uint256) view returns (string)",
 	"function token_url_parts() view returns (string, string, string)",
+	"function transferFrom(address,address,uint256)",
 	"function uri(uint256) view returns (string)"
 ]
-export let factory_abi = [
+
+export let factory_abi =[
 	"function cols(uint256) view returns (address)",
 	"function deploy(string,uint256,uint256) payable",
 	"function getAllCollections() view returns (address[])"
 ]
+ 
