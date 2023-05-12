@@ -34,12 +34,11 @@ export default function Home(props) {
 
   }, []);
   
-
   return (
     <Container>
       <Row style={{paddingBottom: "90px"}}>
         <Col md={6}><IndexPresentation /></Col>
-        <Col md={6} bsPrefix="d-none d-sm-block col"><MyCarousel nfts={nfts} /></Col>
+        <Col md={6} bsPrefix="d-none d-sm-block col"><MyCarousel nfts={nfts as NFT[]} /></Col>
       </Row>
       <Row>
         {/* <h3>Wallet: {address}</h3>
