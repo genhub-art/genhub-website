@@ -7,6 +7,15 @@ import { mint_nft } from "../lib/solidity_api";
 import { add_back_youtube_videos, save_youtube_videos } from '../lib/utils';
 import DOMPurify from 'dompurify';
 import Link from 'next/link';
+import { FaSpinner } from 'react-icons/fa';
+import { useAccount, useDisconnect, useContract } from "wagmi";
+import { useWeb3Modal } from "@web3modal/react";
+import {
+    bscTestnet,
+    fantomTestnet,
+    polygonMumbai,
+    sepolia,
+  } from "wagmi/chains";
 export default function CollectionDetailsInfo(props) {
     // console.log("CollectionDetailsInfo", props);
     const refs = {
@@ -15,6 +24,11 @@ export default function CollectionDetailsInfo(props) {
         ref_copy_3: useRef(null)
     }
 
+    const { open, isOpen, close, setDefaultChain } = useWeb3Modal();
+    let acc = useAccount({onConnect: ({address, connector}) => setAccount({address, connector}),
+                            onDisconnect: () => setAccount({address: null, connector: null})});
+    const [account, setAccount] = useState({address: acc.address, connector: acc.connector});
+    const [minting, setMinting] = useState(false);
     const [iframe_code, setIframeCode] = useState(`<iframe src='https://lay3rz.xyz/CollectionDetailsIframe?collection=KT1SGYrBDC7ZJhpfT9snZSZc4skjvJtPsUnS&header=false' width='100%' height='1000px' />`);
     const [iframe_url, setIframeUrl] = useState(`https://lay3rz.xyz/CollectionDetailsIframe?collection=KT1SGYrBDC7ZJhpfT9snZSZc4skjvJtPsUnS&header=false`);
     const [add_nft, setAddNFT] = useState(false);
@@ -41,6 +55,26 @@ export default function CollectionDetailsInfo(props) {
         let [src, yt_videos] = save_youtube_videos(props?.collection?.metadata?.description);
         return add_back_youtube_videos(DOMPurify.sanitize(src, { USE_PROFILES: { html: true }}).replace("<a", '<a target="_blank"'), yt_videos);
     }
+
+    let mint = async () => {
+        setMinting(true);
+        if(!account.connector){
+            setDefaultChain(bscTestnet);
+            await open();
+            return;
+        }
+        await account.connector.connect({chainId: bscTestnet.id});
+        await mint_nft(props?.collection.address, props?.collection?.price, window);
+        setMinting(false);
+    }
+
+    useEffect(() => {
+        
+        if(!account.connector) return;
+
+        if(minting) mint();
+
+    }, [account.address]);
 
     return (
         <>
@@ -111,9 +145,9 @@ export default function CollectionDetailsInfo(props) {
             <Link target={"_blank"} title={iframe_url} href="Profile" className="aTag" id="detATag">{shortening_str(iframe_url, 30, 0)}</Link>&nbsp;&nbsp;
             <a id="btn_copy" title="Copy Text" onClick={() => {navigator.clipboard.writeText(iframe_url); copy(3);}} href="#!" ref={refs.ref_copy_3}>Copy</a>
             <div className='spacer-20' /> */}
-            <a className='my_btn_main' id="edit_btn" href="#!" 
-                onClick={() => mint_nft(props?.collection.address, props?.collection?.price, window)}>
-                Mint {props?.collection?.price}
+            <a className='my_btn_main' id="edit_btn" href="#!" onClick={() => mint()} 
+                style={minting ? {pointerEvents: "none", backgroundColor: "#D3D3D7"} : {}}>
+                {minting ? <><FaSpinner className="spinner" /> Minting...</> : <>Mint {props?.collection?.price} BNB</>}
             </a>
             {/* TOADD: Edit Collection 
             &nbsp;&nbsp;&nbsp;
@@ -130,7 +164,7 @@ export default function CollectionDetailsInfo(props) {
                     Add NFT&nbsp;&nbsp;
                     <Image src="/angle-down.svg" width={15} height={15} style={{position: 'relative', top: "-1px"}} />
                   </a>
-            } */}
+            }
             {add_nft &&
                 <Form>
                     <div className='spacer-30' />
@@ -138,9 +172,9 @@ export default function CollectionDetailsInfo(props) {
                         
                         <Form.Label className="index_title" style={{fontSize: "18px"}}>Upload Folder</Form.Label>
                         <div className="d-create-file">
-                            {/* <p ref={refUplLd} style={{display: "none"}}><i className="fa fa-spinner fa-pulse"></i> Uploading...</p> */}
-                            <Form.Control /*ref={refUplBr}*/ type="button" id="get_file" bsPrefix="my_btn_main" value="Browse" />
-                            {/* <input type="file" id="upload_file" webkitdirectory="true" mozdirectory="true" onChange={upload_generator} /> */}
+                            {/* <p ref={refUplLd} style={{display: "none"}}><i className="fa fa-spinner fa-pulse"></i> Uploading...</p>
+                            <Form.Control /*ref={refUplBr} type="button" id="get_file" bsPrefix="my_btn_main" value="Browse" />
+                            {/* <input type="file" id="upload_file" webkitdirectory="true" mozdirectory="true" onChange={upload_generator} />
                         </div>
                     </Form.Group>
                     <div className="spacer-40" />
@@ -161,16 +195,16 @@ export default function CollectionDetailsInfo(props) {
                         <Col lg={6} sm={6} xs={12}>
                             <h5 className="index_title" style={{fontSize: "18px"}}>Preview Collection Card</h5>
                             <div className="spacer-5" />
-                            {/*<MyCard href="#!" title={"Collection 1"} image={"/preview.jpg"} price={0.4} curr_tid={6} max_tid={6} typ={"no buttons"} />*/}
+                            {/*<MyCard href="#!" title={"Collection 1"} image={"/preview.jpg"} price={0.4} curr_tid={6} max_tid={6} typ={"no buttons"} />
                         </Col>
                     </Row>
                     <div className="spacer-20" />
         
                     <Form.Control disabled={!title || !desc} type="button" id="create_coll_btn" bsPrefix="my_btn_main" value="Mint" />
-                    {/* <div className="spacer-40" /> */}
+                    {/* <div className="spacer-40" />
 
                 </Form>
-            }
+            }*/}
         </>
     )
 }

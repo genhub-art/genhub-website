@@ -18,6 +18,14 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import useLocalStorage from '../custom_hooks/useLocalStorage';
 import { KEYWORDS } from '../pages/_app';
 import {Collection} from "../lib/indexer_api";
+import { useWeb3Modal } from "@web3modal/react";
+import { useAccount, useDisconnect, useContract } from "wagmi";
+import {
+    bscTestnet,
+    fantomTestnet,
+    polygonMumbai,
+    sepolia,
+  } from "wagmi/chains";
 // import { DateTimeField } from 'react-bootstrap-datetimepicker';
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {	
 	ssr: false,
@@ -68,11 +76,27 @@ const modules = {
 
 export default function CollectionCreationForm(props: { collection:Collection; handleCollectionModified: any; }) {
 
+    const { open, isOpen, close, setDefaultChain } = useWeb3Modal();
+    let acc = useAccount({onConnect: ({address, connector}) => setAccount({address, connector}), 
+                            onDisconnect: () => setAccount({address: null, connector: null})});
+    const [account, setAccount] = useState({address: acc.address, connector: acc.connector});
     const inputRef = useRef(null);
     const [uploading_folder, setUploadingFolder] = useState(false);
     const [creating_collection, setCreatingCollection] = useState(false);
     const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.MAINNET);
     let setCollection = props.handleCollectionModified;
+    
+    let call_create_collection = async () => {
+        setCreatingCollection(true);
+        if(!account.connector){
+            setDefaultChain(bscTestnet);
+            await open();
+            return;
+        }
+        await account.connector.connect({chainId: bscTestnet.id});
+        await create_collection(props.collection, window);
+        setCreatingCollection(false);
+    }
     
     let not_ready_to_mint = () => (!props.collection.metadata.name || !props.collection.metadata.description || !props.collection.price || !props.collection.max_supply || !props.collection.metadata.generator_url/* TOADD: chain || chain === "Choose a chain"*/);
 
@@ -102,6 +126,7 @@ export default function CollectionCreationForm(props: { collection:Collection; h
                 let generator_src = ipfs_to_https(r);
                 setUploadingFolder(false);
                 setCollection(collection => {return {...collection, ...{metadata: {...collection.metadata, ...{generator_url: r}}}}})
+                inputRef.current.value = null;
             });
         }
         catch(err){
@@ -110,9 +135,15 @@ export default function CollectionCreationForm(props: { collection:Collection; h
         }
     }
     
-    // useEffect(() => {
+    useEffect(() => {
         
-    // }, [collection]);
+        if(!account.connector) return;
+        let fetch = async () => {
+            await call_create_collection();
+        };
+        if(creating_collection) fetch();
+
+    }, [account.address]);
     
     // @ts-ignore
     return (
@@ -163,7 +194,7 @@ export default function CollectionCreationForm(props: { collection:Collection; h
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>Price Per Token</Form.Label>
                 <Form.Control type="number" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
-                              placeholder="E.g. 2.5 ꜩ" defaultValue="" onChange={e => setCollection(collection => {return {...collection, price: parseFloat(e.target.value)}})} />
+                              placeholder="E.g. 2.5 BNB" defaultValue="" onChange={e => setCollection(collection => {return {...collection, price: parseFloat(e.target.value)}})} />
                 <div className="spacer-40" />
             </Form.Group>
 
@@ -230,9 +261,8 @@ export default function CollectionCreationForm(props: { collection:Collection; h
                 </Dropdown.Item>
             </DropdownButton>
             <div className="spacer-30" /> */}
-            <Button id="create_coll_btn" bsPrefix="my_btn_main" onClick={async () => 
-             create_collection(props.collection, window)} style={creating_collection || not_ready_to_mint() ? {pointerEvents: "none", 
-             backgroundColor: "#D3D3D7"} : {}}>
+            <Button id="create_coll_btn" bsPrefix="my_btn_main" onClick={async () => call_create_collection()} 
+                    style={creating_collection || not_ready_to_mint() ? {pointerEvents: "none", backgroundColor: "#D3D3D7"} : {}}>
                 {creating_collection ? <><FaSpinner className="spinner" /> Creating...</> : <>Create Collection</>}
             </Button>
             <div className="spacer-40" />

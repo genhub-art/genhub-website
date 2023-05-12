@@ -21,7 +21,7 @@ export const create_collection = async (
     if(!collection.metadata) return;
     // console.log("Collection metadata", collection.metadata);
     let uploaded_metadata = await upload_metadata(collection.metadata);
-    let upload_image = await upload_to_ipfs(collection.metadata.image);
+    // let upload_image = await upload_to_ipfs(collection.metadata.image);
     let rpc_url = rpc_urls[collection.chain];
     // let provider = new ethers.providers.JsonRpcProvider(rpc_url)
     let provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -36,9 +36,10 @@ export const create_collection = async (
     // return;
     // Call the 'deploy' function on the factory contract
     const deployTx = await factoryContract.deploy(uploaded_metadata, collection.max_supply, 
-                                                  ethers.utils.parseUnits(collection.price.toString(), 'ether'));
-    await deployTx.wait();
-    await fetch(cors_fixer + "https://nftm-indexer-s5knoljafq-ey.a.run.app/");
+                                                  ethers.utils.parseUnits(collection.price.toString(), 'ether'))
+                                                  .catch((e: any) => {console.log("transaction rejected")  });
+    await deployTx?.wait().catch((e: any) => {console.log("insufficient funds or gas fee")  });
+    await fetch(cors_fixer + "https://nftm-indexer-s5knoljafq-ey.a.run.app/").catch((e: any) => {console.log("internal error")  });
   };
 
   export const mint_nft = async (
@@ -58,9 +59,9 @@ export const create_collection = async (
     // return;
     let price_string;
     if(price < 0.000000001) price_string = price.toFixed(20).toString(); else price_string = price.toString();
-    const tx = await collectionContract.mint("", { value:  ethers.utils.parseUnits(price_string, "ether")});
-    await tx.wait();
-    await fetch(cors_fixer + "https://nftm-indexer-s5knoljafq-ey.a.run.app/");
+    const tx = await collectionContract.mint("", { value:  ethers.utils.parseUnits(price_string, "ether")}).catch((e: any) => {console.log("transaction rejected")  });
+    await tx?.wait().catch((e: any) => {console.log("insufficient funds or gas fee")  });
+    await fetch(cors_fixer + "https://nftm-indexer-s5knoljafq-ey.a.run.app/").catch((e: any) => {console.log("internal error")  });
   }
 
 // export let create_collection = async (c:Collection) => {

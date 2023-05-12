@@ -54,7 +54,7 @@ export default function EditCollection(props) {
 
                     <Form.Group>
                         <Form.Label className="index_title" style={{fontSize: "18px"}}>Price Per Token</Form.Label>
-                        <Form.Control type="text" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" placeholder="E.g. 2.5 ꜩ" defaultValue="" onChange={e => setPrice(e.target.value)} />
+                        <Form.Control type="text" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" placeholder="E.g. 2.5 BNB" defaultValue="" onChange={e => setPrice(e.target.value)} />
                         <div className="spacer-40" />
                     </Form.Group>
 

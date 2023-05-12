@@ -18,9 +18,21 @@ import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useWeb3Modal } from "@web3modal/react";
+import { useAccount, useDisconnect, useContract } from "wagmi";
+import {
+    bscTestnet,
+    fantomTestnet,
+    polygonMumbai,
+    sepolia,
+  } from "wagmi/chains";
 
 export default function Header(props) {
 
+    const [loading, setLoading] = useState(false);
+    const { open, isOpen, close, setDefaultChain } = useWeb3Modal();
+    const { isConnected } = useAccount();
+    const { disconnect } = useDisconnect();
     const [bridge_modal, setBridgeModal] = useState(false);
     const [wallets_modal, setWalletsModal] = useState(false);
     const [screen_width, setScreenWidth] = useState(993);
@@ -29,6 +41,22 @@ export default function Header(props) {
     const [solidity_pkh, setSolidityPKH] = useLocalStorage(KEYWORDS.SOLIDITY_PKH ,null);
     const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.TESTNET);
     const scrollPosition = useScrollPosition();
+
+    async function onOpen() {
+        setLoading(true);
+        // setDefaultChain(sepolia);
+        setDefaultChain(bscTestnet);
+        await open();
+        setLoading(false);
+    }
+
+    function onClick() {
+        if (isConnected) {
+            disconnect();
+        } else {
+            onOpen();
+        }
+    }
     // const [Window, setWindow] = useState(null);
     
     let beacon_connect = () => {
@@ -194,7 +222,9 @@ export default function Header(props) {
                             onClick={() => {network === KEYWORDS.MAINNET ? setNetwork(KEYWORDS.TESTNET) : setNetwork(KEYWORDS.MAINNET)}}>
                                 {network === "mainnet" ? "Testnet" : "Mainnet (coming soon)"}</NavDropdown.Item>
                         </NavDropdown>
-                        <Button size="sm" variant="dark" bsPrefix="login_button btn"><span className="menu_element">Connect Wallet</span></Button>
+                        <Button size="sm" variant="dark" bsPrefix="login_button btn" onClick={onClick}>
+                            <span className="menu_element">{isConnected ? "Disconnect Wallet" : "Connect Wallet"}</span>
+                        </Button>
                         {/* <Button size="sm" variant="dark" bsPrefix="login_button btn" onClick={() => setWalletsModal(true)}><span className="menu_element">Wallets</span></Button> */}
                     </Nav>
                     </Navbar.Collapse>
