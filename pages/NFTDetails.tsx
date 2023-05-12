@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NftDetailsPreview from '../components/NftDetailsPreview';
 import NftDetialsInfo from '../components/NftDetialsInfo';
-import { get_collections, get_nfts, Collection, NFT } from '../lib/indexer_api';
+import { get_collections, get_nfts, Collection, NFT, database_awake } from '../lib/indexer_api';
 
 export default function NftDetails(props) {
 
@@ -23,6 +23,7 @@ export default function NftDetails(props) {
         let token_id = router.query.token_id as string;
 
         const fetch = async () => {
+            await database_awake();
             setNFT((await get_nfts([], [collection_address], [token_id], []))[0]);
             setCollection((await get_collections([], [collection_address], []))[0]);
             setLoading(false);

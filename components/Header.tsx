@@ -9,7 +9,7 @@ import style from '../styles/Header.module.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { tezos, aleph0, solidity } from '../lib/blockchains';
-import useLocalStorage from '../custom_hooks/useLocalStorage';
+// import useLocalStorage from '../custom_hooks/useLocalStorage';
 import { KEYWORDS } from '../pages/_app';
 import useScrollPosition from '../custom_hooks/useScrollPosition';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -36,10 +36,11 @@ export default function Header(props) {
     const [bridge_modal, setBridgeModal] = useState(false);
     const [wallets_modal, setWalletsModal] = useState(false);
     const [screen_width, setScreenWidth] = useState(993);
-    const [beacon_pkh, setBeaconPKH] = useLocalStorage(KEYWORDS.BEACON_PKH, null);
-    const [aleph0_pkh, setAleph0PKH] = useLocalStorage(KEYWORDS.ALEPH0_PKH ,null);
-    const [solidity_pkh, setSolidityPKH] = useLocalStorage(KEYWORDS.SOLIDITY_PKH ,null);
-    const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.TESTNET);
+    // const [beacon_pkh, setBeaconPKH] = useLocalStorage(KEYWORDS.BEACON_PKH, null);
+    // const [aleph0_pkh, setAleph0PKH] = useLocalStorage(KEYWORDS.ALEPH0_PKH ,null);
+    // const [solidity_pkh, setSolidityPKH] = useLocalStorage(KEYWORDS.SOLIDITY_PKH ,null);
+    // const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.TESTNET);
+    const [network, setNetwork] = useState(KEYWORDS.TESTNET);
     const scrollPosition = useScrollPosition();
 
     async function onOpen() {
@@ -59,40 +60,40 @@ export default function Header(props) {
     }
     // const [Window, setWindow] = useState(null);
     
-    let beacon_connect = () => {
-        if(!beacon_pkh){
-            tezos.connect().then(pkh =>{
-                // console.log("Button PKH", pkh); 
-                setBeaconPKH(pkh);
-            }); 
-        }
-        else{
-            tezos.disconnect().then(res=>{
-                if(!res) return;
-                setBeaconPKH(null);
-            });   
-        }
-    }
+    // let beacon_connect = () => {
+    //     if(!beacon_pkh){
+    //         tezos.connect().then(pkh =>{
+    //             // console.log("Button PKH", pkh); 
+    //             setBeaconPKH(pkh);
+    //         }); 
+    //     }
+    //     else{
+    //         tezos.disconnect().then(res=>{
+    //             if(!res) return;
+    //             setBeaconPKH(null);
+    //         });   
+    //     }
+    // }
 
-    let aleph0_connect = () => {
-        if(!aleph0_pkh){
-            aleph0.connect().then(pkh =>{
-                // console.log("Button PKH", pkh);
-                setAleph0PKH(pkh);
-            });
-        }
-        else {setAleph0PKH(null);}
-    }
+    // let aleph0_connect = () => {
+    //     if(!aleph0_pkh){
+    //         aleph0.connect().then(pkh =>{
+    //             // console.log("Button PKH", pkh);
+    //             setAleph0PKH(pkh);
+    //         });
+    //     }
+    //     else {setAleph0PKH(null);}
+    // }
 
-    let solidity_connect = () => {
-        if(!solidity_pkh){
-            solidity.connect(window).then(pkh =>{
-                // console.log("Button PKH", pkh); 
-                setSolidityPKH(pkh);
-            });
-        }
-        else{setSolidityPKH(null);}
-    }
+    // let solidity_connect = () => {
+    //     if(!solidity_pkh){
+    //         solidity.connect(window).then(pkh =>{
+    //             // console.log("Button PKH", pkh); 
+    //             setSolidityPKH(pkh);
+    //         });
+    //     }
+    //     else{setSolidityPKH(null);}
+    // }
 
     useEffect(() => {
 
@@ -209,9 +210,10 @@ export default function Header(props) {
                         <Link className="menu_element navbar" href="/">Home</Link>
                         <Link className="menu_element navbar" href="AllCollections">Collections</Link>
                         {/* TOADD: Marketplace <Link className="menu_element navbar" href="Marketplace">Marketplace</Link> */}
-                        {(beacon_pkh || solidity_pkh || aleph0_pkh) && 
+                        <Link className="menu_element navbar" href="Profile?account=My Account">Profile</Link>
+                        {/* {(beacon_pkh || solidity_pkh || aleph0_pkh) && 
                             <Link className="menu_element navbar" href="Profile?account=My Account">Profile</Link>
-                        }
+                        } */}
                         <Link className="menu_element navbar" href="CreateCollection">Create</Link>
                         <Nav.Link href="https://docs.lay3rz.xyz/" target="_blank" bsPrefix="menu_element navbar">Docs</Nav.Link>
                         {/* TOADD: Bridge <Nav.Link href="#!" bsPrefix="menu_element navbar" onClick={() => setBridgeModal(true)}>Bridge</Nav.Link> */}

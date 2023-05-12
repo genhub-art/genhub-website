@@ -32,25 +32,30 @@ export default function ProfilePublicKeys(props) {
 
     useEffect(() => {
 
-        // console.log("Props changed", props);
+        console.log("Props changed", props);
 
         if(props.solidity_pkh && props.account === "My Account") setSolidityPKH(props.solidity_pkh);
 
-        if(props.account_typ === "solidity_pkh") {setSolidityPKH(props.account); setAleph0PKH(null); setBeaconPKH(null);}
+        if((!props.solidity_pkh) && props.account === "My Account") setSolidityPKH(null);
+
+        if(props.account_typ === "solidity_pkh" && props.account !== "My Account") {setSolidityPKH(props.account); setAleph0PKH(null); setBeaconPKH(null);}
 
         if(props.beacon_pkh && props.account === "My Account") setBeaconPKH(props.beacon_pkh);
 
-        if(props.account_typ === "beacon_pkh") {setBeaconPKH(props.account); setAleph0PKH(null); setSolidityPKH(null);}
+        if(props.account_typ === "beacon_pkh" && props.account !== "My Account") {setBeaconPKH(props.account); setAleph0PKH(null); setSolidityPKH(null);}
 
         if(props.aleph0_pkh && props.account === "My Account") setAleph0PKH(props.aleph0_pkh);
 
-        if(props.account_typ === "aleph0_pkh") {setAleph0PKH(props.account); setBeaconPKH(null); setSolidityPKH(null);}
+        if(props.account_typ === "aleph0_pkh" && props.account !== "My Account") {setAleph0PKH(props.account); setBeaconPKH(null); setSolidityPKH(null);}
     
       }, [props]);
    
     return (
         <>
-            <h6 className="index_title" style={{fontSize: "18px"}}>Pub Key:</h6>
+            {(!solidity_pkh) 
+                ? <h6 className="index_title" style={{fontSize: "18px"}}>No wallet connected!</h6>
+                : <h6 className="index_title" style={{fontSize: "18px"}}>Pub Key:</h6>
+            }
             {(solidity_pkh) &&
                 <>
                     <Link title={solidity_pkh} href={`Profile?account=${solidity_pkh}&account_typ=solidity_pkh`} className="aTag" id="detATag">
@@ -58,9 +63,9 @@ export default function ProfilePublicKeys(props) {
                         {/* {props.solidity_pkh.substring(0, 12) + "..." + props.solidity_pkh.substring(props.solidity_pkh.length - 12, props.solidity_pkh.length)} */}
                     </Link>&nbsp;&nbsp;
                     <a id="btn_copy" title="Copy Text" onClick={() => {navigator.clipboard.writeText(solidity_pkh); copy(1);}} href="#!" ref={refs.ref_copy_1}>Copy</a>
-                    <div className="spacer-60"></div>
                 </>
             }
+            <div className="spacer-60"></div>
             {/* {console.log("Profile Pub Keys: ", props)} */}
             {/* <h6 className="index_title" style={{fontSize: "18px"}}>Pub Keys:</h6>
             {(solidity_pkh) &&

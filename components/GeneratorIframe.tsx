@@ -32,5 +32,6 @@ export default function GeneratorIframe(props: {className?:string; height?:numbe
         return () => window.removeEventListener("message", (event) => { console.log("xxxRemove event listener") })
         }
     }, [])
-    return <iframe className={props.className} height={props.height} width={props.width} id={"generator_iframe"} src={(props.url)} scrolling="no" style={{...props.style, overflow: "hidden"}}></iframe>
+    return <iframe className={props.className} height={props.height} width={props.width} id={"generator_iframe"} src={(props.url)} 
+                    scrolling="no" style={{...props.style, overflow: "hidden"}}></iframe>
 }

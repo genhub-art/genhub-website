@@ -5,6 +5,7 @@ import MyCarousel from '../components/MyCarousel';
 import MyOwlCarousel from '../components/MyOwlCarousel';
 import Image from 'next/image';
 import Container from 'react-bootstrap/Container';
+import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Title from '../components/Title';
@@ -54,7 +55,13 @@ export default function EditCollection(props) {
 
                     <Form.Group>
                         <Form.Label className="index_title" style={{fontSize: "18px"}}>Price Per Token</Form.Label>
-                        <Form.Control type="text" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" placeholder="E.g. 2.5 BNB" defaultValue="" onChange={e => setPrice(e.target.value)} />
+                        <InputGroup>
+                            <Form.Control type="text" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
+                                            placeholder="E.g. 2.5 BNB" defaultValue="" onChange={e => setPrice(e.target.value)} />
+                            <InputGroup.Text>
+                                <Image width={27} height={27} src="/bnb_logo.png" alt="" />&nbsp;BNB
+                            </InputGroup.Text>
+                        </InputGroup>
                         <div className="spacer-40" />
                     </Form.Group>
 

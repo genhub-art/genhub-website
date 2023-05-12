@@ -441,14 +441,17 @@ p {
 } */
 
 .cardImg{
-  width: 100%;
+  max-width: 100%;
   text-align: center;
   display: flex;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  /* margin-top: 20px;
+  margin-bottom: 20px; */
   justify-content: center;
   position: relative;
+  max-height: 264px;
+  height: auto;
+  width: auto;
 }
 
 .cardButton{

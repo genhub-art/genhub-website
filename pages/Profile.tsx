@@ -5,10 +5,11 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import MyCardsCollection from '../components/MyCardsCollection';
 import ProfilePublicKeys from '../components/ProfilePublicKeys';
-import useLocalStorage from '../custom_hooks/useLocalStorage';
+// import useLocalStorage from '../custom_hooks/useLocalStorage';
 import { KEYWORDS } from '../pages/_app';
 import { useRouter } from 'next/router';
-import { get_collections, get_nfts, Collection, NFT } from '../lib/indexer_api';
+import { get_collections, get_nfts, Collection, NFT, database_awake } from '../lib/indexer_api';
+import { useAccount, useDisconnect, useContract } from "wagmi";
 
 export default function Profile(props) {
 
@@ -16,14 +17,16 @@ export default function Profile(props) {
 
   const loading_collection = {chain: "", address: "", metadata: {name: "Loading...", description: "", image: "/Loading.gif",
                                          external_url: "", generator_url: ""}, price: 0, max_supply: 0, current_supply: 0};
-
+  let acc = useAccount({onConnect: ({address, connector}) => setMyAccount({address, connector}), 
+                        onDisconnect: () => setMyAccount({address: null, connector: null})});
+  const [my_account, setMyAccount] = useState({address: acc.address, connector: acc.connector});
   const [tabs_key, setTabsKey] = useState('nfts');
   const [collections, setCollections] = useState(Array(8).fill(loading_collection));
   const [nfts, setNfts] = useState(Array(8).fill(loading_collection));
   const [creations, setCreations] = useState(Array(8).fill(loading_collection));
-  const [beacon_pkh, setBeaconPKH] = useLocalStorage(KEYWORDS.BEACON_PKH, null);
-  const [aleph0_pkh, setAleph0PKH] = useLocalStorage(KEYWORDS.ALEPH0_PKH ,null);
-  const [solidity_pkh, setSolidityPKH] = useLocalStorage(KEYWORDS.SOLIDITY_PKH ,null);
+  // const [beacon_pkh, setBeaconPKH] = useLocalStorage(KEYWORDS.BEACON_PKH, null);
+  // const [aleph0_pkh, setAleph0PKH] = useLocalStorage(KEYWORDS.ALEPH0_PKH ,null);
+  // const [solidity_pkh, setSolidityPKH] = useLocalStorage(KEYWORDS.SOLIDITY_PKH ,null);
   const [account, setAccount] = useState("");
   const [account_typ, setAccountTyp] = useState("no");
   const [loading, setLoading] = useState(true);
@@ -38,7 +41,7 @@ export default function Profile(props) {
     let acc = router.query.account as string;
     let owner = "";
     
-    if(solidity_pkh && acc === "My Account") owner = solidity_pkh;
+    if(my_account.address && acc === "My Account") owner = my_account.address;
 
     if(acc !== "My Account" && router.query.account_typ === "solidity_pkh") owner = acc;
 
@@ -50,6 +53,7 @@ export default function Profile(props) {
     let owner_UpperCase = replaceAt(owner.toUpperCase(), 1, 'x');
 
     let fetch = async () => {
+      await database_awake();
       let curr_nfts = await get_nfts([], [], [], [owner_LowerCase, owner_UpperCase, owner]);
       setNfts(curr_nfts);
       let curr_collections = [];
@@ -66,7 +70,7 @@ export default function Profile(props) {
 
     fetch();
 
-  }, [router.isReady, router.query, solidity_pkh]);
+  }, [router.isReady, router.query, my_account.address]);
   
   return (
     <div>
@@ -74,7 +78,7 @@ export default function Profile(props) {
         <div className="spacer-60"></div>
         <div className="spacer-20"></div>
         <Container>    
-          <ProfilePublicKeys beacon_pkh={beacon_pkh} solidity_pkh={solidity_pkh} aleph0_pkh={aleph0_pkh} account={account} account_typ={account_typ} />
+          <ProfilePublicKeys /*beacon_pkh={beacon_pkh}*/ solidity_pkh={my_account.address?.toLocaleLowerCase()} /*aleph0_pkh={aleph0_pkh}*/ account={account} account_typ={account_typ} />
           <Tabs id="controlled-tab-example" activeKey={tabs_key} onSelect={(k) => setTabsKey(k)} className="mb-3">
             <Tab tabClassName="tabText" eventKey="nfts" title="NFTs">
                 <MyCardsCollection values={nfts} href={"NFTDetails"} type="nft" />

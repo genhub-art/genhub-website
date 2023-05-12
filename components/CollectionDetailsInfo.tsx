@@ -7,6 +7,7 @@ import { mint_nft } from "../lib/solidity_api";
 import { add_back_youtube_videos, save_youtube_videos } from '../lib/utils';
 import DOMPurify from 'dompurify';
 import Link from 'next/link';
+import Image from 'next/image';
 import { FaSpinner } from 'react-icons/fa';
 import { useAccount, useDisconnect, useContract } from "wagmi";
 import { useWeb3Modal } from "@web3modal/react";
@@ -147,7 +148,10 @@ export default function CollectionDetailsInfo(props) {
             <div className='spacer-20' /> */}
             <a className='my_btn_main' id="edit_btn" href="#!" onClick={() => mint()} 
                 style={minting ? {pointerEvents: "none", backgroundColor: "#D3D3D7"} : {}}>
-                {minting ? <><FaSpinner className="spinner" /> Minting...</> : <>Mint {props?.collection?.price} BNB</>}
+                {minting 
+                    ? <><FaSpinner className="spinner" /> Minting...</> 
+                    : <>Mint {props?.collection?.price}&nbsp;
+                        <Image width={27} height={27} src="/bnb_logo.png" alt="" style={{position: "relative", top: "-2px"}} />&nbsp;BNB</>}
             </a>
             {/* TOADD: Edit Collection 
             &nbsp;&nbsp;&nbsp;

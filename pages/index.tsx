@@ -10,7 +10,7 @@ import Image from 'next/image';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { get_collections, get_nfts, Collection, NFT } from '../lib/indexer_api';
+import { get_collections, get_nfts, Collection, NFT, database_awake } from '../lib/indexer_api';
 
 export default function Home(props) {
   
@@ -24,6 +24,7 @@ export default function Home(props) {
   useEffect(() => {
 
     const fetch = async () => {
+        await database_awake();
         setCollections((await get_collections([], [], [])));
         setNFTS(await get_nfts([], [], [], []));
         setLoading(false);

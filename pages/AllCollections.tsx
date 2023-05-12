@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Title from '../components/Title';
 import MyCardsCollection from '../components/MyCardsCollection';
 import { useEffect, useState } from 'react';
-import { get_collections, Collection } from '../lib/indexer_api';
+import { get_collections, Collection, database_awake } from '../lib/indexer_api';
 
 
 export default function AllCollections(props) {
@@ -15,7 +15,10 @@ export default function AllCollections(props) {
 
   useEffect(() => {
     const fetch = async () => {
-      setCollections(await get_collections([], [], []));
+      await database_awake();
+      let res = await get_collections([], [], []);
+      console.log("RES", res);
+      setCollections(res);
       setLoading(false);
     }
     fetch();

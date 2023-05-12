@@ -9,13 +9,14 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 import DateTimePicker from 'react-datetime-picker';
 import Image from 'next/image';
+import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from 'react-bootstrap';
 import { upload_generator, upload_metadata, ipfs_to_https } from '../lib/utils';
 import { FaSpinner } from 'react-icons/fa';
 import { create_collection } from '../lib/solidity_api';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import useLocalStorage from '../custom_hooks/useLocalStorage';
+// import useLocalStorage from '../custom_hooks/useLocalStorage';
 import { KEYWORDS } from '../pages/_app';
 import {Collection} from "../lib/indexer_api";
 import { useWeb3Modal } from "@web3modal/react";
@@ -83,7 +84,7 @@ export default function CollectionCreationForm(props: { collection:Collection; h
     const inputRef = useRef(null);
     const [uploading_folder, setUploadingFolder] = useState(false);
     const [creating_collection, setCreatingCollection] = useState(false);
-    const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.MAINNET);
+    // const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.MAINNET);
     let setCollection = props.handleCollectionModified;
     
     let call_create_collection = async () => {
@@ -193,8 +194,13 @@ export default function CollectionCreationForm(props: { collection:Collection; h
 
             <Form.Group>
                 <Form.Label className="index_title" style={{fontSize: "18px"}}>Price Per Token</Form.Label>
-                <Form.Control type="number" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
-                              placeholder="E.g. 2.5 BNB" defaultValue="" onChange={e => setCollection(collection => {return {...collection, price: parseFloat(e.target.value)}})} />
+                <InputGroup>
+                    <Form.Control type="number" name="item_royalties" id="item_royalties" bsPrefix="form-control my_form_control" 
+                                placeholder="E.g. 2.5" defaultValue="" onChange={e => setCollection(collection => {return {...collection, price: parseFloat(e.target.value)}})} />
+                    <InputGroup.Text>
+                        <Image width={27} height={27} src="/bnb_logo.png" alt="" />&nbsp;BNB
+                    </InputGroup.Text>
+                 </InputGroup>
                 <div className="spacer-40" />
             </Form.Group>
 

@@ -34,7 +34,7 @@ export default function CollectionDetailsPreview(props: {collection: Collection 
     
     return (
         <div>
-            {iframe_url && iframe_url.includes("https://")
+            {iframe_url && iframe_url.includes("https://") && loading === false
                 ? dbg(<GeneratorIframe width={612} height={612} style={{height: "612px"}} className="coll_prw_img" url={iframe_url} on_iframe_metadata_loaded={setIframeMetadata} />)
                 : <Image alt={"Loading..."} width={612} height={612} style={{height: "612px"}} className="coll_prw_img" 
                     src={props?.loading ? "/Loading.gif" : props.collection?.metadata?.image} />  

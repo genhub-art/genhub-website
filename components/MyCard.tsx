@@ -85,10 +85,10 @@ export default function MyCard(props: { href:string; display_randomize?:boolean;
                   <div style={{width: "100%", height: "264px"}}>
                   <Link className="cardA" href={props.href}>
                   
-                    <img  src={props.collection_or_nft.metadata.image} className="cardImg" alt={props.type === "nft" ? "Nft" : "Collection"} />
+                    <img  src={props.collection_or_nft.metadata.image} className="cardImg" alt="" /*alt={props.type === "nft" ? "Nft" : "Collection"}*/ />
                   </Link></div></>
           }
-        
+        <div className='spacer-10' />
         <Card.Body style={props.type === "nft" ? {paddingTop: "0px", paddingBottom: "0px"} : {paddingTop: "8px", paddingBottom: "8px"}}>
           <Link className="cardA" href={props.href}><Card.Title className="cardTitle">{props.collection_or_nft.metadata.name}</Card.Title></Link>
           {(props.collection_or_nft as Collection) &&
@@ -97,7 +97,10 @@ export default function MyCard(props: { href:string; display_randomize?:boolean;
                 {/*  @ts-ignore */}
                 {(props.type !== "nft") && 
                   <>
-                    <span className="cardPrice">{(props.collection_or_nft as Collection).price } BNB</span>
+                    <span className="cardPrice">
+                      {(props.collection_or_nft as Collection).price }&nbsp;
+                      <Image width={16} height={16} src="/bnb_logo.png" alt="" style={{position: "relative", top: "-2px"}} />&nbsp;BNB
+                    </span>
                     <span className="cardTid">{(props.collection_or_nft as Collection).current_supply}/{(props.collection_or_nft as Collection).max_supply}</span>
                   </>
                 }
