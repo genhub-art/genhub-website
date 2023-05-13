@@ -30,11 +30,6 @@ export default function CollectionDetailsInfo(props) {
                             onDisconnect: () => setAccount({address: null, connector: null})});
     const [account, setAccount] = useState({address: acc.address, connector: acc.connector});
     const [minting, setMinting] = useState(false);
-    const [iframe_code, setIframeCode] = useState(`<iframe src='https://lay3rz.xyz/CollectionDetailsIframe?collection=KT1SGYrBDC7ZJhpfT9snZSZc4skjvJtPsUnS&header=false' width='100%' height='1000px' />`);
-    const [iframe_url, setIframeUrl] = useState(`https://lay3rz.xyz/CollectionDetailsIframe?collection=KT1SGYrBDC7ZJhpfT9snZSZc4skjvJtPsUnS&header=false`);
-    const [add_nft, setAddNFT] = useState(false);
-    const [title, setTitle]   = useState("Silver Surver");
-    const [desc, setDesc]     = useState("");
 
     const sleep = (delay) => {
         try{
