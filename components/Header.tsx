@@ -215,7 +215,7 @@ export default function Header(props) {
                             <Link className="menu_element navbar" href="Profile?account=My Account">Profile</Link>
                         } */}
                         <Link className="menu_element navbar" href="CreateCollection">Create</Link>
-                        <Nav.Link href="https://docs.genhub.art/" target="_blank" bsPrefix="menu_element navbar">Docs</Nav.Link>
+                        <Nav.Link href="https://ivan-tsoninski.gitbook.io/genhub.art/" target="_blank" bsPrefix="menu_element navbar">Docs</Nav.Link>
                         {/* TOADD: Bridge <Nav.Link href="#!" bsPrefix="menu_element navbar" onClick={() => setBridgeModal(true)}>Bridge</Nav.Link> */}
                         <NavDropdown title={network === KEYWORDS.MAINNET ? "Mainnet" : "Testnet"} id="basic-nav-dropdown" bsPrefix="menu_element navbar">
                             <NavDropdown.Item href="#!" disabled

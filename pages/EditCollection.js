@@ -120,7 +120,7 @@ export default function EditCollection(props) {
                     
                     <div className="spacer-30" />
                     
-                    <a target={"_blank"} rel={"noreferrer"} href={`https://docs.genhub.art/launch-your-collection`} className="instructionsATag">See Whitelist</a>    
+                    <a target={"_blank"} rel={"noreferrer"} href={`https://ivan-tsoninski.gitbook.io/genhub.art/launch-your-collection`} className="instructionsATag">See Whitelist</a>    
                     <div className="spacer-30" />
                     
                     <Form.Control type="button" id="create_coll_btn" bsPrefix="my_btn_main" value="Edit Collection" />
