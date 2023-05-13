@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { mint_nft } from '../lib/solidity_api';
-import {Collection, ERC1155TokenMetadata, NFT} from "../lib/indexer_api";
+import {Collection, ERCTokenMetadata, NFT} from "../lib/indexer_api";
 import {ipfs_to_https} from "../lib/utils";
 import {useEffect, useState} from "react";
 import { cors_fixer } from "../lib/solidity_api";
@@ -21,7 +21,7 @@ import { useWeb3Modal } from "@web3modal/react";
 
 import { v4 as uuidv4 } from 'uuid';
 import { config } from '@fortawesome/fontawesome-svg-core';
-export default function MyCard(props: { href:string; display_randomize?:boolean; display_buttons?: boolean; collection_or_nft: Collection | NFT; type:string; display_iframe: boolean; on_iframe_metadata_loaded:(tmd:ERC1155TokenMetadata) => void }) {
+export default function MyCard(props: { href:string; display_randomize?:boolean; display_buttons?: boolean; collection_or_nft: Collection | NFT; type:string; display_iframe: boolean; on_iframe_metadata_loaded:(tmd:ERCTokenMetadata) => void }) {
     
     const { open, isOpen, close, setDefaultChain } = useWeb3Modal();
     // let account = useAccount();
@@ -60,7 +60,7 @@ export default function MyCard(props: { href:string; display_randomize?:boolean;
     }
 
     const [minting, setMinting] = useState(false);
-    const [iframe_metadata, setIframeMetadata] = useState<ERC1155TokenMetadata | null>(null)
+    const [iframe_metadata, setIframeMetadata] = useState<ERCTokenMetadata | null>(null)
     const [preview_seed, setPreviewSeed] = useState<string>("x")
     const [preview_token_id, setPreviewTokenId] = useState<number>(1)
     // console.log("card for ", props.collection_or_nft)

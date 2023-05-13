@@ -5,7 +5,7 @@ import { any } from "ramda";
 
 const wrong_collections = ["0x5F7eb397abaf5e81236488274a1D487BFCB18344", "0x37541C88A1fbAc19833e3D8E9C0a5486fF8afC51",
                            "0x81561dEdc4b33304e3D4F91B069Ccdbc0056dc29", "0x95CeA9698BcdaC246e7342211E870cF62Abb6b34"];
-export type ERC1155TokenMetadata = {
+export type ERCTokenMetadata = {
   name: string;
   description: string;
   image: string;
@@ -21,7 +21,7 @@ export type NFT = {
     collection: string;
     token_id: string;
     owner:string;
-    metadata:ERC1155TokenMetadata;
+    metadata:ERCTokenMetadata;
   };
    
    

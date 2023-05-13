@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { FaSpinner } from 'react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect } from 'react';
-import {Collection, ERC1155TokenMetadata} from "../lib/indexer_api";
+import {Collection, ERCTokenMetadata} from "../lib/indexer_api";
 import GeneratorIframe from "./GeneratorIframe";
 import { Col } from 'react-bootstrap';
 import Card from "react-bootstrap/Card";
@@ -15,7 +15,7 @@ export default function CollectionDetailsPreview(props: {collection: Collection 
     // console.log("collecction details preview props", props);
     const [iframe_url, setIframeUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
-    const [iframe_metadata, setIframeMetadata] = useState<ERC1155TokenMetadata | null>(null);
+    const [iframe_metadata, setIframeMetadata] = useState<ERCTokenMetadata | null>(null);
     
     let generate_variation = () => {
         setLoading(true);

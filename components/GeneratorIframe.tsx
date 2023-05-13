@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
-import {ERC1155TokenMetadata} from "../lib/indexer_api";
+import {ERCTokenMetadata} from "../lib/indexer_api";
 
 
-export default function GeneratorIframe(props: {className?:string; height?:number; width?:number; style?:any; url:string; on_iframe_metadata_loaded: (token_metadata: ERC1155TokenMetadata) => void}) {
-    let iframe_metadata : ERC1155TokenMetadata | null = null
+export default function GeneratorIframe(props: {className?:string; height?:number; width?:number; style?:any; url:string; on_iframe_metadata_loaded: (token_metadata: ERCTokenMetadata) => void}) {
+    let iframe_metadata : ERCTokenMetadata | null = null
     
     useEffect(() => {
         if (props.url && props.url.startsWith("https://")) {
@@ -11,7 +11,7 @@ export default function GeneratorIframe(props: {className?:string; height?:numbe
             //every 1 seconds try to call the metadata() function from inside the generator_iframe and print the result
         window.addEventListener("message", (event) => {
             if (event.data.name) {
-                iframe_metadata = (event.data as ERC1155TokenMetadata)
+                iframe_metadata = (event.data as ERCTokenMetadata)
                 // console.log("zzziframe_metadata", iframe_metadata)
                 props.on_iframe_metadata_loaded(iframe_metadata)
             }
