@@ -61,7 +61,8 @@ export type Collection = {
 
 export let database_awake = async () : Promise<void> => {
   try{
-    await http_get(get_api_url);
+    let awake = !!(await http_get(get_api_url)).swagger;
+    if (!awake){await new Promise(resolve => setTimeout(resolve, 700));}
   }
   catch(err){
     console.log("Internal Errorin awaking the database");
