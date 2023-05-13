@@ -9,7 +9,7 @@ import DOMPurify from 'dompurify';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaSpinner } from 'react-icons/fa';
-import { useAccount, useDisconnect, useContract } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import { useWeb3Modal } from "@web3modal/react";
 import {
     bscTestnet,

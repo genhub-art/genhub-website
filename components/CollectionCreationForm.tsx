@@ -20,7 +20,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import { KEYWORDS } from '../pages/_app';
 import {Collection} from "../lib/indexer_api";
 import { useWeb3Modal } from "@web3modal/react";
-import { useAccount, useDisconnect, useContract } from "wagmi";
+import { useAccount, useDisconnect  } from "wagmi";
 import {
     bscTestnet,
     fantomTestnet,

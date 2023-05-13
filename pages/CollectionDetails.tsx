@@ -11,7 +11,7 @@ import CollectionDetailsInfo from '../components/CollectionDetailsInfo';
 import { get_collections, get_nfts, Collection, NFT, database_awake } from '../lib/indexer_api';
 // import useLocalStorage from '../custom_hooks/useLocalStorage';
 import { KEYWORDS } from '../pages/_app';
-import { useAccount, useDisconnect, useContract } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 
 
 export default function CollectionDetails(props) {

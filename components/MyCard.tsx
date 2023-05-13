@@ -9,7 +9,7 @@ import { cors_fixer } from "../lib/solidity_api";
 import GeneratorIframe from "./GeneratorIframe";
 import Image from "next/image";
 import NFTPropertiesGrid from "./NFTPropertiesGrid";
-import { useAccount, useDisconnect, useContract } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import {
     bscTestnet,
     fantomTestnet,

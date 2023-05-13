@@ -19,7 +19,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useWeb3Modal } from "@web3modal/react";
-import { useAccount, useDisconnect, useContract } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import {
     bscTestnet,
     fantomTestnet,
