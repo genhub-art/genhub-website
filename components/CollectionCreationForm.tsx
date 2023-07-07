@@ -20,7 +20,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import { KEYWORDS } from '../pages/_app';
 import {Collection} from "../lib/indexer_api";
 import { useWeb3Modal } from "@web3modal/react";
-import { useAccount, useDisconnect, useContract } from "wagmi";
+import { useAccount, useDisconnect  } from "wagmi";
 import {
     bscTestnet,
     fantomTestnet,
@@ -154,7 +154,7 @@ export default function CollectionCreationForm(props: { collection:Collection; h
             {/* {console.log("Network KEYWORDS", KEYWORDS.NETWORK, KEYWORDS.MAINNET, KEYWORDS.TESTNET)} */}
             <div className="spacer-60" />
             {/*@ts-ignore*/}
-            <a dataBsToggle="tooltip" title="Instructions on how to create a collection" target={"_blank"} rel={"noreferrer"} href={`https://docs.lay3rz.xyz/launch-your-collection`} className="instructionsATag">Instructions</a>
+            <a dataBsToggle="tooltip" title="Instructions on how to create a collection" target={"_blank"} rel={"noreferrer"} href={`https://ivan-tsoninski.gitbook.io/genhub.art/launch-your-collection`} className="instructionsATag">Instructions</a>
             <div className="spacer-40" />
             <Form.Group>  
                 

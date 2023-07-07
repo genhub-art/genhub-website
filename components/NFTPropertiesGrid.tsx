@@ -2,9 +2,9 @@ import * as R from "ramda";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import {Col} from "react-bootstrap";
-import {ERC1155TokenMetadata} from "../lib/indexer_api";
+import {ERCTokenMetadata} from "../lib/indexer_api";
 
-export default function NFTPropertiesGrid (props:{metadata: ERC1155TokenMetadata | null}) {
+export default function NFTPropertiesGrid (props:{metadata: ERCTokenMetadata | null}) {
     return <>{
         (() => {
             // console.log("yyyRERENDER")

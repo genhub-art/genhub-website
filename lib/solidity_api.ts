@@ -39,7 +39,6 @@ export const create_collection = async (
                                                   ethers.utils.parseUnits(collection.price.toString(), 'ether'))
                                                   .catch((e: any) => {console.log("transaction rejected")  });
     await deployTx?.wait().catch((e: any) => {console.log("insufficient funds or gas fee")  });
-    // await fetch(cors_fixer + "https://nftm-indexer-s5knoljafq-ey.a.run.app/").catch((e: any) => {console.log("internal error")  });
   };
 
   export const mint_nft = async (
@@ -61,7 +60,6 @@ export const create_collection = async (
     if(price < 0.000000001) price_string = price.toFixed(20).toString(); else price_string = price.toString();
     const tx = await collectionContract.mint("", { value:  ethers.utils.parseUnits(price_string, "ether")}).catch((e: any) => {console.log("transaction rejected")  });
     await tx?.wait().catch((e: any) => {console.log("insufficient funds or gas fee")  });
-    // await fetch(cors_fixer + "https://nftm-indexer-s5knoljafq-ey.a.run.app/").catch((e: any) => {console.log("internal error")  });
   }
 
 // export let create_collection = async (c:Collection) => {

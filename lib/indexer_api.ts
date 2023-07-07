@@ -3,9 +3,7 @@ import { ethers } from "ethers";
 import { get_api_url } from "./utils";
 import { any } from "ramda";
 
-const wrong_collections = ["0x5F7eb397abaf5e81236488274a1D487BFCB18344", "0x37541C88A1fbAc19833e3D8E9C0a5486fF8afC51",
-                           "0x81561dEdc4b33304e3D4F91B069Ccdbc0056dc29", "0x95CeA9698BcdaC246e7342211E870cF62Abb6b34"];
-export type ERC1155TokenMetadata = {
+export type ERCTokenMetadata = {
   name: string;
   description: string;
   image: string;
@@ -21,7 +19,7 @@ export type NFT = {
     collection: string;
     token_id: string;
     owner:string;
-    metadata:ERC1155TokenMetadata;
+    metadata:ERCTokenMetadata;
   };
    
    
@@ -65,7 +63,8 @@ export type Collection = {
 
 export let database_awake = async () : Promise<void> => {
   try{
-    await http_get(get_api_url);
+    let awake = !!(await http_get(get_api_url)).swagger;
+    if (!awake){await new Promise(resolve => setTimeout(resolve, 700));}
   }
   catch(err){
     console.log("Internal Errorin awaking the database");

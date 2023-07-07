@@ -1,8 +1,8 @@
 import MyCard from './MyCard';
 import {useState} from "react";
-import {Collection, ERC1155TokenMetadata} from "../lib/indexer_api";
+import {Collection, ERCTokenMetadata} from "../lib/indexer_api";
 
-export default function CollectionCreationPrew(props: {collection: Collection, on_iframe_metadata_loaded: (token_metadata: ERC1155TokenMetadata) => void}) {
+export default function CollectionCreationPrew(props: {collection: Collection, on_iframe_metadata_loaded: (token_metadata: ERCTokenMetadata) => void}) {
     return (
         <div style={{justifyContent: "center"}}>
             <div className="spacer-60" />

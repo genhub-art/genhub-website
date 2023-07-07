@@ -10,13 +10,14 @@ import {
   w3mProvider,
 } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
-import { configureChains, createClient, WagmiConfig } from "wagmi";
+import {configureChains, createConfig, WagmiConfig} from "wagmi";
 import {
   bscTestnet,
   fantomTestnet,
   polygonMumbai,
   sepolia,
 } from "wagmi/chains";
+import {createClient} from "viem";
 
 const projectId = process.env.WEB3MODAL_PROJECT_ID;
 
@@ -27,14 +28,14 @@ const chains = [
   sepolia,
 ];
 
-const { provider } = configureChains(chains, [w3mProvider({ projectId })]);
-const wagmiClient = createClient({
-autoConnect: true,
-connectors: w3mConnectors({ version: 1, chains, projectId }),
-provider,
-});
+const  { publicClient }  = configureChains(chains, [w3mProvider({ projectId })]);
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors: w3mConnectors({ projectId, version: 1, chains }),
+  publicClient
+})
+const ethereumClient = new EthereumClient(wagmiConfig, chains)
 
-const ethereumClient = new EthereumClient(wagmiClient, chains);
 
 
 export const KEYWORDS = {
@@ -62,7 +63,7 @@ export default function App({ Component, pageProps }) {
       </Head>
       {ready  
         ?
-          <WagmiConfig client={wagmiClient}>
+          <WagmiConfig config={wagmiConfig}>
             <NetworkContextProvider>
             <Layout>
               <Component {...pageProps} />

@@ -1,16 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import Form from 'react-bootstrap/Form';
-import IndexPresentation from '../components/IndexPresentation';
-import MyCarousel from '../components/MyCarousel';
-import MyOwlCarousel from '../components/MyOwlCarousel';
 import Image from 'next/image';
 import Container from 'react-bootstrap/Container';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Title from '../components/Title';
-import CollCreationForm from '../components/CollectionCreationForm';
-import CollCreationPrew from '../components/CollectionCreationPreview';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
@@ -22,21 +17,12 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 export default function EditCollection(props) {
     
     const [date_time, setDateTime] = useState(new Date());
-    const [price, setPrice]   = useState("");
-    const [supply, setSupply] = useState("");
-    const [coll_nm, setCollNm] = useState("");
-    const [coll_add, setCollAdd] = useState("");
-    const [admin, setAdmin] = useState("");
     const [add_whitelists_next, setAddWhitelistsNext] = useState("");
     const [rmv_whitelists_next, setRmvWhitelistsNext] = useState("");
     const [add_whitelists, setAddWhitelists] = useState([]);
     const [rmv_whitelists, setRmvWhitelists] = useState([]);
     const [checked, setChecked] = useState(true);
-    const [init_checked, setInitChecked] = useState(true);
     const [check_white, setCheckWhite] = useState(true);
-    const [init_white, setInitWhite] = useState(true);
-    const [white_bigmap, setWhiteBigmap] = useState(0);
-    const [ow, setOw] = useState("");
 
     return (
     <div>
@@ -134,7 +120,7 @@ export default function EditCollection(props) {
                     
                     <div className="spacer-30" />
                     
-                    <a target={"_blank"} rel={"noreferrer"} href={`https://docs.lay3rz.xyz/launch-your-collection`} className="instructionsATag">See Whitelist</a>    
+                    <a target={"_blank"} rel={"noreferrer"} href={`https://ivan-tsoninski.gitbook.io/genhub.art/launch-your-collection`} className="instructionsATag">See Whitelist</a>    
                     <div className="spacer-30" />
                     
                     <Form.Control type="button" id="create_coll_btn" bsPrefix="my_btn_main" value="Edit Collection" />
