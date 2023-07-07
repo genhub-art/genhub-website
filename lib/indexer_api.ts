@@ -26,10 +26,12 @@ export type NFT = {
    
    
    
-export let get_nfts =  async (chains: string[], collection_addresses: string[], token_ids: string[], owners: string[]) : Promise<NFT[]> => 
+export let get_nfts =  async (chains: string[], network: string, collection_addresses: string[], token_ids: string[], owners: string[]) : Promise<NFT[]> => 
 {   
     try{
       let url = new URL(get_api_url + "/nfts")
+
+      if(network !== "") url.searchParams.append("chain", `fts.${network}`)
       if (chains.length > 0) url.searchParams.append("chain", "in.(" + chains.join(",") + ")")
       if (collection_addresses.length > 0) url.searchParams.append("collection", "in.(" + collection_addresses.join(",") + ")")
       if (token_ids.length > 0) url.searchParams.append("token_id", "in.(" + token_ids.join(",") + ")")
@@ -70,16 +72,18 @@ export let database_awake = async () : Promise<void> => {
   }
 }
  
-export let get_collections = async (chains: string[], collection_addresses: string[], collection_creators: string[]) : Promise<Collection[]> =>
+export let get_collections = async (chains: string[], network: string, collection_addresses: string[], collection_creators: string[]) : Promise<Collection[]> =>
 {
   try{
     let url = new URL(get_api_url + "/collections")
+  if(network !== "") url.searchParams.append("chain", `fts.${network}`);
     if (chains.length > 0) url.searchParams.append("chain", "in.(" + chains.join(",") + ")")
     if (collection_addresses.length > 0) url.searchParams.append("address", "in.(" + collection_addresses.join(",") + ")")
     if (collection_creators.length > 0) url.searchParams.append("creator", "in.(" + collection_creators.join(",") + ")")
     console.log("collections URL Href", url.href);
     // let res = await http_get(url.href);
     // // console.log("collections res", res, collection_addresses);
+    console.log("collections URL Href", url.href);
     let res = await http_get(url.href);
     console.log("collections RES", res);
     // console.log("zzzcollections res", res);
