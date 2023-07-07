@@ -9,7 +9,7 @@ import ProfilePublicKeys from '../components/ProfilePublicKeys';
 import { KEYWORDS } from '../pages/_app';
 import { useRouter } from 'next/router';
 import { get_collections, get_nfts, Collection, NFT, database_awake } from '../lib/indexer_api';
-import { useAccount, useDisconnect, useContract } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import { useNetworkContext } from '../contexts/networkContext';
 
 export default function Profile(props) {
