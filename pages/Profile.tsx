@@ -10,6 +10,7 @@ import { KEYWORDS } from '../pages/_app';
 import { useRouter } from 'next/router';
 import { get_collections, get_nfts, Collection, NFT, database_awake } from '../lib/indexer_api';
 import { useAccount, useDisconnect, useContract } from "wagmi";
+import { useNetworkContext } from '../contexts/networkContext';
 
 export default function Profile(props) {
 
@@ -33,6 +34,8 @@ export default function Profile(props) {
 
   let replaceAt = (str, index, replacement) => str.substring(0, index) + replacement + str.substring(index + replacement.length);
 
+  let {network, setNetwork} = useNetworkContext();
+
   useEffect(() => {
 
     if(!router.isReady) return;
@@ -53,24 +56,28 @@ export default function Profile(props) {
     let owner_UpperCase = replaceAt(owner.toUpperCase(), 1, 'x');
 
     let fetch = async () => {
+      setLoading(true);
+      setNfts(Array(8).fill(loading_collection));
+      setCollections(Array(8).fill(loading_collection));
+      setCreations(Array(8).fill(loading_collection));
       await database_awake();
-      let curr_nfts = await get_nfts([], [], [], [owner_LowerCase, owner_UpperCase, owner]);
+      let curr_nfts = await get_nfts([], network, [], [], [owner_LowerCase, owner_UpperCase, owner]);
       setNfts(curr_nfts);
       let curr_collections = [];
       // @ts-ignore
       if([...new Set(curr_nfts.map(nft => nft.collection))].length){
         // @ts-ignore
-        curr_collections = await get_collections([], [...new Set(curr_nfts.map(nft => nft.collection))], []);
+        curr_collections = await get_collections([], network, [...new Set(curr_nfts.map(nft => nft.collection))], []);
       }
       setCollections(curr_collections);
       setCreations(curr_collections);
-      setCreations(await get_collections([], [], [owner_LowerCase, owner_UpperCase, owner]));
+      setCreations(await get_collections([], network, [], [owner_LowerCase, owner_UpperCase, owner]));
       setLoading(false);
     }
 
     fetch();
 
-  }, [router.isReady, router.query, my_account.address]);
+  }, [router.isReady, router.query, my_account.address, network]);
   
   return (
     <div>

@@ -11,6 +11,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { get_collections, get_nfts, Collection, NFT, database_awake } from '../lib/indexer_api';
+import { useNetworkContext } from '../contexts/networkContext';
 
 export default function Home(props) {
   
@@ -21,18 +22,23 @@ export default function Home(props) {
   const [collections, setCollections] = useState(Array(8).fill(loading_collection));
   const [nfts, setNFTS] = useState(Array(8).fill(loading_collection));
 
+  let {network, setNetwork} = useNetworkContext();
+
   useEffect(() => {
 
     const fetch = async () => {
+        setLoading(true);
+        setCollections(Array(8).fill(loading_collection));
+        setNFTS(Array(8).fill(loading_collection));
         await database_awake();
-        setCollections((await get_collections([], [], [])));
-        setNFTS(await get_nfts([], [], [], []));
+        setCollections((await get_collections([], network, [], [])));
+        setNFTS(await get_nfts([], network, [], [], []));
         setLoading(false);
     }
     
     fetch();
 
-  }, []);
+  }, [network]);
   
   return (
     <Container>

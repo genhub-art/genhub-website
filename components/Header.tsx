@@ -20,6 +20,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useWeb3Modal } from "@web3modal/react";
 import { useAccount, useDisconnect, useContract } from "wagmi";
+import { useNetworkContext } from '../contexts/networkContext';
 import {
     bscTestnet,
     fantomTestnet,
@@ -40,7 +41,8 @@ export default function Header(props) {
     // const [aleph0_pkh, setAleph0PKH] = useLocalStorage(KEYWORDS.ALEPH0_PKH ,null);
     // const [solidity_pkh, setSolidityPKH] = useLocalStorage(KEYWORDS.SOLIDITY_PKH ,null);
     // const [network, setNetwork] = useLocalStorage(KEYWORDS.NETWORK, KEYWORDS.TESTNET);
-    const [network, setNetwork] = useState(KEYWORDS.TESTNET);
+    // const [network, setNetwork] = useState(KEYWORDS.TESTNET);
+    let {network, setNetwork} = useNetworkContext();
     const scrollPosition = useScrollPosition();
 
     async function onOpen() {
@@ -220,9 +222,9 @@ export default function Header(props) {
                         {/* <Nav.Link href="https://twitter.com/LAY3RZ_XYZ" target="_blank" bsPrefix="menu_element navbar"><img className='opacity_hover' src='512x512-logo-27157.png' style={{height: "20px"}}></img></Nav.Link>
                         <Nav.Link href="https://discord.com/invite/f9eaNt4qX4" target="_blank" bsPrefix="menu_element navbar"><img className='opacity_hover' src='discord-logo-png-7616.png' style={{height: "25px"}}></img></Nav.Link> */}
                         <NavDropdown title={network === KEYWORDS.MAINNET ? "Mainnet" : "Testnet"} id="basic-nav-dropdown" bsPrefix="menu_element navbar">
-                            <NavDropdown.Item href="#!" disabled
+                            <NavDropdown.Item href="#!"
                             onClick={() => {network === KEYWORDS.MAINNET ? setNetwork(KEYWORDS.TESTNET) : setNetwork(KEYWORDS.MAINNET)}}>
-                                {network === "mainnet" ? "Testnet" : "Mainnet (coming soon)"}</NavDropdown.Item>
+                                {network === "mainnet" ? "Testnet" : "Mainnet"}</NavDropdown.Item>
                         </NavDropdown>
                         <Button size="sm" variant="dark" bsPrefix="login_button btn" onClick={onClick}>
                             <span className="menu_element">{isConnected ? "Disconnect Wallet" : "Connect Wallet"}</span>

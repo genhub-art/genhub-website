@@ -63,11 +63,11 @@ export default function App({ Component, pageProps }) {
       {ready  
         ?
           <WagmiConfig client={wagmiClient}>
-            {/* <NetworkContextProvider> */}
+            <NetworkContextProvider>
             <Layout>
               <Component {...pageProps} />
             </Layout>
-            {/* </NetworkContextProvider> */}
+            </NetworkContextProvider>
           </WagmiConfig>
         : null
       }

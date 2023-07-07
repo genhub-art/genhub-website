@@ -6,10 +6,10 @@ import useLocalStorage from '../custom_hooks/useLocalStorage';
 const NetworkContext = createContext();
 
 export function NetworkContextProvider({ children }) {
-  let sharedState = "context works!!!";
-
+  let [network, setNetwork] = useLocalStorage('network', 'mainnet');
+  
   return (
-    <NetworkContext.Provider value={sharedState}>
+    <NetworkContext.Provider value={{network, setNetwork}}>
       {children}
     </NetworkContext.Provider>
   );

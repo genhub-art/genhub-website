@@ -15,7 +15,7 @@ export default function NftDetailsPreview(props: {nft:NFT, loading: boolean}) {
             }
             
             <div className="spacer-30" />
-            {!props.loading && props.nft.metadata && <NFTPropertiesGrid metadata={props.nft.metadata} />}
+            {!props.loading && props?.nft?.metadata && <NFTPropertiesGrid metadata={props?.nft?.metadata} />}
             <div className="spacer-60" />
         </div>
     )

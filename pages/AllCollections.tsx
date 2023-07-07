@@ -3,6 +3,7 @@ import Title from '../components/Title';
 import MyCardsCollection from '../components/MyCardsCollection';
 import { useEffect, useState } from 'react';
 import { get_collections, Collection, database_awake } from '../lib/indexer_api';
+import { useNetworkContext } from '../contexts/networkContext';
 
 
 export default function AllCollections(props) {
@@ -13,17 +14,22 @@ export default function AllCollections(props) {
   const [collections, setCollections] = useState(Array(8).fill(loading_collection));
   const [loading, setLoading] = useState(true);
 
+  let {network, setNetwork} = useNetworkContext();
+  console.log("network", network, setNetwork);
+
   useEffect(() => {
     const fetch = async () => {
+      setCollections(Array(8).fill(loading_collection));
+      setLoading(true);
       await database_awake();
-      let res = await get_collections([], [], []);
+      let res = await get_collections([], network, [], []);
       console.log("RES", res);
       setCollections(res);
       setLoading(false);
     }
     fetch();
 
-  }, [])
+  }, [network])
   return (
     <div>
         <Title title="Collections" />

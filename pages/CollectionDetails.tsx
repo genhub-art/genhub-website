@@ -12,6 +12,7 @@ import { get_collections, get_nfts, Collection, NFT, database_awake } from '../l
 // import useLocalStorage from '../custom_hooks/useLocalStorage';
 import { KEYWORDS } from '../pages/_app';
 import { useAccount, useDisconnect, useContract } from "wagmi";
+import { useNetworkContext } from '../contexts/networkContext';
 
 
 export default function CollectionDetails(props) {
@@ -27,6 +28,7 @@ export default function CollectionDetails(props) {
     const [my_nfts, setMyNFTS] = useState(Array(8).fill(loading_nfts));
     const [collection, setCollection] = useState<Collection | null>(null);
     const [loading, setLoading] = useState(true);
+    let {network, setNetwork} = useNetworkContext();
     // const [solidity_pkh, setSolidityPKH] = useLocalStorage(KEYWORDS.SOLIDITY_PKH ,null);
     // console.log("KEYWORDS SOLIDITY PKH", KEYWORDS.SOLIDITY_PKH, KEYWORDS);
   useEffect(() => {
@@ -35,14 +37,17 @@ export default function CollectionDetails(props) {
         let address = router.query.address as string;
 
         const fetch = async () => {
+            setLoading(true);
+            setCollection(null);
+            setNFTS(Array(8).fill(loading_nfts));
             await database_awake();
-            setCollection((await get_collections([], [address], []))[0]);
-            setNFTS(await get_nfts([], [address], [], []));
+            setCollection((await get_collections([], network, [address], []))[0]);
+            setNFTS(await get_nfts([], network, [address], [], []));
             setLoading(false);
         }
         fetch();
 
-    }, [router.isReady]);
+    }, [router.isReady, network]);
 
     useEffect(() => {
 
