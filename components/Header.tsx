@@ -19,8 +19,9 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useWeb3Modal } from "@web3modal/react";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { useNetworkContext } from '../contexts/networkContext';
+import { InjectedConnector } from 'wagmi/connectors/injected'
 
 import {
     bscTestnet,
@@ -35,6 +36,9 @@ export default function Header(props) {
     const { open, isOpen, close, setDefaultChain } = useWeb3Modal();
     const { isConnected } = useAccount();
     const { disconnect } = useDisconnect();
+    const { connect } = useConnect({
+        connector: new InjectedConnector(),
+    });
     const [bridge_modal, setBridgeModal] = useState(false);
     const [wallets_modal, setWalletsModal] = useState(false);
     const [screen_width, setScreenWidth] = useState(993);
@@ -49,15 +53,22 @@ export default function Header(props) {
     async function onOpen() {
         setLoading(true);
         // setDefaultChain(sepolia);
+        console.log("Here 3!");
         setDefaultChain(bscTestnet);
-        await open();
+        console.log("Here 4!");
+        // await open();
+        await connect();
+        console.log("Here 5!");
         setLoading(false);
     }
 
     function onClick() {
+        console.log("Here!");
         if (isConnected) {
+            console.log("Here 1!");
             disconnect();
         } else {
+            console.log("Here 2!");
             onOpen();
         }
     }

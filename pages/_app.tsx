@@ -21,6 +21,8 @@ import {createClient} from "viem";
 
 const projectId = process.env.WEB3MODAL_PROJECT_ID;
 
+
+
 const chains = [
   bscTestnet,
   fantomTestnet,
@@ -31,7 +33,7 @@ const chains = [
 const  { publicClient }  = configureChains(chains, [w3mProvider({ projectId })]);
 const wagmiConfig = createConfig({
   autoConnect: true,
-  connectors: w3mConnectors({ projectId, version: 1, chains }),
+  connectors: w3mConnectors({ projectId, chains }),
   publicClient
 })
 const ethereumClient = new EthereumClient(wagmiConfig, chains)
